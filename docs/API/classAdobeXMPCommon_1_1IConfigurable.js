@@ -1,0 +1,37 @@
+var classAdobeXMPCommon_1_1IConfigurable =
+[
+    [ "CombinedDataValue", "unionAdobeXMPCommon_1_1IConfigurable_1_1CombinedDataValue.html", "unionAdobeXMPCommon_1_1IConfigurable_1_1CombinedDataValue" ],
+    [ "eDataType", "classAdobeXMPCommon_1_1IConfigurable.html#ad64e6ae45633298b7158be2b0dce79a1", [
+      [ "kDTNone", "classAdobeXMPCommon_1_1IConfigurable.html#ad64e6ae45633298b7158be2b0dce79a1a0233b4bacf60f59232fd3fc0dee50a27", null ],
+      [ "kDTBool", "classAdobeXMPCommon_1_1IConfigurable.html#ad64e6ae45633298b7158be2b0dce79a1abdf14ab0f7a234fc99bc476dc4212f4e", null ],
+      [ "kDTUint64", "classAdobeXMPCommon_1_1IConfigurable.html#ad64e6ae45633298b7158be2b0dce79a1ad24c2bb370f5fa12dee346051c13409e", null ],
+      [ "kDTInt64", "classAdobeXMPCommon_1_1IConfigurable.html#ad64e6ae45633298b7158be2b0dce79a1a5c57cf68bc47c55815b5bfc1146df0c3", null ],
+      [ "kDTChar", "classAdobeXMPCommon_1_1IConfigurable.html#ad64e6ae45633298b7158be2b0dce79a1a01da29c7d11b67856b0e9d5f3fe4cdb4", null ],
+      [ "kDTDouble", "classAdobeXMPCommon_1_1IConfigurable.html#ad64e6ae45633298b7158be2b0dce79a1a11c2a544d5ac467b22d7d10098237efa", null ],
+      [ "kDTConstCharBuffer", "classAdobeXMPCommon_1_1IConfigurable.html#ad64e6ae45633298b7158be2b0dce79a1a8d6faef7e1737835b5007987ed99c48d", null ],
+      [ "kDTConstVoidPtr", "classAdobeXMPCommon_1_1IConfigurable.html#ad64e6ae45633298b7158be2b0dce79a1a242c98a52e8d324027a00ee6f66d4c39", null ],
+      [ "kDTAll", "classAdobeXMPCommon_1_1IConfigurable.html#ad64e6ae45633298b7158be2b0dce79a1ac5217140bec2fb51971d31759f24b81a", null ]
+    ] ],
+    [ "~IConfigurable", "classAdobeXMPCommon_1_1IConfigurable.html#a7c19f627db3d07e227e93a6a0e6b20ab", null ],
+    [ "ConvertCharBufferToUint64", "classAdobeXMPCommon_1_1IConfigurable.html#a932bf0b8f4396de0e29f6c165954e5dc", null ],
+    [ "GetAllParameters", "classAdobeXMPCommon_1_1IConfigurable.html#ac1ee6bed39650439dc4cbbc4d5e29689", null ],
+    [ "GetDataType", "classAdobeXMPCommon_1_1IConfigurable.html#a2e36dbbb357fef76403e34603b54476e", null ],
+    [ "GetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#a4d301e603f3842bae87983324f4a28c0", null ],
+    [ "GetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#a9da31844f14815d4ed43df07d72b51f2", null ],
+    [ "GetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#ad7d6007647105ffe1962463fcad3917d", null ],
+    [ "GetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#ac08b229f95afffae21e7dedae0d69fd0", null ],
+    [ "GetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#a83027374893242e5f621439907d4d831", null ],
+    [ "GetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#a316078de546c020ac473869994b1cfe9", null ],
+    [ "GetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#a90a82f84809f653eb73d880241529847", null ],
+    [ "RemoveParameter", "classAdobeXMPCommon_1_1IConfigurable.html#a046edf1c0c7d4f994295207dea1242f7", null ],
+    [ "REQ_FRIEND_CLASS_DECLARATION", "classAdobeXMPCommon_1_1IConfigurable.html#abb69da6d73e4b56c30e56b43f5a37b9b", null ],
+    [ "SetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#a174330a36f7e3d27cc0230698ff59313", null ],
+    [ "SetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#a4f5a64d500f2fd8110f31a2b582e0759", null ],
+    [ "SetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#ae3de9436a04fcd5f6f8bd21fcc9a9edd", null ],
+    [ "SetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#a75784001a19ac899764807095e648c70", null ],
+    [ "SetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#ad3b3acdbd19e5860d3e5c5cdcffeb016", null ],
+    [ "SetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#ad248a17a9bc7ca1c189f353f62e829c4", null ],
+    [ "SetParameter", "classAdobeXMPCommon_1_1IConfigurable.html#abc24d334364271934f6f8f1ac9051836", null ],
+    [ "Size", "classAdobeXMPCommon_1_1IConfigurable.html#a2a1e1d3f515d431478ec309fa9dcd977", null ],
+    [ "IConfigurableProxy", "classAdobeXMPCommon_1_1IConfigurable.html#ac321e3926928c7c9b58bab66d6270da5", null ]
+];

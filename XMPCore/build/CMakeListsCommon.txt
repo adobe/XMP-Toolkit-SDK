@@ -1,0 +1,295 @@
+# ==============================================================================
+cmake_minimum_required(VERSION 2.8.6)
+
+# Enable folder grouping of projects in IDEs
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+
+
+# ==============================================================================
+# For convenience we define the sources as a variable. You can add 
+# header files and cpp/c files and CMake will sort them out
+# ==============================================================================
+
+list (APPEND INTERNAL_HEADER_FILES
+	${XMPROOT_DIR}/source/ExpatAdapter.hpp
+	${XMPROOT_DIR}/source/UnicodeConversions.hpp
+	${XMPROOT_DIR}/source/UnicodeInlines.incl_cpp
+	${XMPROOT_DIR}/source/XMLParserAdapter.hpp
+	${XMPROOT_DIR}/build/XMP_BuildInfo.h
+	${SOURCE_ROOT}/XMPCore_Impl.hpp
+	${SOURCE_ROOT}/XMPIterator.hpp
+	${SOURCE_ROOT}/XMPMeta.hpp
+	${SOURCE_ROOT}/XMPUtils.hpp
+	)
+source_group("Header Files\\Private\\XMPCore" FILES ${INTERNAL_HEADER_FILES})
+
+if (INCLUDE_CPP_DOM_SOURCE)
+	file (GLOB_RECURSE PRIVATE_XMPCOMMON_HEADERS ${XMPROOT_DIR}/XMPCommon/*.h)
+	source_group("Header Files\\Private\\XMPCommon" FILES ${PRIVATE_XMPCOMMON_HEADERS})
+
+	file (GLOB_RECURSE PRIVATE_XMPCOMMON_SOURCES ${XMPROOT_DIR}/XMPCommon/source/*.cpp)
+	source_group("Source Files\\Private\\XMPCommon" FILES ${PRIVATE_XMPCOMMON_SOURCES})
+endif (INCLUDE_CPP_DOM_SOURCE)
+
+file (GLOB PRIVATE_XMPCORE_HEADERS 
+	${XMPROOT_DIR}/XMPCore/*.h 
+	${XMPROOT_DIR}/XMPCore/ImplHeaders/*.h 
+	${XMPROOT_DIR}/XMPCore/headers/*.h 
+	${XMPROOT_DIR}/XMPCore/Interfaces/*.h )
+source_group("Header Files\\Private\\XMPCore" FILES ${PRIVATE_XMPCORE_HEADERS})
+	
+file (GLOB_RECURSE PUBLIC_CLIENTGLUE_HEADER_FILES ${XMPROOT_DIR}/public/include/client-glue/*.*)
+list (REMOVE_ITEM PUBLIC_CLIENTGLUE_HEADER_FILES
+	${XMPROOT_DIR}/public/include/client-glue/TXMPFiles.incl_cpp
+	${XMPROOT_DIR}/public/include/client-glue/WXMPFiles.hpp
+	)
+source_group("Header Files\\Public\\Client Glue" FILES ${PUBLIC_CLIENTGLUE_HEADER_FILES})
+
+file (GLOB PUBLIC_HEADER_FILES ${XMPROOT_DIR}/public/include/*.*)
+list (REMOVE_ITEM PUBLIC_HEADER_FILES
+	${XMPROOT_DIR}/public/include/TXMPFiles.hpp
+	${XMPROOT_DIR}/public/include/XMP_IO.hpp
+	)
+source_group("Header Files\\Public" FILES ${PUBLIC_HEADER_FILES})
+
+if (INCLUDE_CPP_DOM_SOURCE)
+file (GLOB_RECURSE PUBLIC_XMPCOMMON_HEADERS ${XMPROOT_DIR}/public/include/XMPCommon/*.h )
+source_group("Header Files\\Public\\XMPCommon" FILES ${PUBLIC_XMPCOMMON_HEADERS})
+
+file (GLOB_RECURSE PUBLIC_XMPCOMMON_SOURCES ${XMPROOT_DIR}/public/include/XMPCommon/source/*.cpp )
+source_group("Source Files\\Public\\XMPCommon" FILES ${PUBLIC_XMPCOMMON_SOURCES})
+
+
+file (GLOB_RECURSE PUBLIC_XMPCORE_HEADERS ${XMPROOT_DIR}/public/include/XMPCore/*.h)
+source_group("Header Files\\Public\\XMPCore" FILES ${PUBLIC_XMPCORE_HEADERS})
+
+file (GLOB_RECURSE PUBLIC_XMPCORE_SOURCES ${XMPROOT_DIR}/public/include/XMPCore/source/*.cpp )
+source_group("Source Files\\Public\\XMPCore" FILES ${PUBLIC_XMPCORE_SOURCES})
+
+endif (INCLUDE_CPP_DOM_SOURCE)
+
+file (GLOB ABIWRAPPER_SOURCE_FILES ${SOURCE_ROOT}/WXMP*.cpp)
+source_group("Source Files\\ABI Wrappers" FILES ${ABIWRAPPER_SOURCE_FILES})
+
+if (INCLUDE_CPP_DOM_SOURCE)
+	file (GLOB PRIVATE_XMPCORE_ISOURCE_FILES ${SOURCE_ROOT}/*_I.cpp)
+	file (GLOB PRIVATE_XMPCORE_IMPLSOURCE_FILES ${SOURCE_ROOT}/*Impl.cpp)
+	list (REMOVE_ITEM PRIVATE_XMPCORE_IMPLSOURCE_FILES ${SOURCE_ROOT}/XMPCore_Impl.cpp)
+	source_group("Source Files\\Private\\XMPCore" FILES ${PRIVATE_XMPCORE_ISOURCE_FILES} ${PRIVATE_XMPCORE_IMPLSOURCE_FILES})
+else (INCLUDE_CPP_DOM_SOURCE)
+	file (GLOB PRIVATE_XMPCORE_IMPLSOURCE_FILES ${SOURCE_ROOT}/CoreObjectFactoryImpl.cpp)
+	source_group("Source Files\\Private\\XMPCore" FILES ${PRIVATE_XMPCORE_IMPLSOURCE_FILES})
+endif (INCLUDE_CPP_DOM_SOURCE)
+
+#XMP Core classes
+file (GLOB CORECLASS_SOURCE_FILES ${SOURCE_ROOT}/XMP*.cpp)
+list (REMOVE_ITEM CORECLASS_SOURCE_FILES ${SOURCE_ROOT}/XMPCore_Impl.cpp)
+source_group("Source Files\\Core Classes" FILES ${CORECLASS_SOURCE_FILES})
+
+file (GLOB ZUID_SOURCE_FILES ${TP_ZUID_PATH}/*.cpp)
+list (APPEND THIRDPARTY_SOURCE_FILES
+	${TP_EXPAT_PATH}/xmlparse.c
+	${TP_EXPAT_PATH}/xmlrole.c
+	${TP_EXPAT_PATH}/xmltok.c
+	${ZUID_SOURCE_FILES}
+	)
+if(WIN32)
+	list (APPEND THIRDPARTY_SOURCE_FILES ${RESOURCE_ROOT}/win/expat_config.h)
+else()
+	list (APPEND THIRDPARTY_SOURCE_FILES ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/expat_config.h)
+endif()
+source_group("Source Files\\Third Party" FILES ${THIRDPARTY_SOURCE_FILES})
+
+list (APPEND UTILITY_SOURCE_FILES
+	${SOURCE_ROOT}/ExpatAdapter.cpp
+	${SOURCE_ROOT}/ParseRDF.cpp
+	${SOURCE_ROOT}/XMPCore_Impl.cpp
+	${XMPROOT_DIR}/source/UnicodeConversions.cpp
+	${XMPROOT_DIR}/source/XML_Node.cpp
+	${XMPROOT_DIR}/source/XMP_LibUtils.cpp
+	)
+source_group("Source Files\\Utilities" FILES ${UTILITY_SOURCE_FILES})
+
+#resource files
+if (WIN32)
+	file (GLOB RESOURCE_FILES ${RESOURCE_ROOT}/win/*.*)
+else ()
+	file (GLOB RESOURCE_FILES ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/*.*)
+endif()
+if(WIN32 AND ${XMP_BUILD_STATIC})
+	list(REMOVE_ITEM RESOURCE_FILES ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.rc)
+endif()
+
+#if (UNIX)
+	file (GLOB_RECURSE PRIVATE_BOOST_UUID_HEADERS ${XMPROOT_DIR}/XMPCore/third-party/boost/boost/uuid/*.hpp)
+	source_group("Header Files\\Private\\UUID" FILES ${PRIVATE_BOOST_UUID_HEADERS})
+#endif()
+
+source_group("Resource Files" FILES ${RESOURCE_FILES})
+
+if (WIN32 OR UNIX)
+	list(APPEND SOURCE_FILES 
+		${PUBLIC_CLIENTGLUE_HEADER_FILES}
+		${PUBLIC_HEADER_FILES}
+		${INTERNAL_HEADER_FILES}
+		${ABIWRAPPER_SOURCE_FILES}
+		${ABIWRAPPER_SOURCE_FILES}
+		${CORECLASS_SOURCE_FILES}
+		${THIRDPARTY_SOURCE_FILES}
+		${UTILITY_SOURCE_FILES}
+		${PRIVATE_XMPCORE_ISOURCE_FILES}
+		${PRIVATE_XMPCORE_IMPLSOURCE_FILES}
+		${PRIVATE_XMPCOMMON_HEADERS}
+		${PRIVATE_XMPCOMMON_SOURCES}
+		${PRIVATE_XMPCORE_HEADERS}
+		${PUBLIC_XMPCOMMON_HEADERS}
+		${PUBLIC_XMPCOMMON_SOURCES}
+		${PUBLIC_XMPCORE_HEADERS}
+		${PUBLIC_XMPCORE_SOURCES}
+        ${ANDROID_UTILS}
+		${RESOURCE_FILES}
+	)
+endif()
+
+# include directories
+include_directories(${XMPROOT_DIR})
+include_directories(${XMPROOT_DIR}/public/include)
+include_directories(${XMPROOT_DIR}/third-party/expat/public/lib)
+include_directories(${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT})
+if(UNIX AND NOT APPLE AND NOT ${XMP_BUILD_STATIC})
+include_directories(${XMPROOT_DIR}/XMPCore/third-party/boost)
+include_directories(${XMPROOT_DIR}/XMPCore/third-party/boost/boost)
+endif()
+if (WIN32)
+	include_directories(${RESOURCE_ROOT}/win)
+else ()
+	include_directories(${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT})
+endif ()
+
+#additional link directory
+link_directories(${OUTPUT_DIR})
+
+# ==============================================================================
+# Define what to do, lib, exe, etc 
+if (UNIX AND APPLE AND NOT ${XMP_BUILD_STATIC})
+	# preprocess Info.plist
+	#if (${CMAKE_BUILD_TYPE} strequal "Debug")
+	if((${CMAKE_BUILD_TYPE} MATCHES "Debug") OR (${CMAKE_BUILD_TYPE} MATCHES "debug"))
+			set (INFO_PLIST_FLAGS "-DDEBUG=1")
+	else()
+		set (INFO_PLIST_FLAGS "-DNDEBUG=1")
+	endif()
+	if(NOT APPLE_IOS)
+		add_custom_target(${TARGET_NAME}InfoPlist
+			COMMAND mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+			COMMAND if [ $(CONFIGURATION) != Debug ]; then
+				${GCCTOOL} -E -P -x c ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.plist
+				-F${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/
+				-DPRODUCT_NAME=${TARGET_NAME} -DMAC_ENV=1 -DNDEBUG=1
+				-include ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}PList.h
+				-o ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/Info.plist
+				\; else
+				${GCCTOOL} -E -P -x c ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.plist
+				-F${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/
+				-DPRODUCT_NAME=${TARGET_NAME} -DMAC_ENV=1 -DDEBUG=1
+				-include ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}PList.h
+				-o ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/Info.plist
+				\; fi
+			COMMAND rm -f ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/../CMakeFiles/${TARGET_NAME}.dir/Info.plist
+			COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/Info.plist ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/../CMakeFiles/${TARGET_NAME}.dir/Info.plist
+			COMMENT "Preprocessing Info-plist"
+		)
+	else()
+		add_custom_target(${TARGET_NAME}InfoPlist
+			COMMAND mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+			COMMAND if [ $(CONFIGURATION) != Debug ]; then
+				${GCCTOOL} -E -P -x c ${RESOURCE_ROOT}/ios/${TARGET_NAME}.plist
+				-F${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/
+				-DPRODUCT_NAME=${TARGET_NAME} -DIOS_ENV=1 -DNDEBUG=1
+				-include ${RESOURCE_ROOT}/ios/${TARGET_NAME}PList.h
+				-o ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/Info.plist
+				\; else
+				${GCCTOOL} -E -P -x c ${RESOURCE_ROOT}/ios/${TARGET_NAME}.plist
+				-F${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/
+				-DPRODUCT_NAME=${TARGET_NAME} -DIOS_ENV=1 -DDEBUG=1
+				-include ${RESOURCE_ROOT}/ios/${TARGET_NAME}PList.h
+				-o ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/Info.plist
+				\; fi
+			COMMAND rm -f ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/../CMakeFiles/${TARGET_NAME}.dir/Info.plist
+			COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/Info.plist ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/../CMakeFiles/${TARGET_NAME}.dir/Info.plist
+			COMMENT "Preprocessing Info-plist"
+		)
+	endif()
+	set(DEPENDENCY_LIST "ALL:${TARGET_NAME}InfoPlist")
+else ()
+	set(DEPENDENCY_LIST "")
+endif()
+
+AddLibraryAndDependencies(${TARGET_NAME} ${XMP_BUILD_STATIC} YES "SHARED" SOURCE_FILES DEPENDENCY_LIST)
+
+#set the output name
+set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME  ${XMPCORE_LIB})
+
+# ==============================================================================
+# Link dependencies
+set(FRAMEWORK_LIST "ALL:CoreFoundation" "Mac:CoreServices")
+AddMacFramework(${TARGET_NAME} FRAMEWORK_LIST)
+if(WIN32)
+	SetWinLinkFlags(${TARGET_NAME} "rpcrt4.lib ole32.lib" "${XMPCORE_LIB}")
+else(WIN32)
+	if(UNIX AND NOT APPLE)
+		SetWinLinkFlags(${TARGET_NAME} "-Xlinker --version-script -Xlinker \"${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.exp\"" "")
+	else()
+		if(APPLE_IOS AND NOT XMP_BUILD_STATIC)
+			set_target_properties(${TARGET_NAME} PROPERTIES XCODE_ATTRIBUTE_DYLIB_INSTALL_NAME_BASE "@rpath")
+			set_target_properties(${TARGET_NAME} PROPERTIES XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.adobe.Adobe${TARGET_NAME}")
+			set_target_properties(${TARGET_NAME} PROPERTIES XCODE_ATTRIBUTE_INSTALL_PATH "@rpath")
+			set_target_properties(${TARGET_NAME} PROPERTIES XCODE_ATTRIBUTE_LIBRARY_SEARCH_PATHS "")
+		endif()
+		set_target_properties(${TARGET_NAME} PROPERTIES BUILD_WITH_INSTALL_RPATH ON BUILD_WITH_INSTALL_NAME_DIR ON INSTALL_NAME_DIR "@executable_path/../Frameworks")
+		SetWinLinkFlags(${TARGET_NAME} "-unexported_symbols_list \"${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/XMPCore.unexp\"" "${XMPCORE_LIB}")
+		set_target_properties(${TARGET_NAME} PROPERTIES XCODE_ATTRIBUTE_GCC_SYMBOLS_PRIVATE_EXTERN "YES")
+	endif()
+endif()
+
+# ==============================================================================
+# Define output
+SetOutputPath(${OUTPUT_DIR} 0)
+
+# ==============================================================================
+# Post build
+# ==============================================================================
+if(UNIX)
+	if (NOT APPLE AND NOT ANDROID)
+		if (${XMP_BUILD_STATIC})
+			add_custom_command (TARGET ${TARGET_NAME}
+				POST_BUILD
+				COMMAND  mv ${OUTPUT_DIR}/lib${XMPCORE_LIB}.a  ${OUTPUT_DIR}/${XMPCORE_LIB}.ar
+			)
+		else()
+			if((${CMAKE_BUILD_TYPE} MATCHES "Debug") OR (${CMAKE_BUILD_TYPE} MATCHES "debug") )
+				add_custom_command (TARGET ${TARGET_NAME}
+					POST_BUILD
+					COMMAND ls -l ${OUTPUT_DIR}/lib${XMPCORE_LIB}.so
+				)
+			else()
+				add_custom_command (TARGET ${TARGET_NAME}
+					POST_BUILD
+					COMMAND strip ${OUTPUT_DIR}/lib${XMPCORE_LIB}.so
+					COMMAND ls -l ${OUTPUT_DIR}/lib${XMPCORE_LIB}.so
+				)
+			endif()
+		endif()
+	endif()
+else()
+    set_target_properties(${TARGET_NAME} PROPERTIES PROJECT_LABEL ${PROJECT_LABEL_STR})
+    set_target_properties(${TARGET_NAME} PROPERTIES XCODE_ATTRIBUTE_LIBRARY_SEARCH_PATHS "")
+endif()
+
+message (STATUS "===========================================================================")
+message (STATUS " ${PROJECT_NAME} ")
+message (STATUS "===========================================================================")
+message (STATUS " OUTPUT_DIR = ${OUTPUT_DIR}")
+
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>PDF_Handler</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.xmp.PDF_Handler</string>
+	<key>CFBundleName</key>
+	<string>PDF_Handler</string>
+	<key>CFBundleGetInfoString</key>
+	<string>PDF Handler kBasicVersion, kXMP_Copyright</string>
+	<key>CFBundleShortVersionString</key>
+	<string>PDF Handler kBasicVersion</string>
+	<key>CFBundlePackageType</key>
+	<string>FMWK</string>
+	<key>CFBundleSignature</key>
+	<string>XMP </string>
+	<key>Configuration</key>
+	<string>kConfig</string>
+	<key>FileVersion</key>
+	<string>kBasicVersion</string>
+	<key>ProductName</key>
+	<string>PDF Handler</string>
+	<key>ProductVersion</key>
+	<string>PDF_HANDLER_VERSION</string>
+</dict>
+</plist>

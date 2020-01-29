@@ -1,0 +1,11 @@
+VERSION {
+global:
+
+	InitializePlugin;
+	InitializePlugin2;
+
+local:
+
+	*;
+
+};

@@ -1,0 +1,9 @@
+; Declares the entry points for the DLL.
+; Highest index: 2 - InitializePlugin2
+
+LIBRARY   PDF_Handler
+
+EXPORTS
+
+	InitializePlugin					@1
+	InitializePlugin2					@2
