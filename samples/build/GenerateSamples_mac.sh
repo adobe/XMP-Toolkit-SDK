@@ -12,7 +12,18 @@
 abspath=$(cd ${0%/*} && echo $PWD/${0##*/})
 scriptdir="`dirname \"$abspath\"`"
 clear
-CMAKE="$scriptdir/../../tools/cmake/bin/cmake.app/Contents/bin/cmake"
+
+CMAKE_PATHS=("$scriptdir/../../tools/cmake/bin/cmake.app/Contents/bin/cmake" "$scriptdir/../../tools/cmake/bin/cmake")
+# Get Cmake path
+for path in ${CMAKE_PATHS[*]}
+do
+	if [ -f $path ]
+	then
+	CMAKE=$path
+	break
+	fi
+done
+
 if [ ! -f "$CMAKE" ]
 then
 echo "ERROR: Cmake tool not present at $CMAKE, cannot proceed "
