@@ -22,7 +22,7 @@ OS_ModuleRef LoadModule( const std::string & inModulePath, bool inOnlyResourceAc
 	ToUTF16 ( (UTF8Unit*)inModulePath.c_str(), inModulePath.size() + 1, &wideString, false ); // need +1 character otherwise \0 won't be converted into UTF16
 
 	DWORD flags = inOnlyResourceAccess ? LOAD_LIBRARY_AS_IMAGE_RESOURCE : 0;
-	OS_ModuleRef result = ::LoadLibraryEx((WCHAR*) wideString.c_str(), NULL, flags);
+	OS_ModuleRef result = ::LoadLibraryEx((LPCSTR) wideString.c_str(), NULL, flags);
 
 	// anything below indicates error in LoadLibrary
 	if((result != NULL) && (result < OS_ModuleRef(32)))
