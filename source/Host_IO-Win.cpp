@@ -554,7 +554,7 @@ bool Host_IO::GetNextChild ( Host_IO::FolderRef folder, std::string* childName )
 	if ( folder == Host_IO::noFolderRef ) return false;
 
 	do {	// Ignore all children with names starting in '.'. This covers ., .., .DS_Store, etc.
-		found = (bool) FindNextFile ( folder, &childInfo );
+		found = (bool) FindNextFile ( folder, (LPWIN32_FIND_DATAA) &childInfo );
 	} while ( found && (childInfo.cFileName[0] == '.') );
 	if ( ! found ) return false;
 
