@@ -16,7 +16,7 @@ This library supplies an API for locating, adding, or updating the XMP metadata 
 *It also includes a plug-in SDK that allows you to create an XMPFiles Plug-in that handles metadata for additional file formats, or replaces built-in format handlers with custom ones.*
 
 ## XMP Toolkit SDK Contents
-This git repo contains the following folders under the root folder XMP-Toolkit-SDK-CC-201607:
+This git repo contains the following folders under the root folder:
 
 Directory | Details 
 ------------ | -------------
