@@ -89,7 +89,7 @@
 	// =========================
 	#if XMP_WinBuild
 		#define SUPPORT_SHARED_POINTERS_WITH_ALLOCATORS 1
-		#if _MSC_VER <= 1600
+		#if !defined(__GNUC__) && _MSC_VER <= 1600)
 			#define SUPPORT_STD_ATOMIC_IMPLEMENTATION 0
 			#define SUPPORT_SHARED_POINTERS_IN_TR1 1
 			#define SUPPORT_SHARED_POINTERS_IN_STD 0
