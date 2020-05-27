@@ -9,7 +9,7 @@
 //
 // This file includes implementation of SVG metadata, according to Scalable Vector Graphics (SVG) 1.1 Specification. 
 // "https://www.w3.org/TR/2003/REC-SVG11-20030114/"
-// Copyright © 1994-2002 World Wide Web Consortium, (Massachusetts Institute of Technology, 
+// Copyright Â© 1994-2002 World Wide Web Consortium, (Massachusetts Institute of Technology, 
 // Institut National de Recherche en Informatique et en Automatique, Keio University). 
 // All Rights Reserved . http://www.w3.org/Consortium/Legal
 //
@@ -184,7 +184,7 @@ void SVG_Adapter::ParseBuffer( const void * buffer, size_t length, bool last /* 
 
 #if BanAllEntityUsage
 	if ( this->isAborted ) {
-		XMP_Error error( kXMPErr_BadXML, "DOCTYPE is not allowed" )
+		XMP_Error error( kXMPErr_BadXML, "DOCTYPE is not allowed" );
 			this->NotifyClient( kXMPErrSev_Recoverable, error );
 	}
 #endif
@@ -217,7 +217,7 @@ XMP_Bool SVG_Adapter::ParseBufferNoThrow( const void * buffer, size_t length, bo
 
 #if BanAllEntityUsage
 	if ( this->isAborted ) {
-		XMP_Error error( kXMPErr_BadXML, "DOCTYPE is not allowed" )
+		XMP_Error error( kXMPErr_BadXML, "DOCTYPE is not allowed" );
 			this->NotifyClient( kXMPErrSev_Recoverable, error );
 	}
 #endif
