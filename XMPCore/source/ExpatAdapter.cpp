@@ -148,7 +148,7 @@ void ExpatAdapter::ParseBuffer ( const void * buffer, size_t length, bool last /
 	
 	#if BanAllEntityUsage
 		if ( this->isAborted ) {
-			XMP_Error error(kXMPErr_BadXML, "DOCTYPE is not allowed" )
+			XMP_Error error(kXMPErr_BadXML, "DOCTYPE is not allowed" );
 			this->NotifyClient ( kXMPErrSev_Recoverable, error );
 		}
 	#endif
