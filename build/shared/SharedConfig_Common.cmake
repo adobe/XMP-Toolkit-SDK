@@ -75,8 +75,8 @@ endfunction(SetupInternalBuildDirectory)
 function(SetupCompilerFlags)
 	if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 	    set(OUTPUT_VARIABLE "")
-		# Execute GCC with the -dumpversion option, to give us a version string
-		execute_process(COMMAND ${CMAKE_CXX_COMPILER} "-dumpversion" OUTPUT_VARIABLE GCC_VERSION_STRING)
+		# Execute GCC with the --version option, to give us a version string
+		execute_process(COMMAND ${CMAKE_CXX_COMPILER} "--version" OUTPUT_VARIABLE GCC_VERSION_STRING)
 	
 		# Match only the major and minor versions of the version string
 		string(REGEX MATCH "[0-9]+.[0-9]+.[0-9]" GCC_MAJOR_MINOR_VERSION_STRING "${GCC_VERSION_STRING}")
