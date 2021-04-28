@@ -7,7 +7,7 @@ To use CMake:
 Download the following recommended CMake distribution zipped package from the following links corresponding to the current platform (Windows, Mac, or Linux)
 Windows	----	https://cmake.org/files/v3.15/cmake-3.15.5-win32-x86.zip
 Mac OSX ----	https://cmake.org/files/v3.15/cmake-3.15.5-Darwin-x86_64.tar.gz
-Linux   ----    https://cmake.org/files/v3.15/cmake-3.15.5-Linux-i386.tar.gz
+Linux   ----   https://cmake.org/files/v3.15/cmake-3.15.5-Linux-x86_64.tar.gz
 
 2. For Windows and Linux copy the folders /bin and /share into <xmpsdk>/tools/cmake/
    For Mac:
