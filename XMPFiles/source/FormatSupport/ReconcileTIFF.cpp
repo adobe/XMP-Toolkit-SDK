@@ -1309,7 +1309,7 @@ ImportTIFF_Date ( const TIFF_Manager & tiff, const TIFF_Manager::TagInfo & dateI
 		case kTIFF_DateTimeOriginal  : secID = kTIFF_SubSecTimeOriginal;
 										offsetID = kTIFF_OffsetTimeOriginal; break;
 		case kTIFF_DateTimeDigitized : secID = kTIFF_SubSecTimeDigitized;
-										offsetID = kTIFF_OffsetTimeDigitized; break;	}
+										offsetID = kTIFF_OffsetTimeDigitized; break;
 	}
 	
 	try {	// Don't let errors with one stop the others.
@@ -2844,11 +2844,12 @@ ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp
 		   }
 
 		}
+	 }
 
 	} catch ( ... ) {
 		// Do nothing, let other exports proceed.
 		// ? Notify client?
-	}
+	 }
 
 }	// ExportTIFF_Date
 
