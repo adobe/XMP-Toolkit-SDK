@@ -150,7 +150,7 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 		XMP_Uns32 numberOfHeaders = GetUns32LE ( &buffer[24] );
 		ASF_ObjectBase objectBase;
 
-		while ( read < newObject.len ) {
+			while ( read < newObject.len && numberOfHeaders > 0) { //Fixing CTECHXMP-4170401
 
 			fileRef->Seek ( pos, kXMP_SeekFromStart );
 			if ( kASF_ObjectBaseLen != fileRef->Read ( &objectBase, kASF_ObjectBaseLen, true ) ) break;
@@ -232,7 +232,7 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 				XMP_Uns32 fieldPos = 28;
 
 				// copyright URL is 3. element with variable size
-				for ( int i = 1; i <= 3 ; ++i ) {
+				for ( int i = 1; i <= 3 && fieldPos < buffer.size() ; ++i ) { //Fixing CTECHXMP-4170401
 					XMP_Uns32 len = GetUns32LE ( &buffer[fieldPos] );
 					if ( i == 3 ) {
 						std::string copyrightURLStr = buffer.substr ( fieldPos + 4, len );
@@ -280,6 +280,7 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 
 			pos += objectBase.size;
 			read += objectBase.size;
+			numberOfHeaders--; //Fixing CTECHXMP-4170401
 		}
 
 	} catch ( ... ) {
@@ -332,7 +333,7 @@ bool ASF_Support::WriteHeaderObject ( XMP_IO* sourceRef, XMP_IO* destRef, const 
 
 		header.append ( buffer.c_str(), bufferSize );
 
-		while ( read < object.len ) {
+		while ( read < object.len && numberOfHeaders > 0 ) { // Fixing CTECHXMP-4170400
 
 			sourceRef->Seek ( pos, kXMP_SeekFromStart );
 			if ( kASF_ObjectBaseLen != sourceRef->Read ( &objectBase, kASF_ObjectBaseLen, true ) ) break;
@@ -507,7 +508,7 @@ bool ASF_Support::WriteHeaderObject ( XMP_IO* sourceRef, XMP_IO* destRef, const 
 
 			pos += objectBase.size;
 			read += objectBase.size;
-
+			numberOfHeaders--; //Fixing CTECHXMP-4170400
 			writtenObjects ++;
 
 		}

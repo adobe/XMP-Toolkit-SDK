@@ -154,7 +154,7 @@ void PSD_MetaHandler::CacheFileData()
 
 	PSIR_Manager::ImgRsrcInfo xmpInfo;
 	bool found = this->psirMgr.GetImgRsrc ( kPSIR_XMP, &xmpInfo );
-     if (psirLen < xmpInfo.dataLen) return;
+    if (psirLen < xmpInfo.dataLen) return; //Fixing CTECHXMP-4170402 && CTECHXMP-4170495
 	
 	if ( found ) {
 

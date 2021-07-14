@@ -1252,6 +1252,14 @@ ImportTIFF_StandardMappings ( XMP_Uns8 ifd, const TIFF_Manager & tiff, SXMPMeta 
 			
 			bool found = tiff.GetTag ( ifd, mapInfo.id, &tagInfo );
 			if ( ! found ) continue;
+			/* tag length need to be checked in case of TIFF_MemoryReader, as a possible case
+             the data length value might be changed (flippig because of endianess) by next overlapping IFD leading to crash.
+             To avoid that, rechecking the datalen just before its access. Fixing CTECHXMP-4170409*/
+            if(tiff.IsCheckTagLength() &&
+               tagInfo.dataLen > tiff.GetTiffLength() - ((XMP_Uns8*)tagInfo.dataPtr - tiff.GetTiffStream())) {
+                    continue;    // Bad Tag
+                }
+            
 
 			XMP_Assert ( tagInfo.type != kTIFF_UndefinedType );	// These must have a special mapping.
 			if ( tagInfo.type == kTIFF_UndefinedType ) continue;

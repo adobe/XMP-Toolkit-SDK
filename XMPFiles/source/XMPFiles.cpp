@@ -1482,7 +1482,11 @@ XMPFiles::GetXMP ( SXMPMeta *       xmpObj /* = 0 */,
 	 */
 	
 	if(! this->handler->processedXMP && !xmpObj && !(this->handler->xmpPacket.empty()) && packetInfo)
-	{
+	{  
+		/*CTECHXMP-4170329: xmppacket and xmpPacketLen will only be populated if client has explicitly requested for xmp packet*/
+		if ( xmpPacket != 0 ) *xmpPacket = this->handler->xmpPacket.c_str();
+		if ( xmpPacketLen != 0 ) *xmpPacketLen = (XMP_StringLen)this->handler->xmpPacket.size();
+		
 		SetClientPacketInfo(packetInfo, this->handler->packetInfo,
 			this->handler->xmpPacket, this->handler->needsUpdate );
 		return true;
