@@ -118,6 +118,9 @@ static const TIFF_MappingToXMP sExifIFDMappings[] = {
 	{ /* 40964 */ kTIFF_RelatedSoundFile,          kTIFF_ASCIIType,       kAnyCount, kExport_Always,     kXMP_NS_EXIF,  "RelatedSoundFile" },	// ! Exif spec says count of 13.
 	{ /* 36867 */ kTIFF_DateTimeOriginal,          kTIFF_ASCIIType,       20,        kExport_Always,     "", "" },	// ! Has a special mapping.
 	{ /* 36868 */ kTIFF_DateTimeDigitized,         kTIFF_ASCIIType,       20,        kExport_Always,     "", "" },	// ! Has a special mapping.
+	{ /* 36880 */ kTIFF_OffsetTime,                kTIFF_ASCIIType,       7,         kExport_Always,     "", "" },	// ! Has a special mapping.
+	{ /* 36881 */ kTIFF_OffsetTimeOriginal,        kTIFF_ASCIIType,       7,         kExport_Always,     "", "" },	// ! Has a special mapping.
+	{ /* 36882 */ kTIFF_OffsetTimeDigitized,       kTIFF_ASCIIType,       7,         kExport_Always,     "", "" },	// ! Has a special mapping.
 	{ /* 42016 */ kTIFF_ImageUniqueID,             kTIFF_ASCIIType,       33,        kExport_InjectOnly, kXMP_NS_EXIF,  "ImageUniqueID" },
 	{ /* 42032 */ kTIFF_CameraOwnerName,           kTIFF_ASCIIType,       kAnyCount, kExport_InjectOnly, kXMP_NS_ExifEX, "CameraOwnerName" },
 	{ /* 42033 */ kTIFF_BodySerialNumber,          kTIFF_ASCIIType,       kAnyCount, kExport_InjectOnly, kXMP_NS_ExifEX, "BodySerialNumber" },
@@ -1299,11 +1302,14 @@ static void
 ImportTIFF_Date ( const TIFF_Manager & tiff, const TIFF_Manager::TagInfo & dateInfo,
 				  SXMPMeta * xmp, const char * xmpNS, const char * xmpProp )
 {
-	XMP_Uns16 secID = 0;
+	XMP_Uns16 secID = 0, offsetID = 0;
 	switch ( dateInfo.id ) {
-		case kTIFF_DateTime          : secID = kTIFF_SubSecTime;			break;
-		case kTIFF_DateTimeOriginal  : secID = kTIFF_SubSecTimeOriginal;	break;
-		case kTIFF_DateTimeDigitized : secID = kTIFF_SubSecTimeDigitized;	break;
+		case kTIFF_DateTime          : secID = kTIFF_SubSecTime;
+									    offsetID = kTIFF_OffsetTime; break;
+		case kTIFF_DateTimeOriginal  : secID = kTIFF_SubSecTimeOriginal;
+										offsetID = kTIFF_OffsetTimeOriginal; break;
+		case kTIFF_DateTimeDigitized : secID = kTIFF_SubSecTimeDigitized;
+										offsetID = kTIFF_OffsetTimeDigitized; break;	}
 	}
 	
 	try {	// Don't let errors with one stop the others.
@@ -1344,8 +1350,33 @@ ImportTIFF_Date ( const TIFF_Manager & tiff, const TIFF_Manager::TagInfo & dateI
 			for ( ; digits < 9; ++digits ) binValue.nanoSecond *= 10;
 			if ( binValue.nanoSecond != 0 ) binValue.hasTime = true;
 		}
+		// The offset time tags were added to EXIF spec 2.3.1., therefore we not
+		// supporting read/write in older versions
+		// We need EXIF spec version to figure out the same.
+
+		bool haveOldExif = true;    // Default to old Exif if no version tag.
+		TIFF_Manager::TagInfo tagInfo;
+		bool foundExif = tiff.GetTag ( kTIFF_ExifIFD, kTIFF_ExifVersion, &tagInfo );
+		if ( foundExif && (tagInfo.type == kTIFF_UndefinedType) && (tagInfo.count == 4) ) {
+			haveOldExif = (strncmp ( (char*)tagInfo.dataPtr, "0231", 4 ) < 0);
+		}
+
+		if (!haveOldExif)
+		{
+			TIFF_Manager::TagInfo timezoneInfo;
+			found = tiff.GetTag ( kTIFF_ExifIFD, offsetID, &timezoneInfo );
+			if ( found && (timezoneInfo.type == kTIFF_ASCIIType) && (timezoneInfo.count == 7) ) {
+				const char * timezoneStr = (const char *) timezoneInfo.dataPtr;
+				if ( (timezoneStr[0] == '+')  || (timezoneStr[0] == '-')  || (timezoneStr[3] == ':') ) {
+					binValue.tzSign     = (timezoneStr[0] == '-') ? -1 : 1;
+					binValue.tzHour      = GatherInt ( &timezoneStr[1], 2 );
+					binValue.tzMinute   = GatherInt ( &timezoneStr[4], 2 );
+					binValue.hasTimeZone = true;
+				}
+			}
 
 		xmp->SetProperty_Date ( xmpNS, xmpProp, binValue );
+		}
 
 	} catch ( ... ) {
 		// Do nothing, let other imports proceed.
@@ -2709,10 +2740,18 @@ ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp
 {
 	XMP_Uns8 mainIFD = kTIFF_ExifIFD;
 	XMP_Uns16 fracID=0;
+	XMP_Uns16 offsetID=0;
 	switch ( mainID ) {
-		case kTIFF_DateTime : mainIFD = kTIFF_PrimaryIFD; fracID = kTIFF_SubSecTime;	break;
-		case kTIFF_DateTimeOriginal  : fracID = kTIFF_SubSecTimeOriginal;	break;
-		case kTIFF_DateTimeDigitized : fracID = kTIFF_SubSecTimeDigitized;	break;
+		case kTIFF_DateTime : mainIFD = kTIFF_PrimaryIFD; 
+		                      fracID = kTIFF_SubSecTime; 
+		                      offsetID = kTIFF_OffsetTime; 
+							  break;
+		case kTIFF_DateTimeOriginal  : fracID = kTIFF_SubSecTimeOriginal; 
+		                               offsetID = kTIFF_OffsetTimeOriginal;	
+									   break;
+		case kTIFF_DateTimeDigitized : fracID = kTIFF_SubSecTimeDigitized; 
+		                               offsetID = kTIFF_OffsetTimeDigitized;	
+									   break;
 	}
 
 	try {	// Don't let errors with one stop the others.
@@ -2722,6 +2761,7 @@ ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp
 		if ( ! foundXMP ) {
 			tiff->DeleteTag ( mainIFD, mainID );
 			tiff->DeleteTag ( kTIFF_ExifIFD, fracID );	// ! The subseconds are always in the Exif IFD.
+			tiff->DeleteTag ( kTIFF_ExifIFD, offsetID );// ! The offsetTime are always in the Exif IFD.
 			return;
 		}
 
@@ -2774,8 +2814,34 @@ ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp
 				if ( buffer[i] != '0' ) break;
 				buffer[i] = 0;	// Strip trailing zero digits.
 			}
+			bool haveOldExif = true;    // Default to old Exif if no version tag.
+		TIFF_Manager::TagInfo tagInfo;
+		bool foundExif = tiff->GetTag ( kTIFF_ExifIFD, kTIFF_ExifVersion, &tagInfo );
+		if ( foundExif && (tagInfo.type == kTIFF_UndefinedType) && (tagInfo.count == 4) ) {
+			haveOldExif = (strncmp ( (char*)tagInfo.dataPtr, "0231", 4 ) < 0);
+		}
+
+		if (!haveOldExif)
+		{
+			// The offset time tags were added to EXIF spec 2.3.1., therefore we are not
+			// supporting read/write in older versions
+			// We need EXIF spec version to figure out the same.
+
+			if ( xmpBin.hasTimeZone == 0 || (xmpBin.tzSign != -1 && xmpBin.tzSign != 1) ){
+
+				tiff->DeleteTag ( kTIFF_ExifIFD, offsetID );
+
+			} else {
+				char tzSign = '+';
+				if(xmpBin.tzSign == -1)
+					tzSign = '-';
+
+				char offsetBuffer[7];
+				snprintf ( offsetBuffer, sizeof(offsetBuffer), "%c%02d:%02d",    // AUDIT: Use of sizeof(offsetBuffer) is safe.
+				tzSign, xmpBin.tzHour, xmpBin.tzMinute );
 
 			tiff->SetTag_ASCII ( kTIFF_ExifIFD, fracID, buffer );	// ! The subseconds are always in the Exif IFD.
+		   }
 
 		}
 

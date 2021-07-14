@@ -193,6 +193,9 @@ enum {
 	kTIFF_RelatedSoundFile = 40964,
 	kTIFF_DateTimeOriginal = 36867,
 	kTIFF_DateTimeDigitized = 36868,
+	kTIFF_OffsetTime = 36880,
+	kTIFF_OffsetTimeOriginal = 36881,
+	kTIFF_OffsetTimeDigitized = 36882,
 	kTIFF_SubSecTime = 37520,
 	kTIFF_SubSecTimeOriginal = 37521,
 	kTIFF_SubSecTimeDigitized = 37522,
@@ -366,6 +369,9 @@ static const XMP_Uns16 sKnownExifIFDTags[] =
 	kTIFF_ExifVersion,					// 36864
 	kTIFF_DateTimeOriginal,				// 36867
 	kTIFF_DateTimeDigitized,			// 36868
+	kTIFF_OffsetTime,                   // 36880
+	kTIFF_OffsetTimeOriginal,           // 36881
+	kTIFF_OffsetTimeDigitized,          // 36882
 	kTIFF_ComponentsConfiguration,		// 37121
 	kTIFF_CompressedBitsPerPixel,		// 37122
 	kTIFF_ShutterSpeedValue,			// 37377

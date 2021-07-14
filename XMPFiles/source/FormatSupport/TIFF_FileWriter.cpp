@@ -1510,8 +1510,9 @@ void TIFF_FileWriter::UpdateMemByAppend ( XMP_Uns8** newStream_out, XMP_Uns32* n
 				if ( (appendAll | currTag.changed) && (currTag.dataLen > 4) ) {
 
 					XMP_Uns32 valueOffset = this->GetUns32 ( &currTag.smallValue );
+					bool inplaceUpdate = (currTag.dataLen <= currTag.origDataLen) && (! appendAll);
 
-					if ( (currTag.dataLen <= currTag.origDataLen) && (! appendAll) ) {
+					if ( inplaceUpdate ) {
 						XMP_Assert ( valueOffset == currTag.origDataOffset );
 					} else {
 						XMP_Assert ( valueOffset == appendedOffset );
@@ -1521,7 +1522,10 @@ void TIFF_FileWriter::UpdateMemByAppend ( XMP_Uns8** newStream_out, XMP_Uns32* n
 					XMP_Assert ( valueOffset <= newLength );	// Provably true, valueOffset is in the old span, newLength is the new bigger span.
 					if ( currTag.dataLen > (newLength - valueOffset) ) XMP_Throw ( "Buffer overrun", kXMPErr_InternalFailure );
 					memcpy ( (newStream + valueOffset), currTag.dataPtr, currTag.dataLen );	// AUDIT: Protected by the above check.
-					if ( (currTag.dataLen & 1) != 0 ) newStream[valueOffset+currTag.dataLen] = 0;
+					if ( !inplaceUpdate && ((currTag.dataLen & 1) != 0) ) {
+						newStream[valueOffset+currTag.dataLen] = 0;
+
+					}
 
 				}
 
