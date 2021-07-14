@@ -142,7 +142,7 @@ void PSD_MetaHandler::CacheFileData()
 
 	cmLen = GetUns32BE ( &psdHeader[26] );
 
-	XMP_Int64 psirOrigin = 26 + 4 + cmLen;
+	XMP_Int64 psirOrigin = 26 + 4 + static_cast<XMP_Int64>(cmLen);
 
 	filePos = fileRef->Seek ( psirOrigin, kXMP_SeekFromStart  );
 	if ( filePos !=  psirOrigin ) return;	// Throw?
@@ -154,7 +154,8 @@ void PSD_MetaHandler::CacheFileData()
 
 	PSIR_Manager::ImgRsrcInfo xmpInfo;
 	bool found = this->psirMgr.GetImgRsrc ( kPSIR_XMP, &xmpInfo );
-
+     if (psirLen < xmpInfo.dataLen) return;
+	
 	if ( found ) {
 
 		// printf ( "PSD_MetaHandler::CacheFileData - XMP packet offset %d (0x%X), size %d\n",

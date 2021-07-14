@@ -157,6 +157,10 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 
 			fileRef->Seek ( pos, kXMP_SeekFromStart );
 			objectBase.size = GetUns64LE ( &objectBase.size );
+			if(XMP_Uns32(objectBase.size) <=0)   /* as ASF_ObjectBase has size in XMP_Uns64 , XMP_Uns32 would give 0 for very large files exceeding UINT32_MAX */
+                {
+                    XMP_Throw ( "Failure reading ASF header object", kXMPErr_InternalFailure );
+                }
 
 			if ( IsEqualGUID ( ASF_File_Properties_Object, objectBase.guid) && (objectBase.size >= 104 ) ) {
 

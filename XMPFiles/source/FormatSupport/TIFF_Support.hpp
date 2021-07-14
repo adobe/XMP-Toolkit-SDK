@@ -99,9 +99,9 @@ enum {	// Constants for the type field of a tag, as defined by TIFF.
 
 static const size_t kTIFF_TypeSizes[]    = { 0, 1, 1, 2, 4, 8, 1, 1, 2, 4, 8, 4, 8, 4 };
 
-static const bool kTIFF_IsIntegerType[]  = { 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0 };
-static const bool kTIFF_IsRationalType[] = { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 };
-static const bool kTIFF_IsFloatType[]    = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 };
+static const bool kTIFF_IsIntegerType[]  = { 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0 ,0 };
+static const bool kTIFF_IsRationalType[] = { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 ,0 };
+static const bool kTIFF_IsFloatType[]    = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 ,0 };
 
 static const char * kTIFF_TypeNames[] = { "ShortOrLong", "BYTE", "ASCII", "SHORT", "LONG", "RATIONAL",
 										  "SBYTE", "UNDEFINED", "SSHORT", "SLONG", "SRATIONAL",

@@ -72,7 +72,7 @@ void TIFF_MemoryReader::SortIFD ( TweakedIFDInfo* thisIFD )
 		} else if ( thisTag == prevTag ) {
 
 			// Duplicate tag, keep the 2nd copy, move the tail of the array up, prevTag is unchanged.
-			memcpy ( &ifdEntries[i-1], &ifdEntries[i], 12*(tagCount-i) );	// AUDIT: Safe, moving tail forward, i >= 1.
+			memmove ( &ifdEntries[i-1], &ifdEntries[i], 12*(tagCount-i) );	// AUDIT: Safe, moving tail forward, i >= 1.
 			--tagCount;
 			--i; // ! Don't move forward in the array, we've moved the unseen part up.
 
@@ -88,7 +88,7 @@ void TIFF_MemoryReader::SortIFD ( TweakedIFDInfo* thisIFD )
 
 				// Out of order duplicate, move it to position j, move the tail of the array up.
 				ifdEntries[j] = ifdEntries[i];
-				memcpy ( &ifdEntries[i], &ifdEntries[i+1], 12*(tagCount-(i+1)) );	// AUDIT: Safe, moving tail forward, i >= 1.
+				memmove ( &ifdEntries[i], &ifdEntries[i+1], 12*(tagCount-(i+1)) );	// AUDIT: Safe, moving tail forward, i >= 1.
 				--tagCount;
 				--i; // ! Don't move forward in the array, we've moved the unseen part up.
 
@@ -98,14 +98,14 @@ void TIFF_MemoryReader::SortIFD ( TweakedIFDInfo* thisIFD )
 				#if ! (SUNOS_SPARC || XMP_IOS_ARM || XMP_ANDROID_ARM)
 					TweakedIFDEntry temp = ifdEntries[i];
 					++j;	// ! So the insertion index becomes j.
-					memcpy ( &ifdEntries[j+1], &ifdEntries[j], 12*(i-j) );	// AUDIT: Safe, moving less than i entries to a location before i.
+					memmove ( &ifdEntries[j+1], &ifdEntries[j], 12*(i-j) );	// AUDIT: Safe, moving less than i entries to a location before i.
 					ifdEntries[j] = temp;
 				#else
 					void * tempifdEntries = &ifdEntries[i];
 					TweakedIFDEntry temp;
 					memcpy ( &temp, tempifdEntries, sizeof(TweakedIFDEntry) );
 					++j;	// ! So the insertion index becomes j.
-					memcpy ( &ifdEntries[j+1], &ifdEntries[j], 12*(i-j) );	// AUDIT: Safe, moving less than i entries to a location before i.
+					memmove ( &ifdEntries[j+1], &ifdEntries[j], 12*(i-j) );	// AUDIT: Safe, moving less than i entries to a location before i.
 					tempifdEntries = &ifdEntries[j];
 					memcpy ( tempifdEntries, &temp, sizeof(TweakedIFDEntry) );
 				#endif

@@ -9,7 +9,7 @@
 //
 // This file includes implementation of SVG metadata, according to Scalable Vector Graphics (SVG) 1.1 Specification. 
 // "https://www.w3.org/TR/2003/REC-SVG11-20030114/"
-// Copyright © 1994-2002 World Wide Web Consortium, (Massachusetts Institute of Technology, 
+// Copyright ï¿½ 1994-2002 World Wide Web Consortium, (Massachusetts Institute of Technology, 
 // Institut National de Recherche en Informatique et en Automatique, Keio University). 
 // All Rights Reserved . http://www.w3.org/Consortium/Legal
 //
@@ -235,6 +235,7 @@ static void ParseFullNS( XMP_StringPtr fullName, string & NS, string &localName 
 {
 	// Expat delivers the full name as a catenation of namespace URI, separator, and local name.
 	size_t sepPos = strlen( fullName );
+	if(!sepPos) return; //Throw?
 	for ( --sepPos; sepPos > 0; --sepPos ) {
 		if ( fullName[ sepPos ] == FullNameSeparator ) break;
 	}

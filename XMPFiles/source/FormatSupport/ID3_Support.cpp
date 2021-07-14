@@ -442,7 +442,7 @@ ID3v2Frame::ID3v2Frame ( XMP_Uns32 _id ) : frameDefaults
 
 void ID3v2Frame::release()
 {
-	if ( this->content != 0 ) delete this->content;
+	if ( this->content != 0 ) delete [] content;
 	this->content = 0;
 	this->contentSize = 0;
 }
