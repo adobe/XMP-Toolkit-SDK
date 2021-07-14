@@ -1289,7 +1289,7 @@ ImportTIFF_StandardMappings ( XMP_Uns8 ifd, const TIFF_Manager & tiff, SXMPMeta 
 // ImportTIFF_Date
 // ===============
 //
-// Convert an Exif 2.2 master date/time tag plus associated fractional seconds to an XMP date/time.
+// Convert an Exif 2.2 main date/time tag plus associated fractional seconds to an XMP date/time.
 // The Exif date/time part is a 20 byte ASCII value formatted as "YYYY:MM:DD HH:MM:SS" with a
 // terminating nul. Any of the numeric portions can be blanks if unknown. The fractional seconds
 // are a nul terminated ASCII string with possible space padding. They are literally the fractional
@@ -2217,13 +2217,13 @@ PhotoDataUtils::Import2WayExif ( const TIFF_Manager & exif, SXMPMeta * xmp, int 
 		xmp->SetProperty ( kXMP_NS_EXIF, "GPSVersionID", strOut );
 	}
 
-	// 2 GPSLatitude is a GPS coordinate master.
+	// 2 GPSLatitude is a GPS coordinate main.
 	found = exif.GetTag ( kTIFF_GPSInfoIFD, kTIFF_GPSLatitude, &tagInfo );
 	if ( found ) {
 		ImportTIFF_GPSCoordinate ( exif, tagInfo, xmp, kXMP_NS_EXIF, "GPSLatitude" );
 	}
 
-	// 4 GPSLongitude is a GPS coordinate master.
+	// 4 GPSLongitude is a GPS coordinate main.
 	found = exif.GetTag ( kTIFF_GPSInfoIFD, kTIFF_GPSLongitude, &tagInfo );
 	if ( found ) {
 		ImportTIFF_GPSCoordinate ( exif, tagInfo, xmp, kXMP_NS_EXIF, "GPSLongitude" );
@@ -2235,13 +2235,13 @@ PhotoDataUtils::Import2WayExif ( const TIFF_Manager & exif, SXMPMeta * xmp, int 
 		ImportTIFF_GPSTimeStamp ( exif, tagInfo, xmp, kXMP_NS_EXIF, "GPSTimeStamp" );
 	}
 
-	// 20 GPSDestLatitude is a GPS coordinate master.
+	// 20 GPSDestLatitude is a GPS coordinate main.
 	found = exif.GetTag ( kTIFF_GPSInfoIFD, kTIFF_GPSDestLatitude, &tagInfo );
 	if ( found ) {
 		ImportTIFF_GPSCoordinate ( exif, tagInfo, xmp, kXMP_NS_EXIF, "GPSDestLatitude" );
 	}
 
-	// 22 GPSDestLongitude is a GPS coordinate master.
+	// 22 GPSDestLongitude is a GPS coordinate main.
 	found = exif.GetTag ( kTIFF_GPSInfoIFD, kTIFF_GPSDestLongitude, &tagInfo );
 	if ( found ) {
 		ImportTIFF_GPSCoordinate ( exif, tagInfo, xmp, kXMP_NS_EXIF, "GPSDestLongitude" );
@@ -2698,7 +2698,7 @@ ExportTIFF_StandardMappings ( XMP_Uns8 ifd, TIFF_Manager * tiff, const SXMPMeta 
 // ExportTIFF_Date
 // ===============
 //
-// Convert  an XMP date/time to an Exif 2.2 master date/time tag plus associated fractional seconds.
+// Convert  an XMP date/time to an Exif 2.2 main date/time tag plus associated fractional seconds.
 // The Exif date/time part is a 20 byte ASCII value formatted as "YYYY:MM:DD HH:MM:SS" with a
 // terminating nul. The fractional seconds are a nul terminated ASCII string with possible space
 // padding. They are literally the fractional part, the digits that would be to the right of the

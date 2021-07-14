@@ -981,7 +981,7 @@ private:
 
 	void ProcessPShop6IFD ( const TIFF_MemoryReader& buriedExif, XMP_Uns8 ifd );
 
-	void* CopyTagToMasterIFD ( const TagInfo& ps6Tag, InternalIFDInfo* masterIFD );
+	void* CopyTagToMainIFD ( const TagInfo& ps6Tag, InternalIFDInfo* mainIFD );
 
 	void PreflightIFDLinkage();
 
