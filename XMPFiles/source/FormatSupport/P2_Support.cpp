@@ -122,7 +122,10 @@ void P2_Clip::CacheClipContent()
 {
 	if (headContentCached) return;
 	headContentCached = true;
-	XMP_StringPtr p2NameSpace=GetP2RootNode()->ns.c_str();
+	XML_NodePtr p2RootNode = GetP2RootNode();
+	if( p2RootNode == 0 ) return;
+	XMP_StringPtr p2NameSpace = p2RootNode->ns.c_str();
+
 	p2ClipContent = GetP2RootNode()->GetNamedElement ( p2NameSpace, "ClipContent" );
 	if ( p2ClipContent == 0 )  return;
 	XML_NodePtr  p2node;
@@ -377,7 +380,9 @@ void P2_SpannedClip::CreateDigest ( std::string * digestStr )
 	digestStr->erase();
 	if ( this->headContent.clipMetadata == 0 ) return;	// Bail if we don't have any legacy XML.
 
-	XMP_StringPtr p2NS = this->GetP2RootNode()->ns.c_str();
+	XML_NodePtr p2RootNode = this->GetP2RootNode(); // Return if there is no root node.
+	if( p2RootNode == 0 ) return;
+	XMP_StringPtr p2NS = p2RootNode->ns.c_str();
 	XML_NodePtr legacyContext;
 	MD5_CTX    md5Context;
 	unsigned char digestBin [16];

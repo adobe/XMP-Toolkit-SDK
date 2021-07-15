@@ -972,17 +972,17 @@ void TIFF_FileWriter::IntegrateFromPShop6 ( const void * buriedPtr, size_t burie
 }	// TIFF_FileWriter::IntegrateFromPShop6
 
 // =================================================================================================
-// TIFF_FileWriter::CopyTagToMasterIFD
+// TIFF_FileWriter::CopyTagToMainIFD
 // ===================================
 //
-// Create a new master IFD entry from a buried Photoshop 6 IFD entry. Don't try to get clever with
+// Create a new main IFD entry from a buried Photoshop 6 IFD entry. Don't try to get clever with
 // large values, just create a new copy. This preserves a clean separation between the memory-based
 // and file-based TIFF processing.
 
-void* TIFF_FileWriter::CopyTagToMasterIFD ( const TagInfo & ps6Tag, InternalIFDInfo * masterIFD )
+void* TIFF_FileWriter::CopyTagToMainIFD ( const TagInfo & ps6Tag, InternalIFDInfo * mainIFD )
 {
 	InternalTagMap::value_type mapValue ( ps6Tag.id, InternalTagInfo ( ps6Tag.id, ps6Tag.type, ps6Tag.count, this->fileParsed ) );
-	InternalTagMap::iterator newPos = masterIFD->tagMap.insert ( masterIFD->tagMap.end(), mapValue );
+	InternalTagMap::iterator newPos = mainIFD->tagMap.insert ( mainIFD->tagMap.end(), mapValue );
 	InternalTagInfo& newTag = newPos->second;
 
 	newTag.dataLen = ps6Tag.dataLen;
@@ -999,11 +999,11 @@ void* TIFF_FileWriter::CopyTagToMasterIFD ( const TagInfo & ps6Tag, InternalIFDI
 	newTag.changed = true;	// ! See comments with ProcessPShop6IFD.
 	XMP_Assert ( (newTag.origDataLen == 0) && (newTag.origDataOffset == 0) );
 
-	masterIFD->changed = true;
+	mainIFD->changed = true;
 
 	return newPos->second.dataPtr;	// ! Return the address within the map entry for small values.
 
-}	// TIFF_FileWriter::CopyTagToMasterIFD
+}	// TIFF_FileWriter::CopyTagToMainIFD
 
 // =================================================================================================
 // FlipCFATable
@@ -1017,10 +1017,10 @@ static bool FlipCFATable ( void* voidPtr, XMP_Uns32 tagLen, GetUns16_Proc GetUns
 
 	XMP_Uns16* u16Ptr = (XMP_Uns16*)voidPtr;
 
-	Flip2 ( &u16Ptr[0] );	// Flip the counts to match the master TIFF.
+	Flip2 ( &u16Ptr[0] );	// Flip the counts to match the main TIFF.
 	Flip2 ( &u16Ptr[1] );
 
-	XMP_Uns16 columns = GetUns16 ( &u16Ptr[0] );	// Fetch using the master TIFF's routine.
+	XMP_Uns16 columns = GetUns16 ( &u16Ptr[0] );	// Fetch using the main TIFF's routine.
 	XMP_Uns16 rows    = GetUns16 ( &u16Ptr[1] );
 
 	if ( tagLen != (XMP_Uns32)(4 + columns*rows) ) return false;
@@ -1062,10 +1062,10 @@ static bool FlipOECFSFRTable ( void* voidPtr, XMP_Uns32 tagLen, GetUns16_Proc Ge
 {
 	XMP_Uns16* u16Ptr = (XMP_Uns16*)voidPtr;
 
-	Flip2 ( &u16Ptr[0] );	// Flip the data to match the master TIFF.
+	Flip2 ( &u16Ptr[0] );	// Flip the data to match the main TIFF.
 	Flip2 ( &u16Ptr[1] );
 
-	XMP_Uns16 columns = GetUns16 ( &u16Ptr[0] );	// Fetch using the master TIFF's routine.
+	XMP_Uns16 columns = GetUns16 ( &u16Ptr[0] );	// Fetch using the main TIFF's routine.
 	XMP_Uns16 rows    = GetUns16 ( &u16Ptr[1] );
 
 	XMP_Uns32 minLen = 4 + columns + (8 * columns * rows);	// Minimum legit tag size.
@@ -1112,25 +1112,25 @@ void TIFF_FileWriter::ProcessPShop6IFD ( const TIFF_MemoryReader& buriedExif, XM
 
 	bool needsFlipping = (this->bigEndian != buriedExif.IsBigEndian());
 
-	InternalIFDInfo* masterIFD = &this->containedIFDs[ifd];
+	InternalIFDInfo* mainIFD = &this->containedIFDs[ifd];
 
 	TagInfoMap::const_iterator ps6Pos = ps6IFD.begin();
 	TagInfoMap::const_iterator ps6End = ps6IFD.end();
 
 	for ( ; ps6Pos != ps6End; ++ps6Pos ) {
 
-		// Copy buried tags to the master IFD if they don't already exist there.
+		// Copy buried tags to the main IFD if they don't already exist there.
 
 		const TagInfo& ps6Tag = ps6Pos->second;
 
-		if ( this->FindTagInIFD ( ifd, ps6Tag.id ) != 0 ) continue;	// Keep existing master tags.
+		if ( this->FindTagInIFD ( ifd, ps6Tag.id ) != 0 ) continue;	// Keep existing main tags.
 		if ( needsFlipping && (ps6Tag.id == 37500) ) continue;	// Don't copy an unflipped MakerNote.
 		if ( (ps6Tag.id == kTIFF_ExifIFDPointer) ||	// Skip the tags that are explicit offsets.
 			 (ps6Tag.id == kTIFF_GPSInfoIFDPointer) ||
 			 (ps6Tag.id == kTIFF_JPEGInterchangeFormat) ||
 			 (ps6Tag.id == kTIFF_InteroperabilityIFDPointer) ) continue;
 
-		void* voidPtr = this->CopyTagToMasterIFD ( ps6Tag, masterIFD );
+		void* voidPtr = this->CopyTagToMainIFD ( ps6Tag, mainIFD );
 
 		if ( needsFlipping ) {
 			switch ( ps6Tag.type ) {
@@ -1510,8 +1510,9 @@ void TIFF_FileWriter::UpdateMemByAppend ( XMP_Uns8** newStream_out, XMP_Uns32* n
 				if ( (appendAll | currTag.changed) && (currTag.dataLen > 4) ) {
 
 					XMP_Uns32 valueOffset = this->GetUns32 ( &currTag.smallValue );
+					bool inplaceUpdate = (currTag.dataLen <= currTag.origDataLen) && (! appendAll);
 
-					if ( (currTag.dataLen <= currTag.origDataLen) && (! appendAll) ) {
+					if ( inplaceUpdate ) {
 						XMP_Assert ( valueOffset == currTag.origDataOffset );
 					} else {
 						XMP_Assert ( valueOffset == appendedOffset );
@@ -1521,7 +1522,10 @@ void TIFF_FileWriter::UpdateMemByAppend ( XMP_Uns8** newStream_out, XMP_Uns32* n
 					XMP_Assert ( valueOffset <= newLength );	// Provably true, valueOffset is in the old span, newLength is the new bigger span.
 					if ( currTag.dataLen > (newLength - valueOffset) ) XMP_Throw ( "Buffer overrun", kXMPErr_InternalFailure );
 					memcpy ( (newStream + valueOffset), currTag.dataPtr, currTag.dataLen );	// AUDIT: Protected by the above check.
-					if ( (currTag.dataLen & 1) != 0 ) newStream[valueOffset+currTag.dataLen] = 0;
+					if ( !inplaceUpdate && ((currTag.dataLen & 1) != 0) ) {
+						newStream[valueOffset+currTag.dataLen] = 0;
+
+					}
 
 				}
 

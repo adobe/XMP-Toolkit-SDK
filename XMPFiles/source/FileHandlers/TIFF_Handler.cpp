@@ -238,7 +238,7 @@ void TIFF_MetaHandler::ProcessXMP()
 
 			iptcDigestState = PhotoDataUtils::CheckIPTCDigest ( iptcInfo.dataPtr, iptcInfo.dataLen, digestInfo.dataPtr );
 
-			if ( (iptcDigestState == kDigestDiffers) && (kTIFF_TypeSizes[iptcInfo.type] > 1) ) {
+			if ( (iptcDigestState == kDigestDiffers) && (kTIFF_TypeSizes[iptcInfo.type] > 1) && iptcInfo.dataLen > 0) {
 				XMP_Uns8 * endPtr = (XMP_Uns8*)iptcInfo.dataPtr + iptcInfo.dataLen - 1;
 				XMP_Uns8 * minPtr = endPtr - kTIFF_TypeSizes[iptcInfo.type] + 1;
 				while ( (endPtr >= minPtr) && (*endPtr == 0) ) --endPtr;

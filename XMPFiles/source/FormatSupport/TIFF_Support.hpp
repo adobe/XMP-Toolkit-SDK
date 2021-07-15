@@ -99,9 +99,9 @@ enum {	// Constants for the type field of a tag, as defined by TIFF.
 
 static const size_t kTIFF_TypeSizes[]    = { 0, 1, 1, 2, 4, 8, 1, 1, 2, 4, 8, 4, 8, 4 };
 
-static const bool kTIFF_IsIntegerType[]  = { 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0 };
-static const bool kTIFF_IsRationalType[] = { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 };
-static const bool kTIFF_IsFloatType[]    = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 };
+static const bool kTIFF_IsIntegerType[]  = { 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0 ,0 };
+static const bool kTIFF_IsRationalType[] = { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 ,0 };
+static const bool kTIFF_IsFloatType[]    = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 ,0 };
 
 static const char * kTIFF_TypeNames[] = { "ShortOrLong", "BYTE", "ASCII", "SHORT", "LONG", "RATIONAL",
 										  "SBYTE", "UNDEFINED", "SSHORT", "SLONG", "SRATIONAL",
@@ -193,6 +193,9 @@ enum {
 	kTIFF_RelatedSoundFile = 40964,
 	kTIFF_DateTimeOriginal = 36867,
 	kTIFF_DateTimeDigitized = 36868,
+	kTIFF_OffsetTime = 36880,
+	kTIFF_OffsetTimeOriginal = 36881,
+	kTIFF_OffsetTimeDigitized = 36882,
 	kTIFF_SubSecTime = 37520,
 	kTIFF_SubSecTimeOriginal = 37521,
 	kTIFF_SubSecTimeDigitized = 37522,
@@ -366,6 +369,9 @@ static const XMP_Uns16 sKnownExifIFDTags[] =
 	kTIFF_ExifVersion,					// 36864
 	kTIFF_DateTimeOriginal,				// 36867
 	kTIFF_DateTimeDigitized,			// 36868
+	kTIFF_OffsetTime,                   // 36880
+	kTIFF_OffsetTimeOriginal,           // 36881
+	kTIFF_OffsetTimeDigitized,          // 36882
 	kTIFF_ComponentsConfiguration,		// 37121
 	kTIFF_CompressedBitsPerPixel,		// 37122
 	kTIFF_ShutterSpeedValue,			// 37377
@@ -518,6 +524,8 @@ public:
 	bool IsBigEndian() const { return this->bigEndian; };
 	bool IsLittleEndian() const { return (! this->bigEndian); };
 	bool IsNativeEndian() const { return this->nativeEndian; };
+	bool IsCheckTagLength () const { return this->checkTagLength; }
+
 
 	// ---------------------------------------------------------------------------------------------
 	// The TIFF_Manager only keeps explicit knowledge of up to 4 IFDs:
@@ -563,6 +571,9 @@ public:
 	// new tag will have type short or long.
 
 	virtual bool GetTag_Integer ( XMP_Uns8 ifd, XMP_Uns16 id, XMP_Uns32* data ) const = 0;
+	virtual XMP_Uns32 GetTiffLength() const = 0;
+
+	virtual XMP_Uns8 *GetTiffStream() const = 0;
 
 	void SetTag_Integer ( XMP_Uns8 ifd, XMP_Uns16 id, XMP_Uns32 data );
 
@@ -677,6 +688,7 @@ public:
 protected:
 
 	bool bigEndian, nativeEndian;
+	bool checkTagLength { false }; 
 
 	XMP_Uns32 CheckTIFFHeader ( const XMP_Uns8* tiffPtr, XMP_Uns32 length );
 		// The pointer is to a buffer of the first 8 bytes. The length is the overall length, used
@@ -738,6 +750,9 @@ public:
 	bool GetTag_ASCII ( XMP_Uns8 ifd, XMP_Uns16 id, XMP_StringPtr* dataPtr, XMP_StringLen* dataLen ) const;
 
 	bool GetTag_EncodedString ( XMP_Uns8 ifd, XMP_Uns16 id, std::string* utf8Str ) const;
+	XMP_Uns32 GetTiffLength() const { return tiffLength; }
+
+	XMP_Uns8 *GetTiffStream() const { return tiffStream; }
 
 	void SetTag_EncodedString ( XMP_Uns8 ifd, XMP_Uns16 id, const std::string& utf8Str, XMP_Uns8 encoding ) { NotAppropriate(); };
 
@@ -753,7 +768,9 @@ public:
 	XMP_Uns32 UpdateMemoryStream ( void** dataPtr, bool condenseStream = false ) { if ( dataPtr != 0 ) *dataPtr = tiffStream; return tiffLength; };
 	void      UpdateFileStream   ( XMP_IO* fileRef, XMP_ProgressTracker* progressTracker ) { NotAppropriate(); };
 
-	TIFF_MemoryReader() : ownedStream(false), tiffStream(0), tiffLength(0) {};
+	TIFF_MemoryReader() : ownedStream(false), tiffStream(0), tiffLength(0) { 
+        checkTagLength = true;
+    };
 
 	virtual ~TIFF_MemoryReader() { if ( this->ownedStream ) free ( this->tiffStream ); };
 
@@ -847,6 +864,9 @@ public:
 	bool GetTag_ASCII ( XMP_Uns8 ifd, XMP_Uns16 id, XMP_StringPtr* dataPtr, XMP_StringLen* dataLen ) const;
 
 	bool GetTag_EncodedString ( XMP_Uns8 ifd, XMP_Uns16 id, std::string* utf8Str ) const;
+	XMP_Uns32 GetTiffLength() const { return tiffLength; }
+
+	XMP_Uns8 *GetTiffStream() const { return memStream; }
 
 	void SetTag_EncodedString ( XMP_Uns8 ifd, XMP_Uns16 id, const std::string& utf8Str, XMP_Uns8 encoding );
 
@@ -966,7 +986,7 @@ private:
 
 	void ProcessPShop6IFD ( const TIFF_MemoryReader& buriedExif, XMP_Uns8 ifd );
 
-	void* CopyTagToMasterIFD ( const TagInfo& ps6Tag, InternalIFDInfo* masterIFD );
+	void* CopyTagToMainIFD ( const TagInfo& ps6Tag, InternalIFDInfo* mainIFD );
 
 	void PreflightIFDLinkage();
 

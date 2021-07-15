@@ -323,12 +323,15 @@ void WXMPFiles_GetXMP_1 ( XMPFilesRef      xmpObjRef,
 		StartPerfCheck ( kAPIPerf_GetXMP, "" );
 
 		bool hasXMP = false;
-		XMP_StringPtr packetStr;
-		XMP_StringLen packetLen;
-
-		if ( xmpRef == 0 ) {
+		XMP_StringPtr packetStr = NULL;
+		XMP_StringLen packetLen = 0;
+		/*Adding check to handle case where a client might not send XMPMetaRef but still want xmp packet in return. eg. CTECHXMP-4170329*/
+		if ( xmpRef == 0  && clientPacket != 0 ) {
 			hasXMP = thiz->GetXMP ( 0, &packetStr, &packetLen, packetInfo );
-		} else {
+		} else if ( xmpRef == 0 && clientPacket == 0 ) {
+			hasXMP = thiz->GetXMP( 0, 0, 0, packetInfo );
+		}
+		else {
 			SXMPMeta xmpObj ( xmpRef );
 			hasXMP = thiz->GetXMP ( &xmpObj, &packetStr, &packetLen, packetInfo );
 		}

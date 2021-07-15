@@ -87,7 +87,7 @@ extern void ExportPhotoData ( XMP_FileFormat destFormat,
 // Here are the primary (0th) IFD tags that get special treatment:
 //
 // 270, 33432 - ASCII mapped to alt-text['x-default']
-// 306 - DateTime master
+// 306 - DateTime main
 // 315 - ASCII mapped to text seq[1]
 //
 // Here are the primary (0th) IFD tags that get mapped by type and count:
@@ -99,7 +99,7 @@ extern void ExportPhotoData ( XMP_FileFormat destFormat,
 //
 // 34856, 41484 - OECF/SFR table
 // 36864, 40960 - 4 ASCII chars to text
-// 36867, 36868 - DateTime master
+// 36867, 36868 - DateTime main
 // 37121 - 4 UInt8 to integer seq
 // 37385 - Flash struct
 // 37510 - explicitly encoded text to alt-text['x-default']
@@ -116,8 +116,8 @@ extern void ExportPhotoData ( XMP_FileFormat destFormat,
 // Here are the GPS IFD tags that get special treatment:
 //
 // 0 - 4 UInt8 to text "n.n.n.n"
-// 2, 4, 20, 22 - Latitude or longitude master
-// 7 - special DateTime master, the time part
+// 2, 4, 20, 22 - Latitude or longitude main
+// 7 - special DateTime main, the time part
 // 27, 28 - explicitly encoded text
 //
 // Here are the GPS IFD tags that get mapped by type and count:
@@ -163,7 +163,7 @@ extern void ExportPhotoData ( XMP_FileFormat destFormat,
 //   296  SHORT            1  ResolutionUnit             integer
 //   301  SHORT        3*256  TransferFunction           integer seq
 //   305  ASCII          Any  Software                   text, xmp:CreatorTool
-//   306  ASCII           20  DateTime                   date, master of 37520, xmp:DateTime
+//   306  ASCII           20  DateTime                   date, main of 37520, xmp:DateTime
 //   315  ASCII          Any  Artist                     text, dc:creator[1]
 //   318  RATIONAL         2  WhitePoint                 rational seq
 //   319  RATIONAL         6  PrimaryChromaticities      rational seq
@@ -183,8 +183,8 @@ extern void ExportPhotoData ( XMP_FileFormat destFormat,
 // 34855  SHORT          Any  ISOSpeedRatings            integer seq
 // 34856  UNDEFINED      Any  OECF                       OECF/SFR table
 // 36864  UNDEFINED        4  ExifVersion                text, Exif has 4 ASCII chars
-// 36867  ASCII           20  DateTimeOriginal           date, master of 37521
-// 36868  ASCII           20  DateTimeDigitized          date, master of 37522
+// 36867  ASCII           20  DateTimeOriginal           date, main of 37521
+// 36868  ASCII           20  DateTimeDigitized          date, main of 37522
 // 37121  UNDEFINED        4  ComponentsConfiguration    integer seq, Exif has 4 UInt8
 // 37122  RATIONAL         1  CompressedBitsPerPixel     rational
 // 37377  SRATIONAL        1  ShutterSpeedValue          rational
@@ -237,12 +237,12 @@ extern void ExportPhotoData ( XMP_FileFormat destFormat,
 //
 //     0  BYTE             4  GPSVersionID               text, "n.n.n.n", Exif has 4 UInt8
 //     1  ASCII            2  GPSLatitudeRef             latitude, with 2
-//     2  RATIONAL         3  GPSLatitude                latitude, master of 2
+//     2  RATIONAL         3  GPSLatitude                latitude, main of 2
 //     3  ASCII            2  GPSLongitudeRef            longitude, with 4
-//     4  RATIONAL         3  GPSLongitude               longitude, master of 3
+//     4  RATIONAL         3  GPSLongitude               longitude, main of 3
 //     5  BYTE             1  GPSAltitudeRef             integer
 //     6  RATIONAL         1  GPSAltitude                rational
-//     7  RATIONAL         3  GPSTimeStamp               date, master of 29
+//     7  RATIONAL         3  GPSTimeStamp               date, main of 29
 //     8  ASCII          Any  GPSSatellites              text
 //     9  ASCII            2  GPSStatus                  text
 //    10  ASCII            2  GPSMeasureMode             text
@@ -255,9 +255,9 @@ extern void ExportPhotoData ( XMP_FileFormat destFormat,
 //    17  RATIONAL         1  GPSImgDirection            rational
 //    18  ASCII          Any  GPSMapDatum                text
 //    19  ASCII            2  GPSDestLatitudeRef         latitude, with 20
-//    20  RATIONAL         3  GPSDestLatitude            latitude, master of 19
+//    20  RATIONAL         3  GPSDestLatitude            latitude, main of 19
 //    21  ASCII            2  GPSDestLongitudeRef        longitude, with 22
-//    22  RATIONAL         3  GPSDestLongitude           logitude, master of 21
+//    22  RATIONAL         3  GPSDestLongitude           logitude, main of 21
 //    23  ASCII            2  GPSDestBearingRef          text
 //    24  RATIONAL         1  GPSDestBearing             rational
 //    25  ASCII            2  GPSDestDistanceRef         text

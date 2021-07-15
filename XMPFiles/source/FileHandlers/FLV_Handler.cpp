@@ -212,6 +212,8 @@ static void GetTagInfo ( XMP_IO* fileRef, XMP_Uns64 tagPos, TagInfo * info )
 
 static XMP_Uns32 GetASValueLen ( const XMP_Uns8 * asValue, const XMP_Uns8 * asLimit )
 {
+	if (asValue > asLimit)
+		return 0;
 	XMP_Uns32 valueLen = 0;
 	const XMP_Uns8 * itemPtr;
 	XMP_Uns32 arrayCount;

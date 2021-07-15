@@ -142,7 +142,13 @@ void PSD_MetaHandler::CacheFileData()
 
 	cmLen = GetUns32BE ( &psdHeader[26] );
 
-	XMP_Int64 psirOrigin = 26 + 4 + cmLen;
+	XMP_Int64 psirOrigin = 26 + 4 + static_cast<XMP_Int64>(cmLen);
+	XMP_Int64 fileLength = fileRef->Length();
+
+	if (psirOrigin > fileLength)
+	{
+		XMP_Throw("Invalid PSD chunk length", kXMPErr_BadPSD);
+	}
 
 	filePos = fileRef->Seek ( psirOrigin, kXMP_SeekFromStart  );
 	if ( filePos !=  psirOrigin ) return;	// Throw?
@@ -153,7 +159,9 @@ void PSD_MetaHandler::CacheFileData()
 	this->psirMgr.ParseFileResources ( fileRef, psirLen );
 
 	PSIR_Manager::ImgRsrcInfo xmpInfo;
-	bool found = this->psirMgr.GetImgRsrc ( kPSIR_XMP, &xmpInfo );
+	bool found = this->psirMgr.GetImgRsrc(kPSIR_XMP, &xmpInfo);
+	if (psirLen < xmpInfo.dataLen)
+		return;
 
 	if ( found ) {
 

@@ -249,7 +249,7 @@ namespace PNG_Support
 					}
 
 					//skip the current chunk.
-					inOutPosition += 8 + chunkLength + CRC;
+					inOutPosition += 8 + static_cast<XMP_Int64>(chunkLength) + CRC;
 					
 					if(inOutPosition > fileLength)
 					{

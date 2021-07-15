@@ -1015,7 +1015,7 @@ std::string PostScript_Support::ConvertToDate(const char* inString)
 					if(itr!=tokenzs.end())
 					{
 						++itr;
-						if (itr!=tokenzs.end()&&itr->noOfDelimiter==0 && IsNumeric(itr->token[0]) )
+						if (itr<tokenzs.end() && itr->noOfDelimiter==0 && IsNumeric(itr->token[0]) )
 						{
 							const char * str=itr->token.c_str();
 							short day= GetNumber(&str);
@@ -1023,6 +1023,10 @@ std::string PostScript_Support::ConvertToDate(const char* inString)
 							{
 								date.day=day;
 							}
+						}
+						else if (itr == tokenzs.end())
+						{
+							break;
 						}
 					}
 				}

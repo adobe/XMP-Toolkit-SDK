@@ -3,14 +3,14 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// of the Adobe license agreement accompanying it. If you have received this file from a source other
 // than Adobe, then your use, modification, or distribution of it requires the prior written permission
 // of Adobe.
 //
-// This file includes implementation of SVG metadata, according to Scalable Vector Graphics (SVG) 1.1 Specification. 
+// This file includes implementation of SVG metadata, according to Scalable Vector Graphics (SVG) 1.1 Specification.
 // "https://www.w3.org/TR/2003/REC-SVG11-20030114/"
-// Copyright © 1994-2002 World Wide Web Consortium, (Massachusetts Institute of Technology, 
-// Institut National de Recherche en Informatique et en Automatique, Keio University). 
+// Copyright Â© 1994-2002 World Wide Web Consortium, (Massachusetts Institute of Technology,
+// Institut National de Recherche en Informatique et en Automatique, Keio University).
 // All Rights Reserved . http://www.w3.org/Consortium/Legal
 //
 // =================================================================================================

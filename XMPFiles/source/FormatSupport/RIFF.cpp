@@ -186,6 +186,10 @@ Chunk::Chunk( ContainerChunk* _parent, RIFF_MetaHandler* handler, bool skip, Chu
 		bool repairFile = XMP_OptionIsSet ( handler->parent->openFlags, kXMPFiles_OpenRepairFile );
 		if ( (! isUpdate) || (repairFile && (_parent == 0)) ) {
 			this->oldSize = chunkLimit - this->oldPos;
+			if (this->oldSize < 8)
+			{
+				XMP_Throw("Invalid RIFF chunk size", kXMPErr_BadFileFormat);
+			}
 		} else {
 			XMP_Throw ( "Bad RIFF chunk size", kXMPErr_BadFileFormat );
 		}

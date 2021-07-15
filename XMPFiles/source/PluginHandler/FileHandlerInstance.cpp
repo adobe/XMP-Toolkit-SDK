@@ -25,8 +25,9 @@ XMPFileHandler( _parent ), mObject( object ), mHandler( handler )
 FileHandlerInstance::~FileHandlerInstance()
 {
 	WXMP_Error error;
-	mHandler->getModule()->getPluginAPIs()->mTerminateSessionProc( this->mObject, &error );
-	PluginManager::removeHandlerInstance( this->mObject );
+
+	PluginManager::removeHandlerInstance(this->mObject);
+	mHandler->getModule()->getPluginAPIs()->mTerminateSessionProc(this->mObject, &error);
 	CheckError( error );
 }
 

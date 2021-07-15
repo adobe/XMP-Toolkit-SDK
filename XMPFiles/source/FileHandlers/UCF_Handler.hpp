@@ -711,6 +711,7 @@ private:
 	XMP_StringLen uncomprPacketLen;
 	XMP_StringPtr finalPacketStr;
 	XMP_StringLen finalPacketLen;
+	std::string compressedPacket;
 	std::vector<CDFileHeader> cdEntries;
 	EndOfCD endOfCD;
 	void writeOut( XMP_IO* sourceFile, XMP_IO* targetFile, bool isRewrite, bool isInPlace);

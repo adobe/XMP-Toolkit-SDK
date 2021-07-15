@@ -1138,6 +1138,7 @@ void P2_MetaHandler::ProcessXMP()
 	XML_NodePtr legacyContext, clipMetadata, legacyProp;
 	if ( ! this->p2ClipManager.IsValidP2() ) return;
 	P2_Clip* p2Clip=this->p2ClipManager.GetManagedClip();
+	if( p2Clip->GetP2RootNode() == 0) return;
 	XMP_StringPtr p2NS = p2Clip->GetP2RootNode()->ns.c_str();
 	std::string oldDigest, newDigest;
 	bool digestFound = this->xmpObj.GetStructField ( kXMP_NS_XMP, "NativeDigests", kXMP_NS_XMP, "P2", &oldDigest, 0 );
@@ -1308,24 +1309,27 @@ void P2_MetaHandler::UpdateFile ( bool doSafeUpdate )
 			if (frameFormat == "50Timecode" || frameFormat == "5994DropTimecode" || frameFormat == "5994NonDropTimecode")
 			{
 				p2Clip = this->p2ClipManager.GetManagedClip();
-				XMP_StringPtr p2NS = p2Clip->GetP2RootNode()->ns.c_str();
-				XML_NodePtr legacyVideoContext = p2Clip->GetEssenceListNode();
-				if (legacyVideoContext != 0)
+				if( p2Clip->GetP2RootNode() != 0 )
 				{
-					legacyVideoContext = legacyVideoContext->GetNamedElement(p2NS, "Video");
-					XML_NodePtr legacyProp = legacyVideoContext->GetNamedElement(p2NS, "StartTimecode");
-					if ((legacyProp != 0) && legacyProp->IsLeafContentNode())
-					{
-						AdjustTimeCode( xmpStartTimeCode, true );
-						if (xmpStartTimeCode != legacyProp->GetLeafContentValue())
-						{
-							legacyProp->SetLeafContentValue(xmpStartTimeCode.c_str());
-							updateLegacyXML = true;
-						}
-					}
-				}
-			}
-		}
+				    XMP_StringPtr p2NS = p2Clip->GetP2RootNode()->ns.c_str();
+				    XML_NodePtr legacyVideoContext = p2Clip->GetEssenceListNode();
+				    if (legacyVideoContext != 0)
+				   {
+					   legacyVideoContext = legacyVideoContext->GetNamedElement(p2NS, "Video");
+					    XML_NodePtr legacyProp = legacyVideoContext->GetNamedElement(p2NS, "StartTimecode");
+					    if ((legacyProp != 0) && legacyProp->IsLeafContentNode())
+					    {
+						    AdjustTimeCode( xmpStartTimeCode, true );
+						    if (xmpStartTimeCode != legacyProp->GetLeafContentValue())
+						    {
+							   legacyProp->SetLeafContentValue(xmpStartTimeCode.c_str());
+							   updateLegacyXML = true;
+						    }
+					    }
+				   }
+			    }
+		    }
+	    }
 
 		std::string newDigest;
 		this->p2ClipManager.GetManagedClip()->CreateDigest ( &newDigest );

@@ -784,9 +784,12 @@ AppendSubtree ( const XMP_Node * sourceNode, XMP_Node * destParent,
 		for ( size_t sourceNum = 0, sourceLim = sourceNode->children.size(); sourceNum != sourceLim && destNode!= NULL; ++sourceNum ) {
 			const XMP_Node * sourceField = sourceNode->children[sourceNum];
 			AppendSubtree ( sourceField, destNode, mergeCompound, replaceOld, deleteEmpty );
-			if ( deleteEmpty && destNode->children.empty() ) {
-				delete ( destNode );
-				destParent->children.erase ( destPos );
+
+			if (deleteEmpty && destNode->children.empty())
+			{
+				delete (destNode);
+				destNode = NULL;
+				destParent->children.erase(destPos);
 			}
 		}
 		
