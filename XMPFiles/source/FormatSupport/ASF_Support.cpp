@@ -150,7 +150,8 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 		XMP_Uns32 numberOfHeaders = GetUns32LE ( &buffer[24] );
 		ASF_ObjectBase objectBase;
 
-			while ( read < newObject.len && numberOfHeaders > 0) { 
+		while (read < newObject.len && numberOfHeaders > 0)
+		{
 
 			fileRef->Seek ( pos, kXMP_SeekFromStart );
 			if ( kASF_ObjectBaseLen != fileRef->Read ( &objectBase, kASF_ObjectBaseLen, true ) ) break;
@@ -278,7 +279,6 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 			read += objectBase.size;
 			numberOfHeaders--;
 		}
-
 	} catch ( ... ) {
 
 		return false;
