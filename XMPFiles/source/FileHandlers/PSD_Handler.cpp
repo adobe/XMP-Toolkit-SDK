@@ -143,6 +143,11 @@ void PSD_MetaHandler::CacheFileData()
 	cmLen = GetUns32BE ( &psdHeader[26] );
 
 	XMP_Int64 psirOrigin = 26 + 4 + static_cast<XMP_Int64>(cmLen);
+	
+	if(psirOrigin > fileLength )
+    {
+        XMP_Throw ( "Invalid PSD chunk length", kXMPErr_BadPSD );
+    }
 
 	filePos = fileRef->Seek ( psirOrigin, kXMP_SeekFromStart  );
 	if ( filePos !=  psirOrigin ) return;	// Throw?
