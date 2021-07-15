@@ -2807,20 +2807,22 @@ ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp
 		
 			tiff->DeleteTag ( kTIFF_ExifIFD, fracID );
 		
-		} else {
-
+		}else {
 			snprintf ( buffer, sizeof(buffer), "%09d", xmpBin.nanoSecond );	// AUDIT: Use of sizeof(buffer) is safe.
 			for ( size_t i = strlen(buffer)-1; i > 0; --i ) {
 				if ( buffer[i] != '0' ) break;
 				buffer[i] = 0;	// Strip trailing zero digits.
 			}
-			bool haveOldExif = true;    // Default to old Exif if no version tag.
+			tiff->SetTag_ASCII ( kTIFF_ExifIFD, fracID, buffer );	// ! The subseconds are always in the Exif IFD.
+
+		}
+
+		bool haveOldExif = true;    // Default to old Exif if no version tag.
 		TIFF_Manager::TagInfo tagInfo;
 		bool foundExif = tiff->GetTag ( kTIFF_ExifIFD, kTIFF_ExifVersion, &tagInfo );
 		if ( foundExif && (tagInfo.type == kTIFF_UndefinedType) && (tagInfo.count == 4) ) {
 			haveOldExif = (strncmp ( (char*)tagInfo.dataPtr, "0231", 4 ) < 0);
 		}
-
 		if (!haveOldExif)
 		{
 			// The offset time tags were added to EXIF spec 2.3.1., therefore we are not
@@ -2840,11 +2842,10 @@ ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp
 				snprintf ( offsetBuffer, sizeof(offsetBuffer), "%c%02d:%02d",    // AUDIT: Use of sizeof(offsetBuffer) is safe.
 				tzSign, xmpBin.tzHour, xmpBin.tzMinute );
 
-			tiff->SetTag_ASCII ( kTIFF_ExifIFD, fracID, buffer );	// ! The subseconds are always in the Exif IFD.
-		   }
+				tiff->SetTag_ASCII ( kTIFF_ExifIFD, offsetID, offsetBuffer );    // ! The OffsetTime are always in the Exif IFD.
+			}
 
 		}
-	 }
 
 	} catch ( ... ) {
 		// Do nothing, let other exports proceed.
