@@ -2806,15 +2806,17 @@ ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp
 		if ( xmpBin.nanoSecond == 0 ) {
 		
 			tiff->DeleteTag ( kTIFF_ExifIFD, fracID );
-		
-		}else {
-			snprintf ( buffer, sizeof(buffer), "%09d", xmpBin.nanoSecond );	// AUDIT: Use of sizeof(buffer) is safe.
-			for ( size_t i = strlen(buffer)-1; i > 0; --i ) {
-				if ( buffer[i] != '0' ) break;
-				buffer[i] = 0;	// Strip trailing zero digits.
+		}
+		else
+		{
+			snprintf(buffer, sizeof(buffer), "%09d", xmpBin.nanoSecond); // AUDIT: Use of sizeof(buffer) is safe.
+			for (size_t i = strlen(buffer) - 1; i > 0; --i)
+			{
+				if (buffer[i] != '0')
+					break;
+				buffer[i] = 0; // Strip trailing zero digits.
 			}
-			tiff->SetTag_ASCII ( kTIFF_ExifIFD, fracID, buffer );	// ! The subseconds are always in the Exif IFD.
-
+			tiff->SetTag_ASCII(kTIFF_ExifIFD, fracID, buffer); // ! The subseconds are always in the Exif IFD.
 		}
 
 		bool haveOldExif = true;    // Default to old Exif if no version tag.
@@ -2833,18 +2835,18 @@ ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp
 
 				tiff->DeleteTag ( kTIFF_ExifIFD, offsetID );
 
-			} else {
+			}else
+			{
 				char tzSign = '+';
-				if(xmpBin.tzSign == -1)
+				if (xmpBin.tzSign == -1)
 					tzSign = '-';
 
 				char offsetBuffer[7];
-				snprintf ( offsetBuffer, sizeof(offsetBuffer), "%c%02d:%02d",    // AUDIT: Use of sizeof(offsetBuffer) is safe.
-				tzSign, xmpBin.tzHour, xmpBin.tzMinute );
+				snprintf(offsetBuffer, sizeof(offsetBuffer), "%c%02d:%02d", // AUDIT: Use of sizeof(offsetBuffer) is safe.
+						 tzSign, xmpBin.tzHour, xmpBin.tzMinute);
 
-				tiff->SetTag_ASCII ( kTIFF_ExifIFD, offsetID, offsetBuffer );    // ! The OffsetTime are always in the Exif IFD.
+				tiff->SetTag_ASCII(kTIFF_ExifIFD, offsetID, offsetBuffer); // ! The OffsetTime are always in the Exif IFD.
 			}
-
 		}
 
 	} catch ( ... ) {

@@ -25,9 +25,9 @@ XMPFileHandler( _parent ), mObject( object ), mHandler( handler )
 FileHandlerInstance::~FileHandlerInstance()
 {
 	WXMP_Error error;
-	/* Fixing CTECHXMP-4170441 */
-	PluginManager::removeHandlerInstance( this->mObject );
-	mHandler->getModule()->getPluginAPIs()->mTerminateSessionProc( this->mObject, &error );
+
+	PluginManager::removeHandlerInstance(this->mObject);
+	mHandler->getModule()->getPluginAPIs()->mTerminateSessionProc(this->mObject, &error);
 	CheckError( error );
 }
 

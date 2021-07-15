@@ -144,10 +144,11 @@ void PSD_MetaHandler::CacheFileData()
 
 	XMP_Int64 psirOrigin = 26 + 4 + static_cast<XMP_Int64>(cmLen);
 	XMP_Int64 fileLength = fileRef->Length();
-	if(psirOrigin > fileLength )
-    {
-        XMP_Throw ( "Invalid PSD chunk length", kXMPErr_BadPSD );
-    }
+
+	if (psirOrigin > fileLength)
+	{
+		XMP_Throw("Invalid PSD chunk length", kXMPErr_BadPSD);
+	}
 
 	filePos = fileRef->Seek ( psirOrigin, kXMP_SeekFromStart  );
 	if ( filePos !=  psirOrigin ) return;	// Throw?
@@ -158,9 +159,10 @@ void PSD_MetaHandler::CacheFileData()
 	this->psirMgr.ParseFileResources ( fileRef, psirLen );
 
 	PSIR_Manager::ImgRsrcInfo xmpInfo;
-	bool found = this->psirMgr.GetImgRsrc ( kPSIR_XMP, &xmpInfo );
-    if (psirLen < xmpInfo.dataLen) return; //Fixing CTECHXMP-4170402 && CTECHXMP-4170495
-	
+	bool found = this->psirMgr.GetImgRsrc(kPSIR_XMP, &xmpInfo);
+	if (psirLen < xmpInfo.dataLen)
+		return;
+
 	if ( found ) {
 
 		// printf ( "PSD_MetaHandler::CacheFileData - XMP packet offset %d (0x%X), size %d\n",

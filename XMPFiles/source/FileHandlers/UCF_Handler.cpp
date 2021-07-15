@@ -490,7 +490,7 @@ void UCF_MetaHandler::CacheFileData()
 					}
 
 					have = CHUNK - strm.avail_out;
-					if ((bytesWritten + have) > sizeUncompressed){ // Fixing CTECHXMP-4170357
+					if ((bytesWritten + have) > sizeUncompressed){
 						XMP_Throw("UCF Bad XMP block", kXMPErr_BadBlockFormat);
 					}
 					memcpy( (unsigned char*) packetStr + bytesWritten , out , have );
@@ -590,9 +590,9 @@ void UCF_MetaHandler::UpdateFile ( bool doSafeUpdate )
 		unsigned int have;
 		z_stream strm;
 		unsigned char out[CHUNK];
-		 /* initilalisation for fix to CT-4170441*/
-        strm.total_out = 0;
-        strm.total_in = 0;
+		/* initilalisation for fix to CTECHXMP-4170441*/
+		strm.total_out = 0;
+		strm.total_in = 0;
 
 		/* allocate deflate state */
 		strm.zalloc = Z_NULL; strm.zfree = Z_NULL; strm.opaque = Z_NULL;

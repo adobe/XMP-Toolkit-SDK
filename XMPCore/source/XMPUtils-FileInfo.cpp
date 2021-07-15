@@ -785,11 +785,12 @@ AppendSubtree ( const XMP_Node * sourceNode, XMP_Node * destParent,
 			const XMP_Node * sourceField = sourceNode->children[sourceNum];
 			AppendSubtree ( sourceField, destNode, mergeCompound, replaceOld, deleteEmpty );
 
-		     if ( deleteEmpty && destNode->children.empty() ) { //Fixing CTECHXMP-4170396
-                delete ( destNode );
-                destNode = NULL;
-                destParent->children.erase ( destPos );
-            }
+			if (deleteEmpty && destNode->children.empty())
+			{
+				delete (destNode);
+				destNode = NULL;
+				destParent->children.erase(destPos);
+			}
 		}
 		
 	} else if ( sourceForm & kXMP_PropArrayIsAltText ) {

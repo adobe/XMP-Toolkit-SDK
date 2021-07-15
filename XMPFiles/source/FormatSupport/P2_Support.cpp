@@ -380,7 +380,7 @@ void P2_SpannedClip::CreateDigest ( std::string * digestStr )
 	digestStr->erase();
 	if ( this->headContent.clipMetadata == 0 ) return;	// Bail if we don't have any legacy XML.
 
-    XML_NodePtr p2RootNode = this->GetP2RootNode(); // Return if there is no root node.
+	XML_NodePtr p2RootNode = this->GetP2RootNode(); // Return if there is no root node.
 	if( p2RootNode == 0 ) return;
 	XMP_StringPtr p2NS = p2RootNode->ns.c_str();
 	XML_NodePtr legacyContext;
