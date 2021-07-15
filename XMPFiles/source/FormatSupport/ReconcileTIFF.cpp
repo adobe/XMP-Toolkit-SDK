@@ -1374,9 +1374,8 @@ ImportTIFF_Date ( const TIFF_Manager & tiff, const TIFF_Manager::TagInfo & dateI
 					binValue.hasTimeZone = true;
 				}
 			}
-
-		xmp->SetProperty_Date ( xmpNS, xmpProp, binValue );
 		}
+		xmp->SetProperty_Date ( xmpNS, xmpProp, binValue );
 
 	} catch ( ... ) {
 		// Do nothing, let other imports proceed.
