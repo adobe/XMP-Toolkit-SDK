@@ -65,7 +65,7 @@ metadata formats.
 Contributions are welcomed! Read the [Contributing Guide](https://github.com/adobe/XMP-Toolkit-SDK/blob/master/CONTRIBUTING.md) for more information.
 
 ## Licensing
-This project is BSD licensed. See [LICENSE](https://github.com/adobe/XMP-Toolkit-SDK/blob/master/BSD-License.txt) for more information.
+This project is BSD licensed. See [LICENSE](https://github.com/adobe/XMP-Toolkit-SDK/blob/main/LICENSE) for more information.
 
 ## Report Issues/Bugs
 You can report the issues in the issues section of the github repo.
