@@ -153,7 +153,7 @@ void P2_Clip::CacheClipContent()
 		p2Offset= p2node->GetNamedElement ( p2NameSpace, "GlobalShotID" );
 		GetElementLocation(p2Offset,headContent.shotId );
 		XML_NodePtr p2connection= p2node->GetNamedElement ( p2NameSpace, "Connection" );
-		if ( p2node != 0 )
+		if ( p2connection != 0 )
 		{
 			p2node= p2connection->GetNamedElement ( p2NameSpace, "Top" );
 			if ( p2node != 0 )
