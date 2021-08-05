@@ -213,7 +213,14 @@ XMP_Bool SVG_Adapter::ParseBufferNoThrow( const void * buffer, size_t length, bo
 		length = 1;
 	}
 
-	status = XML_Parse( this->parser, ( const char * ) buffer, static_cast< XMP_StringLen >( length ), last );
+	try
+	{
+		status = XML_Parse(this->parser, (const char *)buffer, static_cast<XMP_StringLen>(length), last);
+	}
+	catch (XMP_Error &e)
+	{
+		return false; //Don't let one failure abort checking other file formats , this api is called only from checkFileFormat
+	}
 
 #if BanAllEntityUsage
 	if ( this->isAborted ) {

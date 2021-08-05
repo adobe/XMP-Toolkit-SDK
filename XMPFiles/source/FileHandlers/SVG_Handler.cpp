@@ -390,6 +390,8 @@ bool SVG_CheckFormat( XMP_FileFormat format,
 	if ( svgChecker == 0 )
 		return false;
 
+	svgChecker->SetErrorCallback(&parent->errorCallback);
+
 	bool isSVG = false;
 	bool isCompressed = false;
 
