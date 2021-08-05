@@ -235,6 +235,8 @@ static void ParseFullNS( XMP_StringPtr fullName, string & NS, string &localName 
 {
 	// Expat delivers the full name as a catenation of namespace URI, separator, and local name.
 	size_t sepPos = strlen( fullName );
+	if (!sepPos)
+		return; //Throw?
 	for ( --sepPos; sepPos > 0; --sepPos ) {
 		if ( fullName[ sepPos ] == FullNameSeparator ) break;
 	}
