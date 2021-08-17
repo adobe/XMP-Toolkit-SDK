@@ -2,7 +2,7 @@
 #define __LargeFileAccess_hpp__	1
 
 // =================================================================================================
-// Copyright 2008 Adobe Systems Incorporated
+// Copyright 2020 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms

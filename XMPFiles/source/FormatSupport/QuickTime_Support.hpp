@@ -3,13 +3,11 @@
 
 // =================================================================================================
 // Copyright Adobe
-// Copyright 2009 Adobe
+// Copyright 2020 Adobe
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
@@ -40,10 +38,10 @@
 
 enum {	// List of recognized items from the QuickTime 'moov'/'udta' box.
 	// These items are defined by Adobe.
-	kQTilst_Reel        = 0xA952454CUL, // '©REL'
-	kQTilst_Timecode    = 0xA954494DUL, // '©TIM'
-	kQTilst_TimeScale   = 0xA9545343UL, // '©TSC'
-	kQTilst_TimeSize    = 0xA954535AUL  // '©TSZ'
+	kQTilst_Reel        = 0xA952454CUL, // 'REL'
+	kQTilst_Timecode    = 0xA954494DUL, // 'TIM'
+	kQTilst_TimeScale   = 0xA9545343UL, // 'TSC'
+	kQTilst_TimeSize    = 0xA954535AUL  // 'TSZ'
 };
 
 
