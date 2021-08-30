@@ -1,12 +1,10 @@
 // =================================================================================================
 // Copyright Adobe
-// Copyright 2015 Adobe
+// Copyright 2020 Adobe
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 //
 // This file includes implementation of SVG metadata, according to Scalable Vector Graphics (SVG) 1.1 Specification. 
 // "https://www.w3.org/TR/2003/REC-SVG11-20030114/"
@@ -389,6 +387,8 @@ bool SVG_CheckFormat( XMP_FileFormat format,
 	SVG_Adapter * svgChecker = new ( std::nothrow ) SVG_Adapter();
 	if ( svgChecker == 0 )
 		return false;
+
+	svgChecker->SetErrorCallback(&parent->errorCallback);
 
 	bool isSVG = false;
 	bool isCompressed = false;

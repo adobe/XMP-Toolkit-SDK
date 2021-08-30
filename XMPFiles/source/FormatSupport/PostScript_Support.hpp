@@ -3,13 +3,11 @@
 
 // =================================================================================================
 // Copyright Adobe
-// Copyright 2012 Adobe
+// Copyright 2020 Adobe
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #include "public/include/XMP_Environment.h"	
@@ -149,7 +147,7 @@ static const std::string kPS_XMPHintMainLast="%ADO_ContainsXMP: MainLast\n";
 // embedd xpacket in EPS files.the xpacket is written inbetween kEPS_Injectdata1 and kEPS_Injectdata2.
 // The tokens kPS_Injectdata1 and kPS_Injectdata2 are used to embedd xpacket in DSC compliant PS files
 // The code inside the tokens is taken from examples in XMP Spec part 3 
-// section 2.6.2 PS, EPS (PostScript® and Encapsulated PostScript)
+// section 2.6.2 PS, EPS (PostScript and Encapsulated PostScript)
 static const std::string kEPS_Injectdata1="\n/currentdistillerparams where\n"
 "{pop currentdistillerparams /CoreDistVersion get 5000 lt} {true} ifelse\n"
 "{userdict /EPSHandler1_pdfmark /cleartomark load put\n"
