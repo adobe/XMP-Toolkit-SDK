@@ -2,7 +2,7 @@
 #define __XMPScanner_hpp__
 
 // =================================================================================================
-// Copyright 2020 Adobe Systems Incorporated
+// Copyright 2004 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
