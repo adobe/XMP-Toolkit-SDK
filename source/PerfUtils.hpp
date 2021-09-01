@@ -2,7 +2,7 @@
 #define __PerfUtils_hpp__ 1
 
 // =================================================================================================
-// Copyright 2020 Adobe
+// Copyright 2006 Adobe
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms

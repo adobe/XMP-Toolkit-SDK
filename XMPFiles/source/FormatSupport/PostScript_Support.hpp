@@ -3,7 +3,7 @@
 
 // =================================================================================================
 // Copyright Adobe
-// Copyright 2020 Adobe
+// Copyright 2012 Adobe
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms

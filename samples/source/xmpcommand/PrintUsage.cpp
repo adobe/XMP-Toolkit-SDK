@@ -1,5 +1,5 @@
 // =================================================================================================
-// Copyright 2020 Adobe
+// Copyright 2006 Adobe
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
@@ -24,7 +24,7 @@ namespace XMPQE {
 		Log::info("%s [switch [switch]...] action mediafile",exename);
 		Log::info("");
 		Log::info("This command uses the XMPFiles component of the Adobe XMP toolkit. ");
-		Log::info("Copyright 2020 Adobe Systems Incorporated. All Rights Reserved.");
+		Log::info("Copyright 2008 Adobe Systems Incorporated. All Rights Reserved.");
 		Log::info("");
 	}
 
@@ -35,7 +35,7 @@ namespace XMPQE {
 		Log::info("    Print descriptions of all available switches, including examples");
 		Log::info("%s [switch [switch]...] action mediafile",exename);
 		Log::info("This command uses the XMPFiles component of the Adobe XMP toolkit. ");
-		Log::info("Copyright 2020 Adobe Systems Incorporated. All Rights Reserved.");
+		Log::info("Copyright 2008 Adobe Systems Incorporated. All Rights Reserved.");
 		Log::info("NOTICE:  Adobe permits you to use, modify, and distribute this file in");
 		Log::info("         accordance with the terms of the Adobe license agreement");
 		Log::info("         accompanying it.");

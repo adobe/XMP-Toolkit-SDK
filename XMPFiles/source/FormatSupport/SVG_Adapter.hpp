@@ -2,7 +2,7 @@
 #define __SVG_Adapter_hpp__
 
 // =================================================================================================
-// Copyright 2020 Adobe
+// Copyright 2015 Adobe
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
