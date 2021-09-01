@@ -1,5 +1,5 @@
 // =================================================================================================
-// Copyright 2020 Adobe
+// Copyright 2003 Adobe
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
@@ -58,7 +58,7 @@ void printUsageShort() {
 	Log::info("");
 	Log::info("%s [ -help | -version | [-keys|-tree|-list] [-nocomments] <path> ]",EXENAME);
 	Log::info("");
-	Log::info("Copyright 2020 Adobe Systems Incorporated. All Rights Reserved.");
+	Log::info("Copyright 2008 Adobe Systems Incorporated. All Rights Reserved.");
 	Log::info("");
 }
 
@@ -71,7 +71,7 @@ void printUsageLong() {
 	Log::info("");
 	Log::info("%s [ -help | -version | [-keys|-tree|-list] [-nocomments] <path> ]",EXENAME);
 	Log::info("");
-	Log::info("Copyright 2020 Adobe Systems Incorporated. All Rights Reserved.");
+	Log::info("Copyright 2008 Adobe Systems Incorporated. All Rights Reserved.");
 	Log::info("NOTICE:  Adobe permits you to use, modify, and distribute this file in");
 	Log::info("         accordance with the terms of the Adobe license agreement");
 	Log::info("         accompanying it.");
