@@ -598,7 +598,7 @@ void SVG_MetaHandler::CacheFileData()
 			{
 				XMP_Int64 trailerOffset = svgAdapter->GetPIOffset( "xpacket", 2 );
 				XML_NodePtr trailerNode = metadataNode->GetNamedElement( "", "xpacket", 1 );
-				if ( trailerOffset != -1 || trailerNode != 0 )
+				if (trailerOffset != -1 && trailerNode != 0)
 				{
 					packetLength = 2;								// "<?" = 2
 					packetLength += trailerNode->name.length();		// Node's name
