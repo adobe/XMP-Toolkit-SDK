@@ -598,7 +598,7 @@ void SVG_MetaHandler::CacheFileData()
 			{
 				XMP_Int64 trailerOffset = svgAdapter->GetPIOffset( "xpacket", 2 );
 				XML_NodePtr trailerNode = metadataNode->GetNamedElement( "", "xpacket", 1 );
-				if ( trailerOffset != -1 || trailerNode != 0 )
+				if (trailerOffset != -1 && trailerNode != 0)
 				{
 					packetLength = 2;								// "<?" = 2
 					packetLength += trailerNode->name.length();		// Node's name
@@ -712,7 +712,8 @@ void SVG_MetaHandler::ProcessTitle( XMP_IO* sourceRef, XMP_IO * destRef, const s
 	}
 	else
 	{
-		char tempStr[1024];
+		char *tempStr = new char[titleOffset.endOffset - titleOffset.startOffset + 1];
+
 		tempStr [titleOffset.endOffset - titleOffset.startOffset] = '\0';
 
 		if(sourceRef != NULL) {
@@ -732,6 +733,8 @@ void SVG_MetaHandler::ProcessTitle( XMP_IO* sourceRef, XMP_IO * destRef, const s
 
 		destRef->Write( value.c_str(), static_cast< int >( value.length() ) );
 		currentOffset = titleOffset.endOffset;
+		delete[] tempStr;
+		tempStr = NULL;
 	}
 }	// SVG_MetaHandler::ProcessTitle
 
@@ -751,7 +754,8 @@ void SVG_MetaHandler::ProcessDescription( XMP_IO* sourceRef, XMP_IO * destRef, c
 	}
 	else
 	{
-		char tempStr[1024];
+		char *tempStr = new char[descOffset.endOffset - descOffset.startOffset + 1];
+
 		tempStr [descOffset.endOffset - descOffset.startOffset] = '\0';
 		if(sourceRef != NULL) {
 			sourceRef->Seek(descOffset.startOffset, kXMP_SeekFromStart);
@@ -768,6 +772,8 @@ void SVG_MetaHandler::ProcessDescription( XMP_IO* sourceRef, XMP_IO * destRef, c
 		}
 		destRef->Write( value.c_str(), static_cast< int >( value.length() ) );
 		currentOffset = descOffset.endOffset;
+		delete[] tempStr;
+		tempStr = NULL;
 	}
 
 }	// SVG_MetaHandler::ProcessDescription

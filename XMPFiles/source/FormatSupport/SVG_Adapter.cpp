@@ -134,7 +134,7 @@ XMP_Int64 SVG_Adapter::GetPIOffset( std::string PIName, XMP_Uns32 requiredIndex 
 			XMP_Uns32 index = 0;
 			IteratorStringXMP_Int64 indexIterator = iterator.first;
 			for ( ; index < ( requiredIndex - 1 ) && indexIterator != iterator.second; ++indexIterator, ++index );
-			if ( index == requiredIndex - 1 )
+			if ( indexIterator != this->mPIWithOffsetMap.end() && index == requiredIndex - 1 )
 				return indexIterator->second;
 		}
 	}
