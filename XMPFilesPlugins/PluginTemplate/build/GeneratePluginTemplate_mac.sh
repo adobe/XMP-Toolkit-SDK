@@ -46,7 +46,7 @@ PLuginTemplate32()
 {
 #create 32bit Xcode Project
 cmake_buildbitdepth='Off'
-cmakedir="xcode/intel_libcpp"
+cmakedir="xcode/universal"
 BITS="32"
 TOOLCHAIN="$scriptFolder/../../../build/shared/ToolchainLLVM.cmake"
 Generate
@@ -55,7 +55,7 @@ PLuginTemplate64()
 {
 #create 64bit Xcode Project
 cmake_buildbitdepth='On'
-cmakedir="xcode/intel_64_libcpp"
+cmakedir="xcode/universal"
 BITS="64"
 TOOLCHAIN="$scriptFolder/../../../build/shared/ToolchainLLVM.cmake"
 Generate
