@@ -4,7 +4,7 @@ Windows:
 
 1. Double Click GeneratePluginTemplate_win.bat" or run it through command prompt.
 2. Enter the type of project to create
-3. The project files will be created in vc15\windows or vc15\windows_x64 folder
+3. The project files will be created in vc16\windows or vc16\windows_x64 folder
 
 Mac:
 

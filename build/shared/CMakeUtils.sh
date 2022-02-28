@@ -14,11 +14,13 @@ if [ "$unamestr" == 'Linux' ]; then
 	    is_makefile='ON'
 	    cmake_generator='Unix Makefiles'
 	    compiler='gcc'
+		cmake_modesubdir='_64'
 		PATH=$XMPROOT/tools/cmake/bin:$PATH
 elif [ "$unamestr" == 'Darwin' ]; then
 	    is_makefile='OFF'
 	    cmake_generator='Xcode'
 	    compiler='xcode'
+		cmake_modesubdir='universal'
 		PATH=$XMPROOT/tools/cmake/bin/CMake.app/Contents/bin:$PATH
 else
 	    is_makefile='ON'
@@ -42,7 +44,6 @@ cd "$(dirname $0)" >/dev/null
 cmake_build_warning_as_error="Off"
 TOOLCHAIN=""
 cmake_buildbitdepth='On'
-cmake_modesubdir='_64'
 export MACHTYPE=x86_64
 cmake_buildmode="Release"
 cmake_buildtype="dynamic"
@@ -64,7 +65,6 @@ elif [ "$1" == "Debug" ]; then
     cmake_buildmode="Debug"
 elif [ "$1" == "libcpp" ]; then
 	cmake_libcpp="On"
-	cmake_modesubdir="$cmake_modesubdir"_libcpp
 elif [ "$1" == "WarningAsError" ]; then
         cmake_build_warning_as_error="On"
 elif [ "$1" == "Clean" ]; then
@@ -99,7 +99,7 @@ else
     if [ "$TOOLCHAIN" == "Toolchain_ios.cmake" ]; then
         cmakedir="$compiler/$cmake_buildtype/ios"
     else
-	    cmakedir="$compiler/$cmake_buildtype/intel$cmake_modesubdir"
+	    cmakedir="$compiler/$cmake_buildtype/$cmake_modesubdir"
 	fi
 	cmakeconfigdir="../../../."
 fi

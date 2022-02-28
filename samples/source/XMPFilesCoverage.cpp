@@ -301,18 +301,18 @@ extern "C" int main ( int argc, const char * argv[] )
 		
 		DumpHandlerInfo();
 	
-		TestOneFile ( "../../../testfiles/BlueSquare.ai" );
-		TestOneFile ( "../../../testfiles/BlueSquare.eps" );
-		TestOneFile ( "../../../testfiles/BlueSquare.indd" );
-		TestOneFile ( "../../../testfiles/BlueSquare.jpg" );
-		TestOneFile ( "../../../testfiles/BlueSquare.pdf" );
-		TestOneFile ( "../../../testfiles/BlueSquare.psd" );
-		TestOneFile ( "../../../testfiles/BlueSquare.tif" );
-		TestOneFile ( "../../../testfiles/BlueSquare.avi" );
-		TestOneFile ( "../../../testfiles/BlueSquare.mov" );
-		TestOneFile ( "../../../testfiles/BlueSquare.mp3" );
-		TestOneFile ( "../../../testfiles/BlueSquare.wav" );
-		TestOneFile ( "../../../testfiles/BlueSquare.png" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.ai" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.eps" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.indd" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.jpg" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.pdf" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.psd" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.tif" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.avi" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.mov" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.mp3" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.wav" );
+		TestOneFile ( "../../../../testfiles/BlueSquare.png" );
 
 	} catch ( XMP_Error & excep ) {
 

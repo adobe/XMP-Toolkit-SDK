@@ -43,9 +43,10 @@ set GENERATE_ALL=On
 
 :32DLL
 echo "Generating PluginTemplate Dynamic Win32"
-set GENERATOR=Visual Studio 15 2017
+set GENERATOR=Visual Studio 16 2019
+set GeneratorArchitecture=Win32
 set BITS64=OFF
-set CMakeFolder="vc15/windows"
+set CMakeFolder="vc16/windows"
 set CMake_ARCH=x86
 IF "%GENERATE_ALL%"=="On" (
 	set NEXT_LABEL=64DLL
@@ -55,9 +56,10 @@ GOTO GenerateNow
 
 :64DLL
 echo "Generating PluginTemplate Dynamic x64"
-set GENERATOR=Visual Studio 15 2017 Win64
+set GENERATOR=Visual Studio 16 2019
+set GeneratorArchitecture=x64
 set BITS64=ON
-set CMakeFolder="vc15/windows_x64"
+set CMakeFolder="vc16/windows_x64"
 set CMake_ARCH=x64
 IF "%GENERATE_ALL%"=="On" (
 	set NEXT_LABEL=ok
@@ -70,7 +72,7 @@ GOTO GenerateNow
 echo CMakeFolder: %CMakeFolder%
 mkdir %CMakeFolder%
 cd %CMakeFolder%
-echo %CMAKE% ../../. -G"%GENERATOR%" -DCMAKE_CL_64=%BITS64% -DXMP_CMAKEFOLDER_NAME=%CMakeFolder% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_STATIC="%CMAKE_BUILDSTATIC%"
+echo %CMAKE% ../../. -G"%GENERATOR%"  -A %GeneratorArchitecture% -DCMAKE_CL_64=%BITS64% -DXMP_CMAKEFOLDER_NAME=%CMakeFolder% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_STATIC="%CMAKE_BUILDSTATIC%"
 %CMAKE% ../../. -G"%GENERATOR%" -DCMAKE_CL_64=%BITS64% -DXMP_CMAKEFOLDER_NAME=%CMakeFolder% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_STATIC="%CMAKE_BUILDSTATIC%"
 cd ..\..
 if errorlevel 1 goto error
@@ -90,7 +92,7 @@ exit /B 0
 
 :CLEANALL
 echo "Cleaning..."
-if exist vc15 rmdir /S /Q vc15
+if exist vc16 rmdir /S /Q vc16
 echo "Done"
 pause
 exit /B 0

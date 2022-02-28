@@ -22,84 +22,84 @@ clean()
 {
 echo "Cleaning..."
 
-if [ -e cmake/CustomSchema/build_x64 ]
+if [ -e cmake/CustomSchema/universal ]
 then
-rm -rf cmake/CustomSchema/build_x64
+rm -rf cmake/CustomSchema/universal
 fi
 
-if [ -e cmake/CustomSchemaNewDOM/build_x64 ]
+if [ -e cmake/CustomSchemaNewDOM/universal ]
 then
-rm -rf cmake/CustomSchemaNewDOM/build_x64
+rm -rf cmake/CustomSchemaNewDOM/universal
 fi
 
-if [ -e cmake/DumpFile/build_x64 ]
+if [ -e cmake/DumpFile/universal ]
 then
-rm -rf cmake/DumpFile/build_x64
+rm -rf cmake/DumpFile/universal
 fi
 
-if [ -e cmake/DumpMainXMP/build_x64 ]
+if [ -e cmake/DumpMainXMP/universal ]
 then
-rm -rf cmake/DumpMainXMP/build_x64
+rm -rf cmake/DumpMainXMP/universal
 fi
 
-if [ -e cmake/DumpScannedXMP/build_x64 ]
+if [ -e cmake/DumpScannedXMP/universal ]
 then
-rm -rf cmake/DumpScannedXMP/build_x64
+rm -rf cmake/DumpScannedXMP/universal
 fi
 
-if [ -e cmake/ModifyingXMP/build_x64 ]
+if [ -e cmake/ModifyingXMP/universal ]
 then
-rm -rf cmake/ModifyingXMP/build_x64
+rm -rf cmake/ModifyingXMP/universal
 fi
 
-if [ -e cmake/ModifyingXMPNewDOM/build_x64 ]
+if [ -e cmake/ModifyingXMPNewDOM/universal ]
 then
-rm -rf cmake/ModifyingXMPNewDOM/build_x64
+rm -rf cmake/ModifyingXMPNewDOM/universal
 fi
 
-if [ -e cmake/ReadingXMP/build_x64 ]
+if [ -e cmake/ReadingXMP/universal ]
 then
-rm -rf cmake/ReadingXMP/build_x64
+rm -rf cmake/ReadingXMP/universal
 fi
 
-if [ -e cmake/ReadingXMPNewDOM/build_x64 ]
+if [ -e cmake/ReadingXMPNewDOM/universal ]
 then
-rm -rf cmake/ReadingXMPNewDOM/build_x64
+rm -rf cmake/ReadingXMPNewDOM/universal
 fi
 
-if [ -e cmake/XMPCommand/build_x64 ]
+if [ -e cmake/XMPCommand/universal ]
 then
-rm -rf cmake/XMPCommand/build_x64
+rm -rf cmake/XMPCommand/universal
 fi
 
-if [ cmake/XMPCoreCoverage/build_x64 ]
+if [ cmake/XMPCoreCoverage/universal ]
 then
-rm -rf cmake/XMPCoreCoverage/build_x64
+rm -rf cmake/XMPCoreCoverage/universal
 fi
 
-if [ -e cmake/XMPFilesCoverage/build_x64 ]
+if [ -e cmake/XMPFilesCoverage/universal ]
 then
-rm -rf cmake/XMPFilesCoverage/build_x64
+rm -rf cmake/XMPFilesCoverage/universal
 fi
 
-if [ -e cmake/XMPIterations/build_x64 ]
+if [ -e cmake/XMPIterations/universal ]
 then
-rm -rf cmake/XMPIterations/build_x64
+rm -rf cmake/XMPIterations/universal
 fi
 
-if [ -e cmake/UnicodeCorrectness/build_x64 ]
+if [ -e cmake/UnicodeCorrectness/universal ]
 then
-rm -rf cmake/UnicodeCorrectness/build_x64
+rm -rf cmake/UnicodeCorrectness/universal
 fi
 
-if [ -e cmake/UnicodeParseSerialize/build_x64 ]
+if [ -e cmake/UnicodeParseSerialize/universal ]
 then
-rm -rf cmake/UnicodeParseSerialize/build_x64
+rm -rf cmake/UnicodeParseSerialize/universal
 fi
 
-if [ -e cmake/UnicodePerformance/build_x64 ]
+if [ -e cmake/UnicodePerformance/universal ]
 then
-rm -rf cmake/UnicodePerformance/build_x64
+rm -rf cmake/UnicodePerformance/universal
 fi
 
 if [ -e xcode ]
@@ -117,7 +117,7 @@ exit 0;
 Xcode64()
 {
 #create 64bit Xcode Project
-DIR="xcode/intel_64"
+DIR="xcode/universal"
 TOOLCHAIN="$scriptdir/../../build/shared/ToolchainLLVM.cmake"
 bit64="1"
 }
@@ -152,8 +152,8 @@ fi
 
 echo "Enter your choice:"
 echo "1. Clean"
-echo "2. 64 Bit Xcode Project (Static)"
-echo "3. 64 Bit Xcode Project (Dynamic)"
+echo "2. Xcode Project (Static)"
+echo "3. Xcode Project (Dynamic)"
 
 read choice
 

@@ -18,10 +18,10 @@ endif(ANDROID)
 # ==============================================================================
 # Product Config for XMP Toolkit
 # ==============================================================================
+
 if (UNIX)
 	if (APPLE)
 		set(XMP_ENABLE_SECURE_SETTINGS "ON")
-		
 		if (APPLE_IOS)
 			set(XMP_PLATFORM_SHORT "ios")
 			if(XMP_BUILD_STATIC)
@@ -40,11 +40,8 @@ if (UNIX)
 		else ()
 			set(XMP_PLATFORM_SHORT "mac")
 			if(CMAKE_CL_64)
-				set(CMAKE_OSX_ARCHITECTURES "x86_64" CACHE STRING "Build architectures for OSX" FORCE)
+				set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)" CACHE STRING "Build architectures for OSX" FORCE)
 				add_definitions(-DXMP_64=1)
-			else(CMAKE_CL_64)
-				set(CMAKE_OSX_ARCHITECTURES "i386" CACHE STRING "Build architectures for OSX" FORCE)
-				add_definitions(-DXMP_64=0)
 			endif(CMAKE_CL_64)
 
 			# is SDK and deployment target set?
@@ -80,20 +77,11 @@ if (UNIX)
 			if(CMAKE_CL_64)
 				set(XMP_BITDEPTH		"64")
 				if(CMAKE_LIBCPP)
-					set(XMP_CPU_FOLDERNAME	"intel_64_libcpp")
-				else()
-					set(XMP_CPU_FOLDERNAME	"intel_64")
-				endif()
-			else()
-				set(XMP_BITDEPTH		"32")
-				if(CMAKE_LIBCPP)
-					set(XMP_CPU_FOLDERNAME	"intel_libcpp")
-				else()
-					set(XMP_CPU_FOLDERNAME	"intel")
+					set(XMP_CPU_FOLDERNAME	"universal")
 				endif()
 			endif()
 		endif()
-
+		
 		# XMP_PLATFORM_FOLDER is used in OUTPUT_DIR and Debug/Release get automatically added for VS/XCode projects
 		if(APPLE_IOS)
 		    set(XMP_PLATFORM_FOLDER "ios/${XMP_CPU_FOLDERNAME}")

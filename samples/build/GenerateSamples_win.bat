@@ -19,16 +19,16 @@ exit /B 0)
 :Start
 ECHO Enter your choice:
 ECHO 1. Clean
-ECHO 2. VC2017, 64 Bit Project (Static)
-ECHO 3. VC2017, 64 Bit Project (Dynamic)
+ECHO 2. VC2019, 64 Bit Project (Static)
+ECHO 3. VC2019, 64 Bit Project (Dynamic)
 ECHO 4. Close
 
 ECHO
 set /P choice=Enter your choice:
 
 IF "%choice%"=="1" GOTO CleanCMake
-IF "%choice%"=="2" GOTO 64VC2017
-IF "%choice%"=="3" GOTO 64VC2017
+IF "%choice%"=="2" GOTO 64VC2019
+IF "%choice%"=="3" GOTO 64VC2019
 IF "%choice%"=="4" GOTO Close
 
 
@@ -80,7 +80,7 @@ if exist cmake\ModifyingXMPHistory\build_x64 rmdir /S /Q cmake\ModifyingXMPHisto
 if exist cmake\ModifyingXMPHistory\build rmdir /S /Q cmake\ModifyingXMPHistory\build
 
 
-if exist vc15 rmdir /S /Q vc15
+if exist vc16 rmdir /S /Q vc16
 if exist ..\target\windows rmdir /S /Q ..\target\windows
 if exist ..\target\windows_x64 rmdir /S /Q ..\target\windows_x64
 
@@ -89,9 +89,9 @@ echo.
 echo. 
 GOTO Start
 
-:64VC2017
-set GENERATOR=Visual Studio 15 Win64
-set DIR=vc15\windows_x64
+:64VC2019
+set GENERATOR=Visual Studio 16 2019
+set DIR=vc16\windows_x64
 set bit64=1
 IF "%choice%"=="2" set static=1
 IF "%choice%"=="3" set static=0
@@ -104,7 +104,7 @@ IF NOT exist %DIR% mkdir %DIR%
 cd %DIR%
 if errorlevel 1 ( ECHO Cannot create folder %DIR% for generating project
 goto error)
-ECHO "%CMAKE%"  ..\..\cmake\ -G"%GENERATOR%" -DCMAKE_CL_64=%bit64% -DSTATIC=%static%
+ECHO "%CMAKE%"  ..\..\cmake\ -G"%GENERATOR%" -A x64 -DCMAKE_CL_64=%bit64% -DSTATIC=%static%
 "%CMAKE%"  ..\..\cmake\ -G"%GENERATOR%" -DCMAKE_CL_64=%bit64% -DSTATIC=%static%
 if errorlevel 1 ( cd ..\..\
 goto error)
