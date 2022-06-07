@@ -21,6 +21,9 @@
 
 #endif
 
+
+#define HAVE_ARC4RANDOM_BUF 1
+
 /* Define to 1 if you have the `bcopy' function. */
 #define HAVE_BCOPY 1
 
@@ -76,13 +79,13 @@
 #define PACKAGE_NAME "expat"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "expat 1.95.8"
+#define PACKAGE_STRING "expat 2.4.7"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "expat"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.95.8"
+#define PACKAGE_VERSION "2.4.7"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1

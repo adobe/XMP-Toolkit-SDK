@@ -2,13 +2,13 @@ The XMP Toolkit needs an external XML parser. The source from Adobe is written t
 
 although adapters for other parsers can easily be written. The most recent version of Expat used
 
-with XMP is 2.1.0. To use Expat:
+with XMP is 2.4.7. To use Expat:
 
 
 
 1. Obtain a copy of the Expat distribution. One good place is SourceForge:
 
-	http://sourceforge.net/projects/expat/files/expat/2.1.0/
+	http://sourceforge.net/projects/expat/files/expat/2.4.7/
 
 
 
@@ -16,7 +16,7 @@ with XMP is 2.1.0. To use Expat:
 
 
 
-For Expat version 2.0.0 the contents of .../third-party/expat/lib are:
+For Expat version 2.4.7 the contents of .../third-party/expat/lib are:
 
 
 
