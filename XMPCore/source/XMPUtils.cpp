@@ -1521,13 +1521,7 @@ static void FormatFullDateTime ( XMP_DateTime & tempDate, char * buffer, size_t 
 
 	AdjustTimeOverflow ( &tempDate );	// Make sure all time parts are in range.
 
-	if ( (tempDate.second == 0) && (tempDate.nanoSecond == 0) ) {
-
-		// Output YYYY-MM-DDThh:mmTZD.
-		snprintf ( buffer, bufferLen, "%.4d-%02d-%02dT%02d:%02d",	// AUDIT: Callers pass sizeof(buffer).
-				   tempDate.year, tempDate.month, tempDate.day, tempDate.hour, tempDate.minute );
-
-	} else if ( tempDate.nanoSecond == 0  ) {
+	if ( tempDate.nanoSecond == 0  ) {
 
 		// Output YYYY-MM-DDThh:mm:ssTZD.
 		snprintf ( buffer, bufferLen, "%.4d-%02d-%02dT%02d:%02d:%02d",	// AUDIT: Callers pass sizeof(buffer).
