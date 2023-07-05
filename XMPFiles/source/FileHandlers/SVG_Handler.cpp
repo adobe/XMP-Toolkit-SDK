@@ -70,6 +70,7 @@ static XMP_Uns64 DecompressBuffer(XMP_Uns8 * buffer, const XMP_Uns32 ioCount, Ra
 
 	z_stream zipState;
 	memset(&zipState, 0, sizeof(zipState));
+    XMP_Uns32 prev_avail_in = 0;
 
 	// To decompress a gzip format file use windowBits as 16 + MAX_WBITS with inflateInit2
 	int err = inflateInit2(&zipState, 16 + MAX_WBITS);
@@ -86,8 +87,12 @@ static XMP_Uns64 DecompressBuffer(XMP_Uns8 * buffer, const XMP_Uns32 ioCount, Ra
 	while(zipState.avail_in > 0)
 	{
 		XMP_Assert(zipState.avail_out > 0);	// Sanity check for output buffer space. pppp
+        
+        prev_avail_in = zipState.avail_in;
 
 		err = inflate(&zipState, Z_NO_FLUSH);
+        if (prev_avail_in == zipState.avail_in)
+            break;
 		if(err != Z_OK && err != Z_STREAM_END)
 			return 0;
 		if(zipState.avail_out == 0) {
