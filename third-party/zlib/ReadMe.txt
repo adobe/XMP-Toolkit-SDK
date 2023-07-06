@@ -1,5 +1,5 @@
 The XMP Toolkit SDK needs zlib.
-This release uses zlib Version 1.2.8
+This release uses zlib Version 1.2.13
 
 
 
