@@ -49,7 +49,7 @@
 		#elif __GNUC__ && (__sparc__)
 			#define kBigEndianHost 1
 			#define kLittleEndianHost 0
-		#elif __GNUC__ && (__arm__)
+		#elif __GNUC__ && (__aarch64__)
 			#define kBigEndianHost 1
 			#define kLittleEndianHost 0
 		#else
