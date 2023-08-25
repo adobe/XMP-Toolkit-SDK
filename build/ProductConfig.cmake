@@ -114,8 +114,12 @@ if (UNIX)
 			endif()
 
 			if(CMAKE_CL_64)
-				set(XMP_EXTRA_COMPILE_FLAGS "-m64")
-				set(XMP_EXTRA_LINK_FLAGS "-m64")
+
+				if(NOT ${CMAKE_ARCH} MATCHES "ARM64")
+					set(XMP_EXTRA_COMPILE_FLAGS "-m64")
+					set(XMP_EXTRA_LINK_FLAGS "-m64")
+				endif()
+
 				if(CENTOS)	
 					set(XMP_PLATFORM_FOLDER "i80386linux_x64_centos") # add XMP_BUILDMODE_DIR to follow what other platforms do
 					set(XMP_GCC_LIBPATH /opt/llvm/lib)
@@ -136,8 +140,11 @@ if (UNIX)
 		else()
 			# running toolchain
 			if(CMAKE_CL_64)
-				set(XMP_EXTRA_COMPILE_FLAGS "-m64")
-				set(XMP_EXTRA_LINK_FLAGS "-m64")
+
+				if(NOT ${CMAKE_ARCH} MATCHES "ARM64")
+					set(XMP_EXTRA_COMPILE_FLAGS "-m64")
+					set(XMP_EXTRA_LINK_FLAGS "-m64")
+				endif()
 				
 				if(CENTOS)	
 					set(XMP_GCC_LIBPATH /opt/llvm/lib)
