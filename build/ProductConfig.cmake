@@ -177,7 +177,12 @@ if (UNIX)
 		#set(CMAKE_CXX_COMPILER "/user/unicore/i80386linux/compiler/gcc4.4.4/linux2.6_32/bin/gcc")
 		#set(XMP_GCC_LIBPATH /user/unicore/i80386linux/compiler/gcc4.4.4/linux2.6_32/lib)
 
-   		set(XMP_PLATFORM_LINK "-z defs -Xlinker -Bsymbolic -Wl,--no-undefined  ${XMP_EXTRA_LINK_FLAGS} ${XMP_TOOLCHAIN_LINK_FLAGS} -lrt -Wl,--no-as-needed -ldl -lpthread ${XMP_GCC_LIBPATH}/libssp.a")
+		set(XMP_PLATFORM_LINK "-z defs -Xlinker -Bsymbolic -Wl,--no-undefined  ${XMP_EXTRA_LINK_FLAGS} ${XMP_TOOLCHAIN_LINK_FLAGS} -lrt -Wl,--no-as-needed -ldl -lpthread")
+		
+		if (XMP_ENABLE_SECURE_SETTINGS)
+			set (XMP_PLATFORM_LINK "${XMP_PLATFORM_LINK} ${XMP_GCC_LIBPATH}/libssp.a")
+		endif()
+
 if(CENTOS)
 		set(XMP_PLATFORM_LINK " -lc++abi ${XMP_PLATFORM_LINK}")
 endif()
