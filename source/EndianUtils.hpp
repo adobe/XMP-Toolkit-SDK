@@ -49,6 +49,9 @@
 		#elif __GNUC__ && (__sparc__)
 			#define kBigEndianHost 1
 			#define kLittleEndianHost 0
+		#elif __GNUC__ && (__arm__)
+			#define kBigEndianHost 1
+			#define kLittleEndianHost 0
 		#else
 			#error "Must define kBigEndianHost as 0 or 1 in the makefile."
 		#endif
