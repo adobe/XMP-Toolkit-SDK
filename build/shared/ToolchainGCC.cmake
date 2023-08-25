@@ -34,7 +34,7 @@ CMAKE_FORCE_CXX_COMPILER("${CMAKE_SYSTEM_LIBRARY_PATH}/bin/g++" GNU)
 set(CMAKE_MAKE_PROGRAMM "${CMAKE_SYSTEM_LIBRARY_PATH}/bin/make")
 
 # specify to use secure settings 
-set(XMP_ENABLE_SECURE_SETTINGS "ON")
+set(XMP_ENABLE_SECURE_SETTINGS off)
 
 # search for programs in the build host directories
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
