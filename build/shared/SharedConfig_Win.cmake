@@ -19,6 +19,9 @@ endif(ANDROID)
 # ==============================================================================
 # Shared config for windows
 # ==============================================================================
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(CMAKE_CL_64)
 	set(COMMON_SHARED_COMPILE_FLAGS "-DWIN64 -D_WIN64=1")

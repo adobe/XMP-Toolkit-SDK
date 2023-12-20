@@ -1198,7 +1198,10 @@ enum {
     kXMPFiles_OpenRepairFile        = 0x00000100,
 
 	/// When updating a file, spend the effort necessary to optimize file layout.
-	kXMPFiles_OptimizeFileLayout    = 0x00000200
+    kXMPFiles_OptimizeFileLayout    = 0x00000200,
+
+	/// When updating a PDF preserve state of document
+    kXMPFiles_PreservePDFState    =  0x00000400
 
 };
 

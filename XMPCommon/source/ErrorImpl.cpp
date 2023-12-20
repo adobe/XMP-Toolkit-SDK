@@ -113,8 +113,9 @@ namespace XMP_COMPONENT_INT_NAMESPACE {
 			UTF8StringStream stm1;
 			stm1.setf( std::ios::hex );
 			stm1 << "0x" << addressParameter;
+			std::string str1 = stm1.str().c_str();
 			if ( stm1.str().size() > 4 ) {
-				const char * charPtr = stm1.str().c_str();
+				const char * charPtr = str1.c_str();
 				if ( charPtr[ 2 ] == '0' && ( charPtr[ 3 ] == 'x' || charPtr[ 3 ] == 'X' ) ) {
 					appends0x = true;
 				}

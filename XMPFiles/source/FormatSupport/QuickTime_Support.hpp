@@ -44,6 +44,42 @@ enum {	// List of recognized items from the QuickTime 'moov'/'udta' box.
 	kQTilst_TimeSize    = 0xA954535AUL  // 'TSZ'
 };
 
+enum {
+  ksmRoman                       = 0,
+  ksmJapanese                    = 1,
+  ksmTradChinese                 = 2,    /* Traditional Chinese*/
+  ksmKorean                      = 3,
+  ksmArabic                      = 4,
+  ksmHebrew                      = 5,
+  ksmGreek                       = 6,
+  ksmCyrillic                    = 7,
+  ksmRSymbol                     = 8,    /* Right-left symbol*/
+  ksmDevanagari                  = 9,
+  ksmGurmukhi                    = 10,
+  ksmGujarati                    = 11,
+  ksmOriya                       = 12,
+  ksmBengali                     = 13,
+  ksmTamil                       = 14,
+  ksmTelugu                      = 15,
+  ksmKannada                     = 16,   /* Kannada/Kanarese*/
+  ksmMalayalam                   = 17,
+  ksmSinhalese                   = 18,
+  ksmBurmese                     = 19,
+  ksmKhmer                       = 20,   /* Khmer/Cambodian*/
+  ksmThai                        = 21,
+  ksmLao                         = 22,
+  ksmGeorgian                    = 23,
+  ksmArmenian                    = 24,
+  ksmSimpChinese                 = 25,   /* Simplified Chinese*/
+  ksmTibetan                     = 26,
+  ksmMongolian                   = 27,
+  ksmEthiopic                    = 28,
+  ksmGeez                        = 28,   /* Synonym for ksmEthiopic*/
+  ksmCentralEuroRoman            = 29,   /* For Czech, Slovak, Polish, Hungarian, Baltic langs*/
+  ksmVietnamese                  = 30,
+  ksmExtArabic                   = 31,   /* extended Arabic*/
+  ksmUninterp                    = 32    /* uninterpreted symbols, e.g. palette symbols*/
+};
 
 enum {
 	kNoMacLang   = 0xFFFF,

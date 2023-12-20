@@ -77,7 +77,7 @@ ProcessFile ( const char * fileName  )
 	XMP_OptionBits openFlags, handlerFlags;
 	XMP_PacketInfo xmpPacket;
 	
-	sprintf ( buffer, "Dumping main XMP for %s", fileName );
+	snprintf ( buffer,sizeof(buffer), "Dumping main XMP for %s", fileName );
 	WriteMinorLabel ( sLogFile, buffer );
 	
 	xmpFile.OpenFile ( fileName, kXMP_UnknownFile, kXMPFiles_OpenForRead );

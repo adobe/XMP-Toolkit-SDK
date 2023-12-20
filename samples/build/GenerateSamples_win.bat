@@ -19,16 +19,16 @@ exit /B 0)
 :Start
 ECHO Enter your choice:
 ECHO 1. Clean
-ECHO 2. VC2019, 64 Bit Project (Static)
-ECHO 3. VC2019, 64 Bit Project (Dynamic)
+ECHO 2. VC2022, 64 Bit Project (Static)
+ECHO 3. VC2022, 64 Bit Project (Dynamic)
 ECHO 4. Close
 
 ECHO
 set /P choice=Enter your choice:
 
 IF "%choice%"=="1" GOTO CleanCMake
-IF "%choice%"=="2" GOTO 64VC2019
-IF "%choice%"=="3" GOTO 64VC2019
+IF "%choice%"=="2" GOTO 64VC2022
+IF "%choice%"=="3" GOTO 64VC2022
 IF "%choice%"=="4" GOTO Close
 
 
@@ -80,7 +80,7 @@ if exist cmake\ModifyingXMPHistory\build_x64 rmdir /S /Q cmake\ModifyingXMPHisto
 if exist cmake\ModifyingXMPHistory\build rmdir /S /Q cmake\ModifyingXMPHistory\build
 
 
-if exist vc16 rmdir /S /Q vc16
+if exist vc17 rmdir /S /Q vc17
 if exist ..\target\windows rmdir /S /Q ..\target\windows
 if exist ..\target\windows_x64 rmdir /S /Q ..\target\windows_x64
 
@@ -89,9 +89,9 @@ echo.
 echo. 
 GOTO Start
 
-:64VC2019
-set GENERATOR=Visual Studio 16 2019
-set DIR=vc16\windows_x64
+:64VC2022
+set GENERATOR=Visual Studio 17 2022
+set DIR=vc17\windows_x64
 set bit64=1
 IF "%choice%"=="2" set static=1
 IF "%choice%"=="3" set static=0

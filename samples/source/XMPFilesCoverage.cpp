@@ -204,7 +204,7 @@ static void TestOneFile ( const char * fileName )
 	XMP_PacketInfo xmpPacket;
 	std::string    roDump, rwDump;
 	
-	sprintf ( buffer, "Testing %s", fileName );
+	snprintf ( buffer,sizeof(buffer), "Testing %s", fileName );
 	WriteMinorLabel ( sLogFile, buffer );
 	
 	OpenTestFile ( fileName, kXMPFiles_OpenForRead, &xmpMeta, &xmpFile );

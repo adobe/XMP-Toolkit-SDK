@@ -37,7 +37,7 @@ set GENERATE_ALL=On
 
 :32DLL
 echo "Generating XMPSDKToolkit Dynamic Win32"
-set VS_VERSION=2019
+set VS_VERSION=2022
 set BUILD_TYPE=Dynamic
 set BITS=32
 IF "%GENERATE_ALL%"=="On" (
@@ -48,7 +48,7 @@ GOTO GenerateNow
 
 :32LIB
 echo "Generating XMPSDKToolkit Static Win32"
-set VS_VERSION=2019
+set VS_VERSION=2022
 set BUILD_TYPE=Static
 set BITS=32
 IF "%GENERATE_ALL%"=="On" (
@@ -58,7 +58,7 @@ GOTO GenerateNow
 
 :64DLL
 echo "Generating XMPSDKToolkit Dynamic x64"
-set VS_VERSION=2019
+set VS_VERSION=2022
 set BUILD_TYPE=Dynamic
 set BITS=64
 IF "%GENERATE_ALL%"=="On" (
@@ -68,7 +68,7 @@ GOTO GenerateNow
 
 :64LIB
 echo "Generating XMPSDKToolkit Static x64"
-set VS_VERSION=2019
+set VS_VERSION=2022
 set BUILD_TYPE=Static
 set BITS=64
 IF "%GENERATE_ALL%"=="On" (
@@ -94,9 +94,9 @@ exit /B 0
 
 :CLEANALL
 echo "Cleaning..."
-if exist vc16 rmdir /S /Q vc16
-if exist ..\XMPCore\build\vc16 rmdir /S /Q ..\XMPCore\build\vc16
-if exist ..\XMPFiles\build\vc16 rmdir /S /Q ..\XMPFiles\build\vc16
+if exist vc17 rmdir /S /Q vc17
+if exist ..\XMPCore\build\vc17 rmdir /S /Q ..\XMPCore\build\vc17
+if exist ..\XMPFiles\build\vc17 rmdir /S /Q ..\XMPFiles\build\vc17
 if exist ..\public\libraries\windows rmdir /S /Q ..\public\libraries\windows
 if exist ..\public\libraries\windows_x64 rmdir /S /Q ..\public\libraries\windows_x64
 echo "Done"

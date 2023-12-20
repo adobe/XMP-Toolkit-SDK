@@ -2784,7 +2784,7 @@ extern "C" int main ( void )
 	
 	time_t now;
 	time ( &now );
-	sprintf ( buffer, "// Starting test for Unicode conversion correctness, %s", ctime ( &now ) );
+	snprintf ( buffer, sizeof(buffer), "// Starting test for Unicode conversion correctness, %s", ctime ( &now ) );
 
 	fprintf ( log, "// " );
 	for ( size_t i = 4; i < strlen(buffer); ++i ) fprintf ( log, "=" );
@@ -2803,7 +2803,7 @@ extern "C" int main ( void )
 	}
 
 	time ( &now );
-	sprintf ( buffer, "// Finished test for Unicode conversion correctness, %s", ctime ( &now ) );
+	snprintf ( buffer, sizeof(buffer), "// Finished test for Unicode conversion correctness, %s", ctime ( &now ) );
 
 	fprintf ( log, "\n// " );
 	for ( size_t i = 4; i < strlen(buffer); ++i ) fprintf ( log, "=" );

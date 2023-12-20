@@ -68,14 +68,7 @@ public:
 	
 private:
 
-	struct StringCompare : std::binary_function< const std::string &, const std::string &, bool >
-	{
-		bool operator()( const std::string & a, const std::string & b ) const
-		{
-			return ( a.compare(b) < 0 );
-		}
-	};
-	typedef std::map<std::string, const PluginCreatorBase*,	StringCompare>		RegistryEntryMap;
+	typedef std::map<std::string, const PluginCreatorBase*> RegistryEntryMap;
 	
 	PluginRegistry(){}
 	~PluginRegistry();

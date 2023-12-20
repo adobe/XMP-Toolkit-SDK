@@ -22,7 +22,10 @@
 // =================================================================================================
 
 typedef XMP_Uns8 MD5_Digest[16];	// ! Should be in MD5.h.
-
+/* Temporary fix for deprecated warning message, will add proper fix later */
+enum {
+  smSystem_Script                = -1,   /* designates system script.*/
+};
 enum {
 	kDigestMissing = -1,	// A partial import is done, existing XMP is left alone.
 	kDigestDiffers =  0,	// A full import is done, existing XMP is deleted or replaced.

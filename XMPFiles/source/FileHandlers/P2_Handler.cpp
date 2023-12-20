@@ -852,7 +852,7 @@ void P2_MetaHandler::SetGPSPropertyFromLegacyXML  ( XML_NodePtr legacyLocationCo
 					const double minutes = fractionalDegrees * 60.0;
 					char xmpValue [128];
 
-					sprintf ( xmpValue, "%d,%.5lf%c", static_cast<int>(wholeDegrees), minutes, direction );
+					snprintf ( xmpValue, sizeof(xmpValue), "%d,%.5lf%c", static_cast<int>(wholeDegrees), minutes, direction );
 					this->xmpObj.SetProperty ( kXMP_NS_EXIF, propName, xmpValue );
 					this->containsXMP = true;
 
@@ -902,7 +902,7 @@ void P2_MetaHandler::SetAltitudeFromLegacyXML  ( XML_NodePtr legacyLocationConte
 
 					char xmpValue [128];
 
-					sprintf ( xmpValue, "%d/1", altitude );
+					snprintf ( xmpValue, sizeof(xmpValue), "%d/1", altitude );
 					this->xmpObj.SetProperty ( kXMP_NS_EXIF, "GPSAltitude", xmpValue );
 					this->containsXMP = true;
 
