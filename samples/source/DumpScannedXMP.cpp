@@ -69,7 +69,7 @@ ProcessPacket ( const char * fileName,
 	
 	char title [1000];
 	
-	sprintf ( title, "// Dumping raw input for \"%s\" (%zu..%zu)", fileName, offset, (offset + length - 1) );
+	snprintf ( title, sizeof(title),"// Dumping raw input for \"%s\" (%zu..%zu)", fileName, offset, (offset + length - 1) );
 	printf ( "// " );
 	for ( size_t i = 3; i < strlen(title); ++i ) printf ( "=" );
 	printf ( "\n\n%s\n\n%.*s\n\n", title, (int)length, xmlString.c_str() );

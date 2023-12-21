@@ -1609,7 +1609,7 @@ static void AVCCAM_SetXMPStartTimecode ( SXMPMeta& xmpObj, const XMP_Uns8* avcca
 	if ( dmTimeFormat != NULL ) {
 		char timecodeBuff [12];
 
-		sprintf ( timecodeBuff, "%d%d%c%d%d%c%d%d%c%d%d", hourTens, hourUnits, tcSeparator,
+		snprintf ( timecodeBuff, sizeof(timecodeBuff), "%d%d%c%d%d%c%d%d%c%d%d", hourTens, hourUnits, tcSeparator,
 			minuteTens, minuteUnits, tcSeparator, secondTens, secondUnits, tcSeparator, frameTens, frameUnits);
 
 		xmpObj.SetProperty( kXMP_NS_DM, "startTimeScale", dmTimeScale, kXMP_DeleteExisting );
@@ -1638,7 +1638,7 @@ static bool AVCHD_SetXMPMakeAndModel ( SXMPMeta& xmpObj, const AVCHD_blkClipExte
 			case kMakerIDPanasonic : xmpValue = "Panasonic";	break;
 			case kMakerIDSony : xmpValue = "Sony";				break;
 			default :
-				std::sprintf ( hexMakeNumber, "0x%04x", clipExtData.mClipInfoExt.mMakerID );
+				snprintf ( hexMakeNumber,sizeof(hexMakeNumber), "0x%04x", clipExtData.mClipInfoExt.mMakerID );
 				xmpValue = hexMakeNumber;
 
 				break;
@@ -1693,7 +1693,7 @@ static bool AVCHD_SetXMPMakeAndModel ( SXMPMeta& xmpObj, const AVCHD_blkClipExte
 			// Panasonic has said that if we don't have a string for the model number, they'd like to see the code
 			// anyway. We'll do the same for every manufacturer except Sony, who have said that they use
 			// the same model number for multiple cameras.
-			std::sprintf ( hexModelNumber, "0x%04x", clipExtData.mClipInfoExt.mMakerModelCode );
+			snprintf ( hexModelNumber,sizeof(hexModelNumber), "0x%04x", clipExtData.mClipInfoExt.mMakerModelCode );
 			xmpValue = hexModelNumber;
 		}
 
@@ -1800,7 +1800,7 @@ static std::string AVCHD_DateFieldToXMP ( XMP_Uns8 avchdTimeZone, const XMP_Uns8
 
 	char dateBuff [26];
 
-	sprintf ( dateBuff,
+	snprintf ( dateBuff, sizeof(dateBuff),
 			  "%01d%01d%01d%01d-%01d%01d-%01d%01dT%01d%01d:%01d%01d:%01d%01d%+02d:%02d",
 			  (avchdDateTime[0] >> 4), (avchdDateTime[0] & 0x0F),
 			  (avchdDateTime[1] >> 4), (avchdDateTime[1] & 0x0F),

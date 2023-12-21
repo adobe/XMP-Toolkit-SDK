@@ -14,8 +14,9 @@
 set(CMAKE_XCODE_ATTRIBUTE_GCC_VERSION "com.apple.compilers.llvm.clang.1_0")
 set(CMAKE_C_COMPILER xcrun -find clang)
 set(CMAKE_CXX_COMPILER xcrun -find clang++)
+set(CMAKE_XCODE_BUILD_SYSTEM 12)
 
-
-# SDK and deployment 
-set(XMP_OSX_SDK		 	11.1)
-set(XMP_OSX_TARGET	 	10.13)
+# SDK and deployment
+set(XMP_OSX_SDK		 	13.1)
+set(XMP_OSX_TARGET	 	10.15)
+set(APPLE_UNIVERSAL 	True)

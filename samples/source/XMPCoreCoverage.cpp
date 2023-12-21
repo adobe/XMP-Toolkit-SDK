@@ -899,7 +899,7 @@ static void DoXMPCoreCoverage ( FILE * log )
 		fprintf ( log, "\n" );
 
 		for ( i = 1; i < 14; ++i ) {
-			sprintf ( dateName, "Date%d", i );
+			snprintf ( dateName,sizeof(dateName), "Date%d", i );
 			ok = meta.GetProperty_Date ( kNS1, dateName, &dateValue, &options );
 			fprintf ( log, "GetProperty_Date (%s) : %s, %d-%02d-%02d %02d:%02d:%02d %d*%02d:%02d %d, 0x%X\n",  dateName, FoundOrNot ( ok ),
 					  dateValue.year, dateValue.month, dateValue.day, dateValue.hour, dateValue.minute, dateValue.second,

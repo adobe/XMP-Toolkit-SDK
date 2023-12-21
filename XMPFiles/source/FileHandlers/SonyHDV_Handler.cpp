@@ -6,7 +6,8 @@
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
 // of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
+#define BUFFER_SIZE 255
+#define TIMECODE_SIZE 256
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
 #include "public/include/XMP_Const.h"
@@ -290,7 +291,7 @@ static bool ReadIDXFile ( const std::string& idxPath,
 			idxFile.ReadAll ( &hdvFileBlock.mTotalFrame, 4 );
 
 			// Compose file name we expect from file contents and break out on match.
-			sprintf ( filenameBuffer, "%02d-%02d-%02d_%02d%02d%02d",
+			snprintf ( filenameBuffer, sizeof(filenameBuffer), "%02d-%02d-%02d_%02d%02d%02d",
 					  hdvFileBlock.mFileNameYear + 2000,
 					  hdvFileBlock.mFileNameMonth,
 					  hdvFileBlock.mFileNameDay,
@@ -377,16 +378,16 @@ static bool ReadIDXFile ( const std::string& idxPath,
 		// Sample size and scale.
 		if ( clipSampleScale != 0 ) {
 
-			char buffer[255];
+			char buffer[BUFFER_SIZE];
 
 			if ( digestFound || (! xmpObj->DoesPropertyExist ( kXMP_NS_DM, "startTimeScale" )) ) {
-				sprintf(buffer, "%d", clipSampleScale);
+				snprintf(buffer,BUFFER_SIZE, "%d", clipSampleScale);
 				xmpValue = buffer;
 				xmpObj->SetProperty ( kXMP_NS_DM, "startTimeScale", xmpValue, kXMP_DeleteExisting );
 			}
 
 			if ( digestFound || (! xmpObj->DoesPropertyExist ( kXMP_NS_DM, "startTimeSampleSize" )) ) {
-				sprintf(buffer, "%d", clipSampleSize);
+				snprintf(buffer,BUFFER_SIZE, "%d", clipSampleSize);
 				xmpValue = buffer;
 				xmpObj->SetProperty ( kXMP_NS_DM, "startTimeSampleSize", xmpValue, kXMP_DeleteExisting );
 			}
@@ -396,11 +397,11 @@ static bool ReadIDXFile ( const std::string& idxPath,
 				const int frameCount = (hdvFileBlock.mTotalFrame[0] << 24) + (hdvFileBlock.mTotalFrame[1] << 16) +
 									   (hdvFileBlock.mTotalFrame[2] << 8) + hdvFileBlock.mTotalFrame[3];
 
-				sprintf ( buffer, "%d", frameCount );
+				snprintf ( buffer,BUFFER_SIZE, "%d", frameCount );
 				xmpValue = buffer;
 				xmpObj->SetStructField ( kXMP_NS_DM, "duration", kXMP_NS_DM, "value", xmpValue, 0 );
 
-				sprintf ( buffer, "%d/%d", clipSampleSize, clipSampleScale );
+				snprintf ( buffer,BUFFER_SIZE, "%d/%d", clipSampleSize, clipSampleScale );
 				xmpValue = buffer;
 				xmpObj->SetStructField ( kXMP_NS_DM, "duration", kXMP_NS_DM, "scale", xmpValue, 0 );
 
@@ -421,8 +422,8 @@ static bool ReadIDXFile ( const std::string& idxPath,
 				const int tcHours   = ExtractTimeCodeByte ( hdvFileBlock.mStartTimeCode[3], 0x30 );
 
 				// HH:MM:SS:FF or HH;MM;SS;FF
-				char timecode[256];
-				sprintf ( timecode, "%02d%c%02d%c%02d%c%02d", tcHours, chDF, tcMinutes, chDF, tcSeconds, chDF, tcFrames );
+				char timecode[TIMECODE_SIZE];
+				snprintf ( timecode,TIMECODE_SIZE, "%02d%c%02d%c%02d%c%02d", tcHours, chDF, tcMinutes, chDF, tcSeconds, chDF, tcFrames );
 				std::string sonyTimeString = timecode;
 
 				xmpObj->GetStructField ( kXMP_NS_DM, "startTimecode", kXMP_NS_DM, "timeValue", &xmpString, 0 );
@@ -476,7 +477,7 @@ static bool ReadIDXFile ( const std::string& idxPath,
 
 				// YYYY-MM-DDThh:mm:ssZ
 				char date[256];
-				sprintf ( date, "%4d-%02d-%02dT%02d:%02d:%02dZ",
+				snprintf ( date,sizeof(date), "%4d-%02d-%02dT%02d:%02d:%02dZ",
 						  hdvFileBlock.mFileNameYear + 2000,
 						  hdvFileBlock.mFileNameMonth,
 						  hdvFileBlock.mFileNameDay,

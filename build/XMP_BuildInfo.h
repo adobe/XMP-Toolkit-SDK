@@ -11,7 +11,7 @@
 // =================================================================================================
 */
 
-#define kXMP_Copyright Copyright (c) 2019
-#define kXMP_CopyrightStr "Copyright (c) 2019"
+#define kXMP_Copyright Copyright (c) 2022
+#define kXMP_CopyrightStr "Copyright (c) 2022"
 
 #endif	/* __XMP_BuildInfo_h__ */

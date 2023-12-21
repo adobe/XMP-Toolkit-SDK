@@ -14,13 +14,10 @@
 	#include <CoreServices/CoreServices.h>
 #elif XMP_iOSBuild
     #include <CoreFoundation/CoreFoundation.h>
-    #include "XMPFiles/source/FormatSupport/MacScriptExtracts.h"
-#else
-	#include "XMPFiles/source/FormatSupport/MacScriptExtracts.h"
 #endif
 
 #include "XMPFiles/source/FormatSupport/QuickTime_Support.hpp"
-
+#include "XMPFiles/source/FormatSupport/MacScriptExtracts.h"
 #include "source/UnicodeConversions.hpp"
 #include "source/UnicodeInlines.incl_cpp"
 #include "XMPFiles/source/FormatSupport/Reconcile_Impl.hpp"
@@ -48,6 +45,7 @@ static const char * kMacRomanUTF8 [128] = {	// UTF-8 mappings for MacRoman 80..F
 	"\xC2\xAF", "\xCB\x98", "\xCB\x99", "\xCB\x9A", "\xC2\xB8", "\xCB\x9D", "\xCB\x9B", "\xCB\x87"
 };
 
+
 static const XMP_Uns32 kMacRomanCP [128] = {	// Unicode codepoints for MacRoman 80..FF.
 	0x00C4, 0x00C5, 0x00C7, 0x00C9, 0x00D1, 0x00D6, 0x00DC, 0x00E1,
 	0x00E0, 0x00E2, 0x00E4, 0x00E3, 0x00E5, 0x00E7, 0x00E9, 0x00E8,
@@ -71,142 +69,142 @@ static const XMP_Uns32 kMacRomanCP [128] = {	// Unicode codepoints for MacRoman 
 
 static const XMP_Uns16 kMacLangToScript_0_94 [95] = {
 
-	/* langEnglish (0) */		smRoman,
-	/* langFrench (1) */		smRoman,
-	/* langGerman (2) */		smRoman,
-	/* langItalian (3) */		smRoman,
-	/* langDutch (4) */			smRoman,
-	/* langSwedish (5) */		smRoman,
-	/* langSpanish (6) */		smRoman,
-	/* langDanish (7) */		smRoman,
-	/* langPortuguese (8) */	smRoman,
-	/* langNorwegian (9) */		smRoman,
+	/* langEnglish (0) */		ksmRoman,
+	/* langFrench (1) */		ksmRoman,
+	/* langGerman (2) */		ksmRoman,
+	/* langItalian (3) */		ksmRoman,
+	/* langDutch (4) */			ksmRoman,
+	/* langSwedish (5) */		ksmRoman,
+	/* langSpanish (6) */		ksmRoman,
+	/* langDanish (7) */		ksmRoman,
+	/* langPortuguese (8) */	ksmRoman,
+	/* langNorwegian (9) */		ksmRoman,
 
-	/* langHebrew (10) */		smHebrew,
-	/* langJapanese (11) */		smJapanese,
-	/* langArabic (12) */		smArabic,
-	/* langFinnish (13) */		smRoman,
-	/* langGreek (14) */		smRoman,
-	/* langIcelandic (15) */	smRoman,
-	/* langMaltese (16) */		smRoman,
-	/* langTurkish (17) */		smRoman,
-	/* langCroatian (18) */		smRoman,
-	/* langTradChinese (19) */	smTradChinese,
+	/* langHebrew (10) */		ksmHebrew,
+	/* langJapanese (11) */		ksmJapanese,
+	/* langArabic (12) */		ksmArabic,
+	/* langFinnish (13) */		ksmRoman,
+	/* langGreek (14) */		ksmRoman,
+	/* langIcelandic (15) */	ksmRoman,
+	/* langMaltese (16) */		ksmRoman,
+	/* langTurkish (17) */		ksmRoman,
+	/* langCroatian (18) */		ksmRoman,
+	/* langTradChinese (19) */	ksmTradChinese,
 
-	/* langUrdu (20) */			smArabic,
-	/* langHindi (21) */		smDevanagari,
-	/* langThai (22) */			smThai,
-	/* langKorean (23) */		smKorean,
-	/* langLithuanian (24) */	smCentralEuroRoman,
-	/* langPolish (25) */		smCentralEuroRoman,
-	/* langHungarian (26) */	smCentralEuroRoman,
-	/* langEstonian (27) */		smCentralEuroRoman,
-	/* langLatvian (28) */		smCentralEuroRoman,
+	/* langUrdu (20) */			ksmArabic,
+	/* langHindi (21) */		ksmDevanagari,
+	/* langThai (22) */			ksmThai,
+	/* langKorean (23) */		ksmKorean,
+	/* langLithuanian (24) */	ksmCentralEuroRoman,
+	/* langPolish (25) */		ksmCentralEuroRoman,
+	/* langHungarian (26) */	ksmCentralEuroRoman,
+	/* langEstonian (27) */		ksmCentralEuroRoman,
+	/* langLatvian (28) */		ksmCentralEuroRoman,
 	/* langSami (29) */			kNoMacScript,	// ! Not known, missing from Apple comments.
 
-	/* langFaroese (30) */		smRoman,
-	/* langFarsi (31) */		smArabic,
-	/* langRussian (32) */		smCyrillic,
-	/* langSimpChinese (33) */	smSimpChinese,
-	/* langFlemish (34) */		smRoman,
-	/* langIrishGaelic (35) */	smRoman,
-	/* langAlbanian (36) */		smRoman,
-	/* langRomanian (37) */		smRoman,
-	/* langCzech (38) */		smCentralEuroRoman,
-	/* langSlovak (39) */		smCentralEuroRoman,
+	/* langFaroese (30) */		ksmRoman,
+	/* langFarsi (31) */		ksmArabic,
+	/* langRussian (32) */		ksmCyrillic,
+	/* langSimpChinese (33) */	ksmSimpChinese,
+	/* langFlemish (34) */		ksmRoman,
+	/* langIrishGaelic (35) */	ksmRoman,
+	/* langAlbanian (36) */		ksmRoman,
+	/* langRomanian (37) */		ksmRoman,
+	/* langCzech (38) */		ksmCentralEuroRoman,
+	/* langSlovak (39) */		ksmCentralEuroRoman,
 
-	/* langSlovenian (40) */	smRoman,
-	/* langYiddish (41) */		smHebrew,
-	/* langSerbian (42) */		smCyrillic,
-	/* langMacedonian (43) */	smCyrillic,
-	/* langBulgarian (44) */	smCyrillic,
-	/* langUkrainian (45) */	smCyrillic,
-	/* langBelorussian (46) */	smCyrillic,
-	/* langUzbek (47) */		smCyrillic,
-	/* langKazakh (48) */		smCyrillic,
-	/* langAzerbaijani (49) */	smCyrillic,
+	/* langSlovenian (40) */	ksmRoman,
+	/* langYiddish (41) */		ksmHebrew,
+	/* langSerbian (42) */		ksmCyrillic,
+	/* langMacedonian (43) */	ksmCyrillic,
+	/* langBulgarian (44) */	ksmCyrillic,
+	/* langUkrainian (45) */	ksmCyrillic,
+	/* langBelorussian (46) */	ksmCyrillic,
+	/* langUzbek (47) */		ksmCyrillic,
+	/* langKazakh (48) */		ksmCyrillic,
+	/* langAzerbaijani (49) */	ksmCyrillic,
 
-	/* langAzerbaijanAr (50) */	smArabic,
-	/* langArmenian (51) */		smArmenian,
-	/* langGeorgian (52) */		smGeorgian,
-	/* langMoldavian (53) */	smCyrillic,
-	/* langKirghiz (54) */		smCyrillic,
-	/* langTajiki (55) */		smCyrillic,
-	/* langTurkmen (56) */		smCyrillic,
-	/* langMongolian (57) */	smMongolian,
-	/* langMongolianCyr (58) */	smCyrillic,
-	/* langPashto (59) */		smArabic,
+	/* langAzerbaijanAr (50) */	ksmArabic,
+	/* langArmenian (51) */		ksmArmenian,
+	/* langGeorgian (52) */		ksmGeorgian,
+	/* langMoldavian (53) */	ksmCyrillic,
+	/* langKirghiz (54) */		ksmCyrillic,
+	/* langTajiki (55) */		ksmCyrillic,
+	/* langTurkmen (56) */		ksmCyrillic,
+	/* langMongolian (57) */	ksmMongolian,
+	/* langMongolianCyr (58) */	ksmCyrillic,
+	/* langPashto (59) */		ksmArabic,
 
-	/* langKurdish (60) */		smArabic,
-	/* langKashmiri (61) */		smArabic,
-	/* langSindhi (62) */		smArabic,
-	/* langTibetan (63) */		smTibetan,
-	/* langNepali (64) */		smDevanagari,
-	/* langSanskrit (65) */		smDevanagari,
-	/* langMarathi (66) */		smDevanagari,
-	/* langBengali (67) */		smBengali,
-	/* langAssamese (68) */		smBengali,
-	/* langGujarati (69) */		smGujarati,
+	/* langKurdish (60) */		ksmArabic,
+	/* langKashmiri (61) */		ksmArabic,
+	/* langSindhi (62) */		ksmArabic,
+	/* langTibetan (63) */		ksmTibetan,
+	/* langNepali (64) */		ksmDevanagari,
+	/* langSanskrit (65) */		ksmDevanagari,
+	/* langMarathi (66) */		ksmDevanagari,
+	/* langBengali (67) */		ksmBengali,
+	/* langAssamese (68) */		ksmBengali,
+	/* langGujarati (69) */		ksmGujarati,
 
-	/* langPunjabi (70) */		smGurmukhi,
-	/* langOriya (71) */		smOriya,
-	/* langMalayalam (72) */	smMalayalam,
-	/* langKannada (73) */		smKannada,
-	/* langTamil (74) */		smTamil,
-	/* langTelugu (75) */		smTelugu,
-	/* langSinhalese (76) */	smSinhalese,
-	/* langBurmese (77) */		smBurmese,
-	/* langKhmer (78) */		smKhmer,
-	/* langLao (79) */			smLao,
+	/* langPunjabi (70) */		ksmGurmukhi,
+	/* langOriya (71) */		ksmOriya,
+	/* langMalayalam (72) */	ksmMalayalam,
+	/* langKannada (73) */		ksmKannada,
+	/* langTamil (74) */		ksmTamil,
+	/* langTelugu (75) */		ksmTelugu,
+	/* langSinhalese (76) */	ksmSinhalese,
+	/* langBurmese (77) */		ksmBurmese,
+	/* langKhmer (78) */		ksmKhmer,
+	/* langLao (79) */			ksmLao,
 
-	/* langVietnamese (80) */	smVietnamese,
-	/* langIndonesian (81) */	smRoman,
-	/* langTagalog (82) */		smRoman,
-	/* langMalayRoman (83) */	smRoman,
-	/* langMalayArabic (84) */	smArabic,
-	/* langAmharic (85) */		smEthiopic,
-	/* langTigrinya (86) */		smEthiopic,
-	/* langOromo (87) */		smEthiopic,
-	/* langSomali (88) */		smRoman,
-	/* langSwahili (89) */		smRoman,
+	/* langVietnamese (80) */	ksmVietnamese,
+	/* langIndonesian (81) */	ksmRoman,
+	/* langTagalog (82) */		ksmRoman,
+	/* langMalayRoman (83) */	ksmRoman,
+	/* langMalayArabic (84) */	ksmArabic,
+	/* langAmharic (85) */		ksmEthiopic,
+	/* langTigrinya (86) */		ksmEthiopic,
+	/* langOromo (87) */		ksmEthiopic,
+	/* langSomali (88) */		ksmRoman,
+	/* langSwahili (89) */		ksmRoman,
 
-	/* langKinyarwanda (90) */	smRoman,
-	/* langRundi (91) */		smRoman,
-	/* langNyanja (92) */		smRoman,
-	/* langMalagasy (93) */		smRoman,
-	/* langEsperanto (94) */	smRoman
+	/* langKinyarwanda (90) */	ksmRoman,
+	/* langRundi (91) */		ksmRoman,
+	/* langNyanja (92) */		ksmRoman,
+	/* langMalagasy (93) */		ksmRoman,
+	/* langEsperanto (94) */	ksmRoman
 
 };	// kMacLangToScript_0_94
 
 static const XMP_Uns16 kMacLangToScript_128_151 [24] = {
 
-	/* langWelsh (128) */				smRoman,
-	/* langBasque (129) */				smRoman,
+	/* langWelsh (128) */				ksmRoman,
+	/* langBasque (129) */				ksmRoman,
 
-	/* langCatalan (130) */				smRoman,
-	/* langLatin (131) */				smRoman,
-	/* langQuechua (132) */				smRoman,
-	/* langGuarani (133) */				smRoman,
-	/* langAymara (134) */				smRoman,
-	/* langTatar (135) */				smCyrillic,
-	/* langUighur (136) */				smArabic,
-	/* langDzongkha (137) */			smTibetan,
-	/* langJavaneseRom (138) */			smRoman,
-	/* langSundaneseRom (139) */		smRoman,
+	/* langCatalan (130) */				ksmRoman,
+	/* langLatin (131) */				ksmRoman,
+	/* langQuechua (132) */				ksmRoman,
+	/* langGuarani (133) */				ksmRoman,
+	/* langAymara (134) */				ksmRoman,
+	/* langTatar (135) */				ksmCyrillic,
+	/* langUighur (136) */				ksmArabic,
+	/* langDzongkha (137) */			ksmTibetan,
+	/* langJavaneseRom (138) */			ksmRoman,
+	/* langSundaneseRom (139) */		ksmRoman,
 
-	/* langGalician (140) */			smRoman,
-	/* langAfrikaans (141) */			smRoman,
-	/* langBreton (142) */				smRoman,
-	/* langInuktitut (143) */			smEthiopic,
-	/* langScottishGaelic (144) */		smRoman,
-	/* langManxGaelic (145) */			smRoman,
-	/* langIrishGaelicScript (146) */	smRoman,
-	/* langTongan (147) */				smRoman,
-	/* langGreekAncient (148) */		smGreek,
-	/* langGreenlandic (149) */			smRoman,
+	/* langGalician (140) */			ksmRoman,
+	/* langAfrikaans (141) */			ksmRoman,
+	/* langBreton (142) */				ksmRoman,
+	/* langInuktitut (143) */			ksmEthiopic,
+	/* langScottishGaelic (144) */		ksmRoman,
+	/* langManxGaelic (145) */			ksmRoman,
+	/* langIrishGaelicScript (146) */	ksmRoman,
+	/* langTongan (147) */				ksmRoman,
+	/* langGreekAncient (148) */		ksmGreek,
+	/* langGreenlandic (149) */			ksmRoman,
 
-	/* langAzerbaijanRoman (150) */		smRoman,
-	/* langNynorsk (151) */				smRoman
+	/* langAzerbaijanRoman (150) */		ksmRoman,
+	/* langNynorsk (151) */				ksmRoman
 	
 };	// kMacLangToScript_128_151
 
@@ -816,7 +814,7 @@ static inline bool IsMacLangKnown ( XMP_Uns16 macLang )
 	if ( macScript == kNoMacScript ) return false;
 
 	#if XMP_UNIXBuild | XMP_AndroidBuild
-		if ( macScript != smRoman ) return false;
+		if ( macScript != ksmRoman ) return false;
 	#elif XMP_WinBuild
 		if ( GetWinCP(macLang) == 0 ) return false;
 	#endif
@@ -914,7 +912,7 @@ bool TradQT_Manager::ParseCachedBoxes ( const MOOV_Manager & moovMgr )
 		
 		XMP_Uns8 * boxPtr = (XMP_Uns8*) currInfo.content;
 		XMP_Uns8 * boxEnd = boxPtr + currInfo.contentSize;
-		XMP_Uns16 miniLen, macLang;
+		XMP_Uns32 miniLen; XMP_Uns16 macLang;
 
 		for ( ; boxPtr < boxEnd-4; boxPtr += miniLen ) {
 

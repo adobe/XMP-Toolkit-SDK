@@ -8,7 +8,7 @@
 
 REM Available Arguments:
 REM [64|32] Bit Architecture (optional, 64 is default)
-REM [2008|2011|2011|2015|2017] VS Version(optional, 2019 is default)
+REM [2008|2011|2011|2015|2017|2019] VS Version(optional, 2022 is default)
 REM [Dynamic | Static] optional, Dynamic by default
 REM [WarningAsError] optional
 REM [Clean] optional
@@ -22,7 +22,7 @@ set CleanCMake=OFF
 set XMPROOT=%buildSharedLoc%/../..
 
 :: Default Generator
-set GeneratorVersion=Visual Studio 16 2019
+set GeneratorVersion=Visual Studio 17 2022
 set GeneratorArchitecture=x64
 set CMake_Arch64Bit=ON
 set CMake_ARCH=x64
@@ -59,9 +59,9 @@ set CMake_LibTypeFolderName=dynamic
 	)
 
 	:: Visual Studio Version
-	if /I "%1"=="2019" (
-	echo "Generator VS 2019 specified"
-	set GeneratorVersion=Visual Studio 16 2019
+	if /I "%1"=="2022" (
+	echo "Generator VS 2022 specified"
+	set GeneratorVersion=Visual Studio 17 2022
 	set CMakeGenVersion_FolderSuffix=
 	)
 
@@ -94,7 +94,7 @@ set CMake64_Folder_Suffix=
 )
 
 :: CMake Folder specified:
-set CMakeFolder="vc16/%CMake_LibTypeFolderName%/windows%CMake64_Folder_Suffix%"
+set CMakeFolder="vc17/%CMake_LibTypeFolderName%/windows%CMake64_Folder_Suffix%"
 echo CMakeFolder: %CMakeFolder%
 
 echo Generator used: %GeneratorVersion%

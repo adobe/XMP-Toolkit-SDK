@@ -145,7 +145,7 @@ static void FullUnicodeParse ( FILE * log, const char * encoding, size_t bufferS
 		meta.ParseFromBuffer ( XMP_StringPtr(sU32), 0 );
 	} catch ( XMP_Error& excep ) {
 		char message [200];
-		sprintf ( message, "#ERROR: Full Unicode parsing error for %s, %d byte buffers", encoding, bufferSize );
+		snprintf ( message, sizeof(message), "#ERROR: Full Unicode parsing error for %s, %d byte buffers", encoding, bufferSize );
 		PrintXMPErrorInfo ( excep, message );
 		return;
 	}
@@ -455,7 +455,7 @@ extern "C" int main ( void )
 	
 	time_t now;
 	time ( &now );
-	sprintf ( buffer, "// Starting test for UTF-16 and UTF-32 serialization and parsing, %s", ctime ( &now ) );
+	snprintf ( buffer,sizeof(buffer), "// Starting test for UTF-16 and UTF-32 serialization and parsing, %s", ctime ( &now ) );
 
 	fprintf ( sLogFile, "// " );
 	for ( int i = 4; i < strlen(buffer); ++i ) fprintf ( sLogFile, "=" );
@@ -500,7 +500,7 @@ extern "C" int main ( void )
 	}
 
 	time ( &now );
-	sprintf ( buffer, "// Finished test for UTF-16 and UTF-32 serialization and parsing, %s", ctime ( &now ) );
+	snprintf ( buffer,sizeof(buffer), "// Finished test for UTF-16 and UTF-32 serialization and parsing, %s", ctime ( &now ) );
 
 	fprintf ( sLogFile, "// " );
 	for ( int i = 4; i < strlen(buffer); ++i ) fprintf ( sLogFile, "=" );

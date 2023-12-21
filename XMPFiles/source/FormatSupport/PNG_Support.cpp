@@ -236,9 +236,14 @@ namespace PNG_Support
 
 					if (chunkType == iTXt)
 					{
-						ExtractXMPPacket(fileRef, chunkLength, tempBuffer, bufferLimit - tempBuffer, inOutPosition, outXMPPacket, outXmpOffset);
-						processedXMP = true;
-						break;
+						/* There could be multiple iTXt chunks. There should be no more than one
+						 * chunk containing XMP in each PNG file.
+						 */
+						if (ExtractXMPPacket(fileRef, chunkLength, tempBuffer, bufferLimit - tempBuffer, inOutPosition, outXMPPacket, outXmpOffset))
+						{
+						    processedXMP = true;
+						    break;
+						}
 					}
 					else if (chunkType == IEND && isOpenForRead) {
 						/*signifies end of png file. No need to process further.*/

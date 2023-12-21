@@ -156,7 +156,7 @@ private:	// XMPScanner
 	public:
 
 		SnipInfo	fInfo;							// The public info about this snip.
-		std::auto_ptr<PacketMachine>	fMachine;	// The state machine for "active" snips.
+		std::unique_ptr<PacketMachine> fMachine;	// The state machine for "active" snips.
 		
 		InternalSnip ( XMP_Int64 offset, XMP_Int64 length );
 		InternalSnip ( const InternalSnip & );

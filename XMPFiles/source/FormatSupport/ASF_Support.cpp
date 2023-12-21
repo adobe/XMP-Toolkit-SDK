@@ -77,6 +77,7 @@ bool ASF_Support::ReadObject ( XMP_IO* fileRef, ObjectState & inOutObjectState, 
 		if ( bytesRead != kASF_ObjectBaseLen ) return false;
 
 		*objectLength = GetUns64LE ( &objectBase.size );
+		if (*objectLength == 0) return false;
 		inOutPosition += *objectLength;
 
 		ObjectData	newObject;
