@@ -3,7 +3,7 @@ This README describes steps to generate project files on different platforms. Th
 
 WINDOWS 7 and above
 
-Options to generate Project files in Windows are of the form "Generate XMPSDKToolkit [Dynamic|static] [Win32|x64]". An option of "Dynamic" indicates that the generated project files will build a dll for the XMP SDK components. On the other hand the option of "Static" indicates that the generated project files will build a static lib for the XMP SDK components. Options for "Win32" or "x64" indicate that the generated project files will build the library for 32 bit or 64 bit applications respectively. 
+Options to generate Project files in Windows are of the form "Generate XMPSDKToolkit [Dynamic|static] [Win32|x64]". An option of "Dynamic" indicates that the generated project files will build a dll for the XMP SDK components. On the other hand the option of "Static" indicates that the generated project files will build a static lib for the XMP SDK components. Options for "Win32", "x64", or "ARM64" indicate that the generated project files will build the library for x86 (32 bit), x64 (64 bit), or ARM64 (Arm 64 bit) applications respectively. 
 
 1. Open the windows command prompt and change the current directory to <xmpsdk>/build.
 2. Run the batch file GenerateXMPToolkitSDK_win.bat. There will be two options(2 & 3) to build projects for different configurations, one option(4) to generate projects for all configurations and one option(1) to clean all the projects.

@@ -1251,7 +1251,7 @@ XMPScanner::Scan ( const void * bufferOrigin, XMP_Int64 bufferOffset, XMP_Int64 
 			{
 				// Some versions of gcc complain about the assignment operator above.  This avoids the gcc bug.
 				PacketMachine *	pm	= new PacketMachine ( bufferOffset, bufferOrigin, bufferLength );
-				auto_ptr<PacketMachine>	ap ( pm );
+				shared_ptr<PacketMachine>	ap ( pm );
 				snipPos->fMachine = ap;
 			}
 		#endif
@@ -1275,7 +1275,7 @@ XMPScanner::Scan ( const void * bufferOrigin, XMP_Int64 bufferOffset, XMP_Int64 
 			#else
 				{
 					// Some versions of gcc complain about the assignment operator above.  This avoids the gcc bug.
-					auto_ptr<PacketMachine>	ap ( 0 );
+					shared_ptr<PacketMachine>	ap ( 0 );
 					snipPos->fMachine = ap;
 				}
 			#endif
@@ -1368,7 +1368,7 @@ XMPScanner::Scan ( const void * bufferOrigin, XMP_Int64 bufferOffset, XMP_Int64 
 					#else
 						{
 							// Some versions of gcc complain about the assignment operator above.  This avoids the gcc bug.
-							auto_ptr<PacketMachine>	ap ( 0 );
+							shared_ptr<PacketMachine>	ap ( 0 );
 							snipPos->fMachine = ap;
 						}
 					#endif

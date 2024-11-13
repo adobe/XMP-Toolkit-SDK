@@ -7,7 +7,7 @@
 :: =================================================================================================
 
 REM Available Arguments:
-REM [64|32] Bit Architecture (optional, 64 is default)
+REM [64|32|ARM64] Architecture (optional, 64 is default)
 REM [2008|2011|2011|2015|2017|2019] VS Version(optional, 2022 is default)
 REM [Dynamic | Static] optional, Dynamic by default
 REM [WarningAsError] optional
@@ -81,16 +81,27 @@ set CMake_LibTypeFolderName=dynamic
 	set CMake_Arch64Bit=ON
 	set CMake_ARCH=x64
 	)
+
+	if /I "%1"=="ARM64" (
+	echo ARM 64 bit specified
+	set CMake_Arch64Bit=ON
+	set CMake_ARCH=ARM64
+	set GeneratorArchitecture=ARM64
+	)
 	
 	shift
 	goto Loop
 
 :EndLoop
 
-if "%CMake_Arch64Bit%"=="ON" (
+if "%CMake_ARCH%"=="x64" (
 set CMake64_Folder_Suffix=_x64
 ) else (
-set CMake64_Folder_Suffix=
+	if "%CMake_ARCH%"=="arm64" (
+        set CMake64_Folder_Suffix=_arm64
+	) else (
+		set CMake64_Folder_Suffix=
+	)
 )
 
 :: CMake Folder specified:
