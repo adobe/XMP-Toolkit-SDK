@@ -1517,6 +1517,8 @@ ImportConversionTable ( const TIFF_Manager::TagInfo & tagInfo, bool nativeEndian
 			rows = Flip2 ( rows );
 		}
 
+		if ( (XMP_Uns64)(byteEnd - bytePtr) < (8ULL * columns * rows) ) XMP_Throw ( "OECF-SFR data underflow", kXMPErr_BadValue );
+
 		char buffer[40];
 
 		snprintf ( buffer, sizeof(buffer), "%d", columns );	// AUDIT: Use of sizeof(buffer) is safe.
@@ -1537,7 +1539,7 @@ ImportConversionTable ( const TIFF_Manager::TagInfo & tagInfo, bool nativeEndian
 			bytePtr += nameLen;
 		}
 
-		if ( (byteEnd - bytePtr) != (8 * columns * rows) ) XMP_Throw ( "OECF-SFR data overflow", kXMPErr_BadValue );
+		if ( (XMP_Uns64)(byteEnd - bytePtr) != (8ULL * columns * rows) ) XMP_Throw ( "OECF-SFR data overflow", kXMPErr_BadValue );
 		SXMPUtils::ComposeStructFieldPath ( xmpNS, xmpProp, kXMP_NS_EXIF, "Values", &arrayPath );
 
 		XMP_Uns32 * binPtr = (XMP_Uns32*)bytePtr;

@@ -224,6 +224,8 @@ bool TIFF_MemoryReader::GetTag ( XMP_Uns8 ifd, XMP_Uns16 id, TagInfo* info ) con
 	
 	if ( (thisType < kTIFF_ByteType) || (thisType > kTIFF_LastType) ) return false;	// Bad type, skip this tag.
 
+	if ( thisBytes > tiffLength ) return false; // Bad data length, skip this tag.
+
 	if ( info != 0 ) {
 
 		info->id = GetUns16AsIs ( &thisTag->id );

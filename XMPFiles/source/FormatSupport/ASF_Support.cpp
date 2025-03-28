@@ -163,7 +163,7 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 				XMP_Throw("Failure reading ASF header object", kXMPErr_InternalFailure);
 			}
 
-			if ( IsEqualGUID ( ASF_File_Properties_Object, objectBase.guid) && (objectBase.size >= 104 ) ) {
+			if ( IsEqualGUID ( ASF_File_Properties_Object, objectBase.guid) && ( XMP_Int32(objectBase.size) >= 104 ) ) {
 
 				buffer.clear();
 				buffer.reserve ( XMP_Uns32( objectBase.size ) );
@@ -184,7 +184,7 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 
 				legacyManager->SetObjectExists ( ASF_LegacyManager::objectFileProperties );
 
-			} else if ( IsEqualGUID ( ASF_Content_Description_Object, objectBase.guid) && (objectBase.size >= 34 ) ) {
+			} else if ( IsEqualGUID ( ASF_Content_Description_Object, objectBase.guid) && ( XMP_Int32(objectBase.size) >= 34 ) ) {
 
 				buffer.clear();
 				buffer.reserve ( XMP_Uns32( objectBase.size ) );
