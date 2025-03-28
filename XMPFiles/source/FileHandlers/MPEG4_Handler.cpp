@@ -633,6 +633,8 @@ static bool ImportISOCopyrights ( const std::vector<MOOV_Manager::BoxInfo> & cpr
 		XMP_StringPtr textPtr = (XMP_StringPtr) (currBox.content + 6);
 		XMP_StringLen textLen = currBox.contentSize - 6;
 
+		if ( *(textPtr + textLen - 1) != '\0' ) continue; // make sure textPtr points to a null terminated string
+
 		if ( (textLen >= 2) && (GetUns16BE(textPtr) == 0xFEFF) ) {
 			FromUTF16 ( (UTF16Unit*)textPtr, textLen/2, &tempStr, true /* big endian */ );
 			textPtr = tempStr.c_str();
@@ -2240,6 +2242,7 @@ bool MPEG4_MetaHandler::ParseTimecodeTrack()
 	XMP_Uns32 stsdTrailerSize = stsdEntrySize - sizeof ( MOOV_Manager::Content_stsd_entry );
 	if ( stsdTrailerSize > 8 ) {	// Room for a non-empty 'name' box?
 
+		if ( stsdInfo.contentSize < (stsdTrailerSize + 8 + sizeof ( MOOV_Manager::Content_stsd_entry )) ) return false; //Not enough data
 		const XMP_Uns8 * trailerStart = stsdInfo.content + 8 + sizeof ( MOOV_Manager::Content_stsd_entry );
 		const XMP_Uns8 * trailerLimit = trailerStart + stsdTrailerSize;
 		const XMP_Uns8 * trailerPos;
