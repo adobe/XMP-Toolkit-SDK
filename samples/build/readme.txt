@@ -4,7 +4,7 @@ Windows:
 
 1. Double Click "GenerateSamples_win.bat" or run it through command prompt.
 2. Enter the type of project to create
-3. The project files will be created in vc14\windows or vc14\windows_x64 folder
+3. The project files will be created in vc14\windows or vc14\windows_x64 or vc14\windows_arm64 folder
 
 Mac:
 

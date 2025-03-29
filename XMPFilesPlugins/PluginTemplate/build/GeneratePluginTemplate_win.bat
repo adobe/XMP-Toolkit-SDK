@@ -21,6 +21,7 @@ exit /B 0)
 ECHO Enter your choice:
 ECHO 1. Clean All
 ECHO 2. Generate PluginTemplate Dynamic   x64
+ECHO 3. Generate PluginTemplate Dynamic   ARM64
 
 
 ECHO
@@ -32,7 +33,8 @@ set GENERATE_ALL=Off
 set NEXT_LABEL=ok
 
 IF "%choice%"=="1" GOTO CLEANALL
-IF "%choice%"=="2" GOTO 64DLL
+IF "%choice%"=="2" GOTO X64DLL
+IF "%choice%"=="3" GOTO ARM64DLL
 
 ECHO Invalid Choice, Exiting
 pause
@@ -54,7 +56,7 @@ IF "%GENERATE_ALL%"=="On" (
 GOTO GenerateNow
 
 
-:64DLL
+:X64DLL
 echo "Generating PluginTemplate Dynamic x64"
 set GENERATOR=Visual Studio 17 2022
 set GeneratorArchitecture=x64
@@ -66,14 +68,24 @@ IF "%GENERATE_ALL%"=="On" (
 )
 GOTO GenerateNow
 
-
+:ARM64DLL
+echo "Generating PluginTemplate Dynamic x64"
+set GENERATOR=Visual Studio 17 2022
+set GeneratorArchitecture=ARM64
+set BITS64=ON
+set CMakeFolder="vc17/windows_ARM64"
+set CMake_ARCH=ARM64
+IF "%GENERATE_ALL%"=="On" (
+	set NEXT_LABEL=ok
+)
+GOTO GenerateNow
 
 :GenerateNow
 echo CMakeFolder: %CMakeFolder%
 mkdir %CMakeFolder%
 cd %CMakeFolder%
 echo %CMAKE% ../../. -G"%GENERATOR%"  -A %GeneratorArchitecture% -DCMAKE_CL_64=%BITS64% -DXMP_CMAKEFOLDER_NAME=%CMakeFolder% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_STATIC="%CMAKE_BUILDSTATIC%"
-%CMAKE% ../../. -G"%GENERATOR%" -DCMAKE_CL_64=%BITS64% -DXMP_CMAKEFOLDER_NAME=%CMakeFolder% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_STATIC="%CMAKE_BUILDSTATIC%"
+%CMAKE% ../../. -G"%GENERATOR%" -A %GeneratorArchitecture% -DCMAKE_CL_64=%BITS64% -DXMP_CMAKEFOLDER_NAME=%CMakeFolder% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_STATIC="%CMAKE_BUILDSTATIC%"
 cd ..\..
 if errorlevel 1 goto error
 goto %NEXT_LABEL%
