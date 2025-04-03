@@ -84,25 +84,25 @@ namespace PNG_Support
 {
     enum chunkType {
         // Critical chunks - (shall appear in this order, except PLTE is optional)
-        IHDR = 'IHDR',
-        PLTE = 'PLTE',
-        IDAT = 'IDAT',
-        IEND = 'IEND',
+        IHDR = *((const char*)"IHDR"),
+        PLTE = *((const char*)"PLTE"),
+        IDAT = *((const char*)"IDAT"),
+        IEND = *((const char*)"IEND"),
         // Ancillary chunks - (need not appear in this order)
-        cHRM = 'cHRM',
-        gAMA = 'gAMA',
-        iCCP = 'iCCP',
-        sBIT = 'sBIT',
-        sRGB = 'sRGB',
-        bKGD = 'bKGD',
-        hIST = 'hIST',
-        tRNS = 'tRNS',
-        pHYs = 'pHYs',
-        sPLT = 'sPLT',
-        tIME = 'tIME',
-        iTXt = 'iTXt',
-        tEXt = 'tEXt',
-        zTXt = 'zTXt'
+        cHRM = *((const char*)"cHRM"),
+        gAMA = *((const char*)"gAMA"),
+        iCCP = *((const char*)"iCCP"),
+        sBIT = *((const char*)"sBIT"),
+        sRGB = *((const char*)"sRGB"),
+        bKGD = *((const char*)"bKGD"),
+        hIST = *((const char*)"hIST"),
+        tRNS = *((const char*)"tRNS"),
+        pHYs = *((const char*)"pHYs"),
+        sPLT = *((const char*)"sPLT"),
+        tIME = *((const char*)"tIME"),
+        iTXt = *((const char*)"iTXt"),
+        tEXt = *((const char*)"tEXt"),
+        zTXt = *((const char*)"zTXt")
         
     };
     
