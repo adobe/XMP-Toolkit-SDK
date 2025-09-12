@@ -90,7 +90,7 @@ OS_ModuleRef LoadModule( const std::string & inModulePath, bool inOnlyResourceAc
 		}
 		else
 		{	// success !
-			result = (void*) fileHandle;
+			result = (void*) (intptr_t) fileHandle;
 			ResourceFileToPathMap::const_iterator iter = sMapResourceFileToPath.find(result);
 			if (iter == sMapResourceFileToPath.end())
 			{
