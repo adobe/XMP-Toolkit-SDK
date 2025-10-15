@@ -18,7 +18,9 @@
 
 #include <vector>
 
-#define MIN(a,b)	((a) < (b) ? (a) : (b))
+#ifndef MIN
+  #define MIN(a,b)	((a) < (b) ? (a) : (b))
+#endif
 
 namespace ID3_Support {
 
