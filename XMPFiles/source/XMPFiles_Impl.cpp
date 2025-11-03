@@ -47,7 +47,9 @@ using namespace std;
 /// This file ...
 ///
 // =================================================================================================
-#include "public/include/XMP.incl_cpp"
+#if ! XMP_StaticBuild
+	#include "public/include/XMP.incl_cpp"
+#endif
 
 #if XMP_WinBuild
 	#pragma warning ( disable : 4290 )	// C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
