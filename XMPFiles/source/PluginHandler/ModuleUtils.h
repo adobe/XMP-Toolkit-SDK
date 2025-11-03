@@ -18,6 +18,10 @@ typedef HMODULE OS_ModuleRef;
 #include <CoreFoundation/CFBundle.h>
 #include <memory>
 typedef CFBundleRef OS_ModuleRef;
+#elif XMP_iOSBuild
+#include <CoreFoundation/CFBundle.h>
+#include <memory>
+typedef CFBundleRef OS_ModuleRef;
 #elif XMP_UNIXBuild
 # if __clang__
 #include <memory>
