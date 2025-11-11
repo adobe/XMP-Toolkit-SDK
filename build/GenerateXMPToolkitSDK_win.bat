@@ -14,6 +14,8 @@ ECHO 1. Clean All
 ECHO 2. Generate XMPSDKToolkit Dynamic   x64
 ECHO 3. Generate XMPSDKToolkit Static    x64
 ECHO 4. Generate All
+ECHO 5. Generate XMPSDKToolkit Dynamic   ARM64
+ECHO 6. Generate XMPSDKToolkit Static    ARM64
 
 
 ECHO
@@ -25,9 +27,11 @@ set GENERATE_ALL=Off
 set NEXT_LABEL=ok
 
 IF "%choice%"=="1" GOTO CLEANALL
-IF "%choice%"=="2" GOTO 64DLL
-IF "%choice%"=="3" GOTO 64LIB
+IF "%choice%"=="2" GOTO X64DLL
+IF "%choice%"=="3" GOTO X64LIB
 IF "%choice%"=="4" GOTO GENALL
+IF "%choice%"=="5" GOTO ARM64DLL
+IF "%choice%"=="6" GOTO ARM64LIB
 
 ECHO Invalid Choice, Exiting
 exit /B 0
@@ -39,7 +43,7 @@ set GENERATE_ALL=On
 echo "Generating XMPSDKToolkit Dynamic Win32"
 set VS_VERSION=2022
 set BUILD_TYPE=Dynamic
-set BITS=32
+set ARCH=32
 IF "%GENERATE_ALL%"=="On" (
 	set NEXT_LABEL=32LIB
 )
@@ -50,34 +54,54 @@ GOTO GenerateNow
 echo "Generating XMPSDKToolkit Static Win32"
 set VS_VERSION=2022
 set BUILD_TYPE=Static
-set BITS=32
+set ARCH=32
 IF "%GENERATE_ALL%"=="On" (
-	set NEXT_LABEL=64DLL
+	set NEXT_LABEL=X64DLL
 )
 GOTO GenerateNow
 
-:64DLL
+:X64DLL
 echo "Generating XMPSDKToolkit Dynamic x64"
 set VS_VERSION=2022
 set BUILD_TYPE=Dynamic
-set BITS=64
+set ARCH=64
 IF "%GENERATE_ALL%"=="On" (
-	set NEXT_LABEL=64LIB
+	set NEXT_LABEL=X64LIB
 )
 GOTO GenerateNow
 
-:64LIB
+:X64LIB
 echo "Generating XMPSDKToolkit Static x64"
 set VS_VERSION=2022
 set BUILD_TYPE=Static
-set BITS=64
+set ARCH=64
+IF "%GENERATE_ALL%"=="On" (
+	set NEXT_LABEL=ok
+)
+GOTO GenerateNow
+
+:ARM64DLL
+echo "Generating XMPSDKToolkit Dynamic ARM64"
+set VS_VERSION=2022
+set BUILD_TYPE=Dynamic
+set ARCH=ARM64
+IF "%GENERATE_ALL%"=="On" (
+	set NEXT_LABEL=ARM64LIB
+)
+GOTO GenerateNow
+
+:ARM64LIB
+echo "Generating XMPSDKToolkit Static ARM64"
+set VS_VERSION=2022
+set BUILD_TYPE=Static
+set ARCH=ARM64
 IF "%GENERATE_ALL%"=="On" (
 	set NEXT_LABEL=ok
 )
 GOTO GenerateNow
 
 :GenerateNow
-call cmake_all.bat %BITS% %VS_VERSION% WarningAsError %BUILD_TYPE%
+call cmake_all.bat %ARCH% %VS_VERSION% WarningAsError %BUILD_TYPE%
 if errorlevel 1 goto error
 goto %NEXT_LABEL%
 
@@ -99,6 +123,7 @@ if exist ..\XMPCore\build\vc17 rmdir /S /Q ..\XMPCore\build\vc17
 if exist ..\XMPFiles\build\vc17 rmdir /S /Q ..\XMPFiles\build\vc17
 if exist ..\public\libraries\windows rmdir /S /Q ..\public\libraries\windows
 if exist ..\public\libraries\windows_x64 rmdir /S /Q ..\public\libraries\windows_x64
+if exist ..\public\libraries\windows_arm64 rmdir /S /Q ..\public\libraries\windows_arm64
 echo "Done"
 pause
 exit /B 0

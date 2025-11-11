@@ -90,6 +90,7 @@ message (STATUS "===============================================================
 #message (STATUS " ${XMP_EXTRA_BUILDMACHINE}")
 message (STATUS " 64 bit build is: ${CMAKE_CL_64}")
 message (STATUS " Static build is: ${XMP_BUILD_STATIC}")
+message (STATUS " CMake Arch is: ${CMAKE_ARCH}")
 message (STATUS " ${TARGET_NAME} ")
 message (STATUS " ${XMP_PLATFORM_LINK} ")
 message (STATUS " ${XMP_GLOBALS}")

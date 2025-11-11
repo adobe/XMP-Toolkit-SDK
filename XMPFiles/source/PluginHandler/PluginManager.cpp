@@ -565,7 +565,11 @@ static bool CheckPluginArchitecture ( XMLParserAdapter * xmlParser ) {
 	#endif
 	
 	#if XMP_64
-		const char * nativeArchitecture = "x64";
+	    #if defined(_M_ARM64)
+		    const char * nativeArchitecture = "ARM64";
+		#else
+		    const char * nativeArchitecture = "x64";
+		#endif
 	#else
 		const char * nativeArchitecture = "x86";
 	#endif
