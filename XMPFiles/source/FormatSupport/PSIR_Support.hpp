@@ -286,7 +286,7 @@ public:
 		{
 			// ! Gag! Transfer ownership of the dataPtr and rsrcName!
 			this->FreeData();
-			memcpy ( this, &in, sizeof(*this) );	// AUDIT: Use of sizeof(InternalRsrcInfo) is safe.
+			memcpy ( static_cast<void*>(this), &in, sizeof(*this) );	// AUDIT: Use of sizeof(InternalRsrcInfo) is safe.
 			*((void**)&in.dataPtr) = 0;		// The pointer is now owned by "this".
 			*((void**)&in.rsrcName) = 0;	// The pointer is now owned by "this".
 		};

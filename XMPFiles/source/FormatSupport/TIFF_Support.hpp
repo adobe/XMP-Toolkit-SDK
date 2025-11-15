@@ -938,7 +938,7 @@ private:
 		{
 			// ! Gag! Transfer ownership of the dataPtr!
 			this->FreeData();
-			memcpy ( this, &in, sizeof(*this) );	// AUDIT: Use of sizeof(InternalTagInfo) is safe.
+			memcpy ( static_cast<void*>(this), &in, sizeof(*this) );	// AUDIT: Use of sizeof(InternalTagInfo) is safe.
 			if ( this->dataLen <= 4 ) {
 				this->dataPtr = (XMP_Uns8*) &this->smallValue;	// Don't use the copied pointer.
 			} else {
