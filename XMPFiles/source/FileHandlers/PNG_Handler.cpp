@@ -168,6 +168,13 @@ void PNG_MetaHandler::UpdateFile ( bool doSafeUpdate )
 	else if (chunkState.xmpLen >= packetLen )
 	{
 		// current chunk size is sufficient -> write and update CRC (in place update)
++		if (chunkState.xmpLen > packetLen)
++		{
++			// Let the packet fill the entire chunk with whitexpace to avoid garbage XMP fragments at the end.
++			xmpPacket.resize(chunkState.xmpLen, ' ');
++			packetStr = xmpPacket.c_str();
++			packetLen = (XMP_StringLen)xmpPacket.size();
++		}
 		updated = PNG_Support::WriteBuffer(fileRef, chunkState.xmpPos, packetLen, packetStr );
 		PNG_Support::UpdateChunkCRC(fileRef, chunkState.xmpChunk );
 	}
