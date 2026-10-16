@@ -162,7 +162,7 @@ public:
 
 	struct BoxInfo {
 		XMP_Uns32 boxType;			// In memory as native endian, compares work with ISOMedia::k_* constants.
-		XMP_Uns32 childCount;		// ! A 'meta' box has both content (version/flags) and children!
+		XMP_Uns32 childCount;		// ! An ISO 'meta' box has both content (version/flags) and children!
 		XMP_Uns32 contentSize;		// Does not include the size of nested boxes.
 		const XMP_Uns8 * content;	// Null if contentSize is zero.
 		XMP_Uns8 idUUID[16];		// ID of the uuid atom if present

@@ -128,9 +128,12 @@ void MOOV_Manager::ParseNestedBoxes ( BoxNode * parentNode, const std::string & 
 	
 	parentNode->contentSize = 0;	// Exclude nested box size.
 
-	if ( parentNode->boxType == ISOMedia::k_meta && parentPath != "moov/meta") {	// ! The 'meta' box is a FullBox.
-		parentNode->contentSize = 4;
-		childOrigin += 4;
+	if ( parentNode->boxType == ISOMedia::k_meta ) {	// ! An ISO 'meta' box is a FullBox, a QuickTime 'meta' atom is not.
+		bool hasVersionFlags = ( (childLimit - childOrigin) >= 4 ) && ( GetUns32BE ( childOrigin ) < 8 );
+		if ( hasVersionFlags ) {
+			parentNode->contentSize = 4;
+			childOrigin += 4;
+		}
 	}
 
 	for ( const XMP_Uns8 * currChild = childOrigin; currChild < childLimit; currChild = nextChild ) {
@@ -253,8 +256,8 @@ XMP_Uns32 MOOV_Manager::NewSubtreeSize ( const BoxNode & node, const std::string
 // MOOV_Manager::AppendNewSubtree
 // ==============================
 //
-// Append this node's header, content, and children. Because the 'meta' box is a FullBox with nested
-// boxes, there can be both content and children. Ignore 'free' and 'wide' boxes.
+// Append this node's header, content, and children. Because an ISO 'meta' box is a FullBox with
+// nested boxes, there can be both content and children. Ignore 'free' and 'wide' boxes.
 
 #define IncrNewPtr(count)	{ newPtr += count; XMP_Enforce ( newPtr <= newEnd ); }
 
